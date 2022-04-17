@@ -12,7 +12,7 @@
                                 v-model="data.value"
                                 color="primary"
                                 label="Nom d'utilisateur ou email"
-                                append-outer-icon="mdi-user"
+                                prepend-inner-icon="mdi-account"
                                 @keydown="check"
                             ></v-text-field>
 
@@ -51,7 +51,7 @@
                         </form>
 
                         <v-divider></v-divider>
-                        <span>Mot de passe oublié ? <router-link to="reset">réinitialiser</router-link></span>
+                        <span>Mot de passe oublié ? <router-link to="request-password">réinitialiser</router-link></span>
                     </v-card-text>
                 </v-card>
             </v-row>
