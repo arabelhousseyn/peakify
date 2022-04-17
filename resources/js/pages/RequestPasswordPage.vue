@@ -62,9 +62,35 @@ export default {
         {
             this.disabled = true
             this.loading = true
+
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.post('/api/request-reset-password',this.data).then(e=>{
+                    this.loading = false
+                    this.$toast.open({
+                        message : 'Vérifier votre boîte de réception ou vos spams',
+                        type : 'success'
+                    })
+                    this.data.email = null
+                }).catch(err => {
+                    if(err.response.status == 422)
+                    {
+                        let errors = err.response.data.errors
+                        let values = Object.values(errors)
+                        for (let i = 0;i<values.length;i++)
+                        {
+                            this.errors.push(values[i][0])
+                        }
+                        this.hasError = true
+                        this.data.email = null
+                        this.loading = false
+                    }
+                })
+            })
         },
         check()
         {
+            this.hasError = false
+            this.errors = []
             this.disabled = (this.data.email == null) ? true : false
         }
     }

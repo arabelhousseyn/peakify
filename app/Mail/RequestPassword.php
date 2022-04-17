@@ -27,7 +27,7 @@ class RequestPassword extends Mailable
      */
     public function build()
     {
-        return $this->from('potency.football@gmail.com')
+        return $this->subject(env('app_name') . ' réinitialiser le mot de passe')->from('potency.football@gmail.com')
             ->markdown('emails.reset.password',[
                 'url' => $this->url
             ]);

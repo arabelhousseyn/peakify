@@ -30,6 +30,18 @@ const routes = [
         },
     },
     {
+        path : '/reset',
+        component: () => import('../pages/ResetPage'),
+        beforeEnter: (to, from,next) => {
+            if(localStorage.getItem('isAuth') == undefined)
+            {
+                next()
+            }else{
+                next('/home')
+            }
+        },
+    },
+    {
         path : '/home',
         component: () => import('../pages/DashboardPage'),
         beforeEnter: (to, from,next) => {
