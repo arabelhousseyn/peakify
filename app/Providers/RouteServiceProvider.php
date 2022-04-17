@@ -50,7 +50,9 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login',function (Request $request){
-            return Limit::perMinutes('5','5')->by($request->ip());
+            return Limit::perMinutes('5','5')->by($request->ip())->response(function (){
+                return response(['message' => __('messages.many')],429);
+            });
         });
     }
 }
