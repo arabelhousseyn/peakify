@@ -28,7 +28,7 @@ class LoginController extends Controller
                 return response(['data' => $user],200);
             }
 
-            return response(['message' => 'Une de vos informations est incorrecte.'],422);
+            return response(['message' => 'Une de vos informations est incorrecte.'],404);
         }
     }
 }
