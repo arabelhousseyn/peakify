@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -32,7 +33,10 @@ class LoginController extends Controller
 
                 if($user->type == 'agent')
                 {
-
+                    $data = User::with('permissions')->find($user->_id);
+                    $token = $user->createToken('peakify')->plainTextToken;
+                    $data['token'] = $token;
+                    return response(['data' => $data],200);
                 }
             }
 
