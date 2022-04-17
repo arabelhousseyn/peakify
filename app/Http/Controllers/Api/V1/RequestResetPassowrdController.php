@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestResetPasswordRequest;
+use App\Mail\RequestPassword;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class RequestResetPassowrdController extends Controller
 {
@@ -17,7 +22,15 @@ class RequestResetPassowrdController extends Controller
     {
         if($request->validated())
         {
-            return $request;
+            $token = hash('sha256', Str::random(40));
+
+            DB::table('password_resets')->insert([
+                'email' => $request->email,
+                'token' => $token
+            ]);
+            $url = env('app_url') . '/reset?token=' . $token;
+            Mail::to($request->email)->send(new RequestPassword($url));
+            return response()->noContent();
         }
     }
 }
