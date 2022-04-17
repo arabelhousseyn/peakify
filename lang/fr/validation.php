@@ -146,7 +146,8 @@ return [
         ],
         'email' => [
             'email' => 'L\'e-mail doit être valide.',
-            'required' => 'Email requis.'
+            'required' => 'Email requis.',
+            'exists' => 'Email n\'existse pas.'
         ],
         'password' => [
             'required' => 'Mote de passe requis.',

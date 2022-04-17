@@ -24,7 +24,7 @@ class RequestResetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email:rfc,dns,filter',
+            'email' => 'required|email:rfc,dns,filter|exists:users,email',
         ];
     }
 }
