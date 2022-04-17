@@ -141,8 +141,18 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'username' => [
+            'max' => 'Nom d\'utilisateur maximum de caractères 255.',
+        ],
+        'email' => [
+            'email' => 'L\'e-mail doit être valide.',
+        ],
+        'password' => [
+            'required' => 'Mote de passe requis.',
+        ],
+        'has_email' => [
+            'required' => 'Erreur dans serveur.',
+            'boolean' => 'Erreur dans serveur.',
         ],
     ],
 
