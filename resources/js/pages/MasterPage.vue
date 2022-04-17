@@ -1,7 +1,7 @@
 <template>
     <div class="master-page">
         <v-app>
-            welcome to master page
+            <router-view />
         </v-app>
     </div>
 </template>

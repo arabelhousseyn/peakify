@@ -5366,6 +5366,8 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_vuetify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./plugins/vuetify */ "./resources/js/plugins/vuetify.js");
+/* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router/index */ "./resources/js/router/index.js");
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
@@ -5376,9 +5378,13 @@ files.keys().map(function (key) {
   return Vue.component(key.split('/').pop().split('.')[0], files(key)["default"]);
 });
 
+
+
 var app = new Vue({
   el: '#app',
-  vuetify: _plugins_vuetify__WEBPACK_IMPORTED_MODULE_0__["default"]
+  vuetify: _plugins_vuetify__WEBPACK_IMPORTED_MODULE_0__["default"],
+  router: _router_index__WEBPACK_IMPORTED_MODULE_1__["default"],
+  store: _store_index__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 
 /***/ }),
@@ -5451,6 +5457,118 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use((vuetify__WEBPACK_IMPORTED_MODUL
       }
     }
   }
+}));
+
+/***/ }),
+
+/***/ "./resources/js/router/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/router/index.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var lodash_seq__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/seq */ "./node_modules/lodash/seq.js");
+/* harmony import */ var lodash_seq__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_seq__WEBPACK_IMPORTED_MODULE_0__);
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
+var routes = [{
+  path: '/',
+  component: function component() {
+    return Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ../pages/LoginPage */ "./resources/js/pages/LoginPage.vue"));
+  },
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (localStorage.getItem('isAuth') == undefined) {
+      next();
+    } else {
+      next('/home');
+    }
+  }
+}, {
+  path: '/home',
+  component: function component() {
+    return Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ../pages/DashboardPage */ "./resources/js/pages/DashboardPage.vue"));
+  },
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (localStorage.getItem('isAuth')) {
+      next();
+    } else {
+      next('/');
+    }
+  },
+  children: [{
+    path: '/',
+    component: function component() {
+      return Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ../components/MainComponent */ "./resources/js/components/MainComponent.vue"));
+    }
+  }]
+}];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
+  mode: 'history',
+  routes: routes
+}));
+
+/***/ }),
+
+/***/ "./resources/js/store/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/index.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  state: {
+    data: [],
+    user: [],
+    isAuth: false,
+    logo: 'data:image/png;base64,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'
+  },
+  getters: {
+    GET_USER: function GET_USER(state) {
+      return state.user;
+    }
+  },
+  mutations: {
+    SET_AUTH: function SET_AUTH(state, status) {
+      state.isAuth = status;
+    },
+    SET_USER: function SET_USER(state, data) {
+      state.user = data;
+    },
+    SET_OUT: function SET_OUT(state, option) {
+      state.user = [];
+      state.isAuth = false;
+      localStorage.removeItem('isAuth');
+      localStorage.removeItem('data');
+    },
+    CHECK_AUTH: function CHECK_AUTH(state, option) {
+      state.isAuth = localStorage.getItem('isAuth') !== null ? true : false;
+      state.user = localStorage.getItem('data') !== null ? JSON.parse(localStorage.getItem('data')) : [];
+    },
+    SET_DATA: function SET_DATA(state, data) {
+      state.data = data;
+    }
+  },
+  actions: {},
+  modules: {}
 }));
 
 /***/ }),
@@ -10579,6 +10697,3561 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_DataView.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_DataView.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView');
+
+module.exports = DataView;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Hash.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/_Hash.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var hashClear = __webpack_require__(/*! ./_hashClear */ "./node_modules/lodash/_hashClear.js"),
+    hashDelete = __webpack_require__(/*! ./_hashDelete */ "./node_modules/lodash/_hashDelete.js"),
+    hashGet = __webpack_require__(/*! ./_hashGet */ "./node_modules/lodash/_hashGet.js"),
+    hashHas = __webpack_require__(/*! ./_hashHas */ "./node_modules/lodash/_hashHas.js"),
+    hashSet = __webpack_require__(/*! ./_hashSet */ "./node_modules/lodash/_hashSet.js");
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+module.exports = Hash;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_LazyWrapper.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_LazyWrapper.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseCreate = __webpack_require__(/*! ./_baseCreate */ "./node_modules/lodash/_baseCreate.js"),
+    baseLodash = __webpack_require__(/*! ./_baseLodash */ "./node_modules/lodash/_baseLodash.js");
+
+/** Used as references for the maximum length and index of an array. */
+var MAX_ARRAY_LENGTH = 4294967295;
+
+/**
+ * Creates a lazy wrapper object which wraps `value` to enable lazy evaluation.
+ *
+ * @private
+ * @constructor
+ * @param {*} value The value to wrap.
+ */
+function LazyWrapper(value) {
+  this.__wrapped__ = value;
+  this.__actions__ = [];
+  this.__dir__ = 1;
+  this.__filtered__ = false;
+  this.__iteratees__ = [];
+  this.__takeCount__ = MAX_ARRAY_LENGTH;
+  this.__views__ = [];
+}
+
+// Ensure `LazyWrapper` is an instance of `baseLodash`.
+LazyWrapper.prototype = baseCreate(baseLodash.prototype);
+LazyWrapper.prototype.constructor = LazyWrapper;
+
+module.exports = LazyWrapper;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_ListCache.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_ListCache.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var listCacheClear = __webpack_require__(/*! ./_listCacheClear */ "./node_modules/lodash/_listCacheClear.js"),
+    listCacheDelete = __webpack_require__(/*! ./_listCacheDelete */ "./node_modules/lodash/_listCacheDelete.js"),
+    listCacheGet = __webpack_require__(/*! ./_listCacheGet */ "./node_modules/lodash/_listCacheGet.js"),
+    listCacheHas = __webpack_require__(/*! ./_listCacheHas */ "./node_modules/lodash/_listCacheHas.js"),
+    listCacheSet = __webpack_require__(/*! ./_listCacheSet */ "./node_modules/lodash/_listCacheSet.js");
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+module.exports = ListCache;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_LodashWrapper.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_LodashWrapper.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseCreate = __webpack_require__(/*! ./_baseCreate */ "./node_modules/lodash/_baseCreate.js"),
+    baseLodash = __webpack_require__(/*! ./_baseLodash */ "./node_modules/lodash/_baseLodash.js");
+
+/**
+ * The base constructor for creating `lodash` wrapper objects.
+ *
+ * @private
+ * @param {*} value The value to wrap.
+ * @param {boolean} [chainAll] Enable explicit method chain sequences.
+ */
+function LodashWrapper(value, chainAll) {
+  this.__wrapped__ = value;
+  this.__actions__ = [];
+  this.__chain__ = !!chainAll;
+  this.__index__ = 0;
+  this.__values__ = undefined;
+}
+
+LodashWrapper.prototype = baseCreate(baseLodash.prototype);
+LodashWrapper.prototype.constructor = LodashWrapper;
+
+module.exports = LodashWrapper;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Map.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/_Map.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map');
+
+module.exports = Map;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_MapCache.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_MapCache.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var mapCacheClear = __webpack_require__(/*! ./_mapCacheClear */ "./node_modules/lodash/_mapCacheClear.js"),
+    mapCacheDelete = __webpack_require__(/*! ./_mapCacheDelete */ "./node_modules/lodash/_mapCacheDelete.js"),
+    mapCacheGet = __webpack_require__(/*! ./_mapCacheGet */ "./node_modules/lodash/_mapCacheGet.js"),
+    mapCacheHas = __webpack_require__(/*! ./_mapCacheHas */ "./node_modules/lodash/_mapCacheHas.js"),
+    mapCacheSet = __webpack_require__(/*! ./_mapCacheSet */ "./node_modules/lodash/_mapCacheSet.js");
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+module.exports = MapCache;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Promise.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_Promise.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var Promise = getNative(root, 'Promise');
+
+module.exports = Promise;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Set.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/_Set.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var Set = getNative(root, 'Set');
+
+module.exports = Set;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Symbol.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_Symbol.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_WeakMap.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_WeakMap.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var WeakMap = getNative(root, 'WeakMap');
+
+module.exports = WeakMap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_apply.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/_apply.js ***!
+  \***************************************/
+/***/ ((module) => {
+
+/**
+ * A faster alternative to `Function#apply`, this function invokes `func`
+ * with the `this` binding of `thisArg` and the arguments of `args`.
+ *
+ * @private
+ * @param {Function} func The function to invoke.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {Array} args The arguments to invoke `func` with.
+ * @returns {*} Returns the result of `func`.
+ */
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+  }
+  return func.apply(thisArg, args);
+}
+
+module.exports = apply;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayLikeKeys.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_arrayLikeKeys.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseTimes = __webpack_require__(/*! ./_baseTimes */ "./node_modules/lodash/_baseTimes.js"),
+    isArguments = __webpack_require__(/*! ./isArguments */ "./node_modules/lodash/isArguments.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isBuffer = __webpack_require__(/*! ./isBuffer */ "./node_modules/lodash/isBuffer.js"),
+    isIndex = __webpack_require__(/*! ./_isIndex */ "./node_modules/lodash/_isIndex.js"),
+    isTypedArray = __webpack_require__(/*! ./isTypedArray */ "./node_modules/lodash/isTypedArray.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  var isArr = isArray(value),
+      isArg = !isArr && isArguments(value),
+      isBuff = !isArr && !isArg && isBuffer(value),
+      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
+      skipIndexes = isArr || isArg || isBuff || isType,
+      result = skipIndexes ? baseTimes(value.length, String) : [],
+      length = result.length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (
+           // Safari 9 has enumerable `arguments.length` in strict mode.
+           key == 'length' ||
+           // Node.js 0.10 has enumerable non-index properties on buffers.
+           (isBuff && (key == 'offset' || key == 'parent')) ||
+           // PhantomJS 2 has enumerable non-index properties on typed arrays.
+           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+           // Skip index properties.
+           isIndex(key, length)
+        ))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = arrayLikeKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayMap.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_arrayMap.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+module.exports = arrayMap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayPush.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_arrayPush.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * Appends the elements of `values` to `array`.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to append.
+ * @returns {Array} Returns `array`.
+ */
+function arrayPush(array, values) {
+  var index = -1,
+      length = values.length,
+      offset = array.length;
+
+  while (++index < length) {
+    array[offset + index] = values[index];
+  }
+  return array;
+}
+
+module.exports = arrayPush;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayReduce.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_arrayReduce.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */
+function arrayReduce(array, iteratee, accumulator, initAccum) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  if (initAccum && length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
+}
+
+module.exports = arrayReduce;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_asciiToArray.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_asciiToArray.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+/**
+ * Converts an ASCII `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function asciiToArray(string) {
+  return string.split('');
+}
+
+module.exports = asciiToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_assocIndexOf.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_assocIndexOf.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var eq = __webpack_require__(/*! ./eq */ "./node_modules/lodash/eq.js");
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+module.exports = assocIndexOf;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseAt.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_baseAt.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var get = __webpack_require__(/*! ./get */ "./node_modules/lodash/get.js");
+
+/**
+ * The base implementation of `_.at` without support for individual paths.
+ *
+ * @private
+ * @param {Object} object The object to iterate over.
+ * @param {string[]} paths The property paths to pick.
+ * @returns {Array} Returns the picked elements.
+ */
+function baseAt(object, paths) {
+  var index = -1,
+      length = paths.length,
+      result = Array(length),
+      skip = object == null;
+
+  while (++index < length) {
+    result[index] = skip ? undefined : get(object, paths[index]);
+  }
+  return result;
+}
+
+module.exports = baseAt;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseCreate.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseCreate.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js");
+
+/** Built-in value references. */
+var objectCreate = Object.create;
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} proto The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+var baseCreate = (function() {
+  function object() {}
+  return function(proto) {
+    if (!isObject(proto)) {
+      return {};
+    }
+    if (objectCreate) {
+      return objectCreate(proto);
+    }
+    object.prototype = proto;
+    var result = new object;
+    object.prototype = undefined;
+    return result;
+  };
+}());
+
+module.exports = baseCreate;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseFlatten.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_baseFlatten.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayPush = __webpack_require__(/*! ./_arrayPush */ "./node_modules/lodash/_arrayPush.js"),
+    isFlattenable = __webpack_require__(/*! ./_isFlattenable */ "./node_modules/lodash/_isFlattenable.js");
+
+/**
+ * The base implementation of `_.flatten` with support for restricting flattening.
+ *
+ * @private
+ * @param {Array} array The array to flatten.
+ * @param {number} depth The maximum recursion depth.
+ * @param {boolean} [predicate=isFlattenable] The function invoked per iteration.
+ * @param {boolean} [isStrict] Restrict to values that pass `predicate` checks.
+ * @param {Array} [result=[]] The initial result value.
+ * @returns {Array} Returns the new flattened array.
+ */
+function baseFlatten(array, depth, predicate, isStrict, result) {
+  var index = -1,
+      length = array.length;
+
+  predicate || (predicate = isFlattenable);
+  result || (result = []);
+
+  while (++index < length) {
+    var value = array[index];
+    if (depth > 0 && predicate(value)) {
+      if (depth > 1) {
+        // Recursively flatten arrays (susceptible to call stack limits).
+        baseFlatten(value, depth - 1, predicate, isStrict, result);
+      } else {
+        arrayPush(result, value);
+      }
+    } else if (!isStrict) {
+      result[result.length] = value;
+    }
+  }
+  return result;
+}
+
+module.exports = baseFlatten;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseGet.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_baseGet.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var castPath = __webpack_require__(/*! ./_castPath */ "./node_modules/lodash/_castPath.js"),
+    toKey = __webpack_require__(/*! ./_toKey */ "./node_modules/lodash/_toKey.js");
+
+/**
+ * The base implementation of `_.get` without support for default values.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @returns {*} Returns the resolved value.
+ */
+function baseGet(object, path) {
+  path = castPath(path, object);
+
+  var index = 0,
+      length = path.length;
+
+  while (object != null && index < length) {
+    object = object[toKey(path[index++])];
+  }
+  return (index && index == length) ? object : undefined;
+}
+
+module.exports = baseGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseGetTag.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseGetTag.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    getRawTag = __webpack_require__(/*! ./_getRawTag */ "./node_modules/lodash/_getRawTag.js"),
+    objectToString = __webpack_require__(/*! ./_objectToString */ "./node_modules/lodash/_objectToString.js");
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? getRawTag(value)
+    : objectToString(value);
+}
+
+module.exports = baseGetTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsArguments.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_baseIsArguments.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]';
+
+/**
+ * The base implementation of `_.isArguments`.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ */
+function baseIsArguments(value) {
+  return isObjectLike(value) && baseGetTag(value) == argsTag;
+}
+
+module.exports = baseIsArguments;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsNative.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_baseIsNative.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isFunction = __webpack_require__(/*! ./isFunction */ "./node_modules/lodash/isFunction.js"),
+    isMasked = __webpack_require__(/*! ./_isMasked */ "./node_modules/lodash/_isMasked.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    toSource = __webpack_require__(/*! ./_toSource */ "./node_modules/lodash/_toSource.js");
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+module.exports = baseIsNative;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsTypedArray.js":
+/*!**************************************************!*\
+  !*** ./node_modules/lodash/_baseIsTypedArray.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isLength = __webpack_require__(/*! ./isLength */ "./node_modules/lodash/isLength.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/** Used to identify `toStringTag` values of typed arrays. */
+var typedArrayTags = {};
+typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+typedArrayTags[uint32Tag] = true;
+typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+typedArrayTags[errorTag] = typedArrayTags[funcTag] =
+typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
+typedArrayTags[setTag] = typedArrayTags[stringTag] =
+typedArrayTags[weakMapTag] = false;
+
+/**
+ * The base implementation of `_.isTypedArray` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ */
+function baseIsTypedArray(value) {
+  return isObjectLike(value) &&
+    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
+}
+
+module.exports = baseIsTypedArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseKeys.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_baseKeys.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isPrototype = __webpack_require__(/*! ./_isPrototype */ "./node_modules/lodash/_isPrototype.js"),
+    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ "./node_modules/lodash/_nativeKeys.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseLodash.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseLodash.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * The function whose prototype chain sequence wrappers inherit from.
+ *
+ * @private
+ */
+function baseLodash() {
+  // No operation performed.
+}
+
+module.exports = baseLodash;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseSetToString.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_baseSetToString.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var constant = __webpack_require__(/*! ./constant */ "./node_modules/lodash/constant.js"),
+    defineProperty = __webpack_require__(/*! ./_defineProperty */ "./node_modules/lodash/_defineProperty.js"),
+    identity = __webpack_require__(/*! ./identity */ "./node_modules/lodash/identity.js");
+
+/**
+ * The base implementation of `setToString` without support for hot loop shorting.
+ *
+ * @private
+ * @param {Function} func The function to modify.
+ * @param {Function} string The `toString` result.
+ * @returns {Function} Returns `func`.
+ */
+var baseSetToString = !defineProperty ? identity : function(func, string) {
+  return defineProperty(func, 'toString', {
+    'configurable': true,
+    'enumerable': false,
+    'value': constant(string),
+    'writable': true
+  });
+};
+
+module.exports = baseSetToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseTimes.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseTimes.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+module.exports = baseTimes;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseToString.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_baseToString.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    arrayMap = __webpack_require__(/*! ./_arrayMap */ "./node_modules/lodash/_arrayMap.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+/**
+ * The base implementation of `_.toString` which doesn't convert nullish
+ * values to empty strings.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (isArray(value)) {
+    // Recursively convert values (susceptible to call stack limits).
+    return arrayMap(value, baseToString) + '';
+  }
+  if (isSymbol(value)) {
+    return symbolToString ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+module.exports = baseToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseUnary.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseUnary.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+module.exports = baseUnary;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseValues.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseValues.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayMap = __webpack_require__(/*! ./_arrayMap */ "./node_modules/lodash/_arrayMap.js");
+
+/**
+ * The base implementation of `_.values` and `_.valuesIn` which creates an
+ * array of `object` property values corresponding to the property names
+ * of `props`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} props The property names to get values for.
+ * @returns {Object} Returns the array of property values.
+ */
+function baseValues(object, props) {
+  return arrayMap(props, function(key) {
+    return object[key];
+  });
+}
+
+module.exports = baseValues;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseWrapperValue.js":
+/*!**************************************************!*\
+  !*** ./node_modules/lodash/_baseWrapperValue.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ "./node_modules/lodash/_LazyWrapper.js"),
+    arrayPush = __webpack_require__(/*! ./_arrayPush */ "./node_modules/lodash/_arrayPush.js"),
+    arrayReduce = __webpack_require__(/*! ./_arrayReduce */ "./node_modules/lodash/_arrayReduce.js");
+
+/**
+ * The base implementation of `wrapperValue` which returns the result of
+ * performing a sequence of actions on the unwrapped `value`, where each
+ * successive action is supplied the return value of the previous.
+ *
+ * @private
+ * @param {*} value The unwrapped value.
+ * @param {Array} actions Actions to perform to resolve the unwrapped value.
+ * @returns {*} Returns the resolved value.
+ */
+function baseWrapperValue(value, actions) {
+  var result = value;
+  if (result instanceof LazyWrapper) {
+    result = result.value();
+  }
+  return arrayReduce(actions, function(result, action) {
+    return action.func.apply(action.thisArg, arrayPush([result], action.args));
+  }, result);
+}
+
+module.exports = baseWrapperValue;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_castPath.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_castPath.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isKey = __webpack_require__(/*! ./_isKey */ "./node_modules/lodash/_isKey.js"),
+    stringToPath = __webpack_require__(/*! ./_stringToPath */ "./node_modules/lodash/_stringToPath.js"),
+    toString = __webpack_require__(/*! ./toString */ "./node_modules/lodash/toString.js");
+
+/**
+ * Casts `value` to a path array if it's not one.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @param {Object} [object] The object to query keys on.
+ * @returns {Array} Returns the cast property path array.
+ */
+function castPath(value, object) {
+  if (isArray(value)) {
+    return value;
+  }
+  return isKey(value, object) ? [value] : stringToPath(toString(value));
+}
+
+module.exports = castPath;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_copyArray.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_copyArray.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+module.exports = copyArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_coreJsData.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_coreJsData.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+module.exports = coreJsData;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_defineProperty.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_defineProperty.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js");
+
+var defineProperty = (function() {
+  try {
+    var func = getNative(Object, 'defineProperty');
+    func({}, '', {});
+    return func;
+  } catch (e) {}
+}());
+
+module.exports = defineProperty;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_flatRest.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_flatRest.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var flatten = __webpack_require__(/*! ./flatten */ "./node_modules/lodash/flatten.js"),
+    overRest = __webpack_require__(/*! ./_overRest */ "./node_modules/lodash/_overRest.js"),
+    setToString = __webpack_require__(/*! ./_setToString */ "./node_modules/lodash/_setToString.js");
+
+/**
+ * A specialized version of `baseRest` which flattens the rest array.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @returns {Function} Returns the new function.
+ */
+function flatRest(func) {
+  return setToString(overRest(func, undefined, flatten), func + '');
+}
+
+module.exports = flatRest;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_freeGlobal.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_freeGlobal.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+module.exports = freeGlobal;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getMapData.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_getMapData.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isKeyable = __webpack_require__(/*! ./_isKeyable */ "./node_modules/lodash/_isKeyable.js");
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+module.exports = getMapData;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getNative.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_getNative.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ "./node_modules/lodash/_baseIsNative.js"),
+    getValue = __webpack_require__(/*! ./_getValue */ "./node_modules/lodash/_getValue.js");
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+module.exports = getNative;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getRawTag.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_getRawTag.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+module.exports = getRawTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getTag.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_getTag.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var DataView = __webpack_require__(/*! ./_DataView */ "./node_modules/lodash/_DataView.js"),
+    Map = __webpack_require__(/*! ./_Map */ "./node_modules/lodash/_Map.js"),
+    Promise = __webpack_require__(/*! ./_Promise */ "./node_modules/lodash/_Promise.js"),
+    Set = __webpack_require__(/*! ./_Set */ "./node_modules/lodash/_Set.js"),
+    WeakMap = __webpack_require__(/*! ./_WeakMap */ "./node_modules/lodash/_WeakMap.js"),
+    baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    toSource = __webpack_require__(/*! ./_toSource */ "./node_modules/lodash/_toSource.js");
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    setTag = '[object Set]',
+    weakMapTag = '[object WeakMap]';
+
+var dataViewTag = '[object DataView]';
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = baseGetTag(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : '';
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+module.exports = getTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getValue.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_getValue.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+module.exports = getValue;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hasUnicode.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_hasUnicode.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/** Used to compose unicode character classes. */
+var rsAstralRange = '\\ud800-\\udfff',
+    rsComboMarksRange = '\\u0300-\\u036f',
+    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+    rsComboSymbolsRange = '\\u20d0-\\u20ff',
+    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
+    rsVarRange = '\\ufe0e\\ufe0f';
+
+/** Used to compose unicode capture groups. */
+var rsZWJ = '\\u200d';
+
+/** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
+var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
+
+/**
+ * Checks if `string` contains Unicode symbols.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {boolean} Returns `true` if a symbol is found, else `false`.
+ */
+function hasUnicode(string) {
+  return reHasUnicode.test(string);
+}
+
+module.exports = hasUnicode;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashClear.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_hashClear.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+  this.size = 0;
+}
+
+module.exports = hashClear;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashDelete.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_hashDelete.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  var result = this.has(key) && delete this.__data__[key];
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+module.exports = hashDelete;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashGet.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_hashGet.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+module.exports = hashGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashHas.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_hashHas.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);
+}
+
+module.exports = hashHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashSet.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_hashSet.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  this.size += this.has(key) ? 0 : 1;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+module.exports = hashSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isFlattenable.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_isFlattenable.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    isArguments = __webpack_require__(/*! ./isArguments */ "./node_modules/lodash/isArguments.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js");
+
+/** Built-in value references. */
+var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
+
+/**
+ * Checks if `value` is a flattenable `arguments` object or array.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
+ */
+function isFlattenable(value) {
+  return isArray(value) || isArguments(value) ||
+    !!(spreadableSymbol && value && value[spreadableSymbol]);
+}
+
+module.exports = isFlattenable;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isIndex.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_isIndex.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  var type = typeof value;
+  length = length == null ? MAX_SAFE_INTEGER : length;
+
+  return !!length &&
+    (type == 'number' ||
+      (type != 'symbol' && reIsUint.test(value))) &&
+        (value > -1 && value % 1 == 0 && value < length);
+}
+
+module.exports = isIndex;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isKey.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/_isKey.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
+
+/** Used to match property names within property paths. */
+var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
+    reIsPlainProp = /^\w*$/;
+
+/**
+ * Checks if `value` is a property name and not a property path.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {Object} [object] The object to query keys on.
+ * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+ */
+function isKey(value, object) {
+  if (isArray(value)) {
+    return false;
+  }
+  var type = typeof value;
+  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
+      value == null || isSymbol(value)) {
+    return true;
+  }
+  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+    (object != null && value in Object(object));
+}
+
+module.exports = isKey;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isKeyable.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_isKeyable.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+module.exports = isKeyable;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isMasked.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_isMasked.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var coreJsData = __webpack_require__(/*! ./_coreJsData */ "./node_modules/lodash/_coreJsData.js");
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+module.exports = isMasked;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isPrototype.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_isPrototype.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+module.exports = isPrototype;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_iteratorToArray.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_iteratorToArray.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/**
+ * Converts `iterator` to an array.
+ *
+ * @private
+ * @param {Object} iterator The iterator to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function iteratorToArray(iterator) {
+  var data,
+      result = [];
+
+  while (!(data = iterator.next()).done) {
+    result.push(data.value);
+  }
+  return result;
+}
+
+module.exports = iteratorToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheClear.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_listCacheClear.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+  this.size = 0;
+}
+
+module.exports = listCacheClear;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheDelete.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_listCacheDelete.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype;
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  --this.size;
+  return true;
+}
+
+module.exports = listCacheDelete;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheGet.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_listCacheGet.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+module.exports = listCacheGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheHas.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_listCacheHas.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+module.exports = listCacheHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheSet.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_listCacheSet.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    ++this.size;
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+module.exports = listCacheSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheClear.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheClear.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Hash = __webpack_require__(/*! ./_Hash */ "./node_modules/lodash/_Hash.js"),
+    ListCache = __webpack_require__(/*! ./_ListCache */ "./node_modules/lodash/_ListCache.js"),
+    Map = __webpack_require__(/*! ./_Map */ "./node_modules/lodash/_Map.js");
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.size = 0;
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+module.exports = mapCacheClear;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheDelete.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_mapCacheDelete.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  var result = getMapData(this, key)['delete'](key);
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+module.exports = mapCacheDelete;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheGet.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheGet.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+module.exports = mapCacheGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheHas.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheHas.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+module.exports = mapCacheHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheSet.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheSet.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  var data = getMapData(this, key),
+      size = data.size;
+
+  data.set(key, value);
+  this.size += data.size == size ? 0 : 1;
+  return this;
+}
+
+module.exports = mapCacheSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapToArray.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_mapToArray.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * Converts `map` to its key-value pairs.
+ *
+ * @private
+ * @param {Object} map The map to convert.
+ * @returns {Array} Returns the key-value pairs.
+ */
+function mapToArray(map) {
+  var index = -1,
+      result = Array(map.size);
+
+  map.forEach(function(value, key) {
+    result[++index] = [key, value];
+  });
+  return result;
+}
+
+module.exports = mapToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_memoizeCapped.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_memoizeCapped.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var memoize = __webpack_require__(/*! ./memoize */ "./node_modules/lodash/memoize.js");
+
+/** Used as the maximum memoize cache size. */
+var MAX_MEMOIZE_SIZE = 500;
+
+/**
+ * A specialized version of `_.memoize` which clears the memoized function's
+ * cache when it exceeds `MAX_MEMOIZE_SIZE`.
+ *
+ * @private
+ * @param {Function} func The function to have its output memoized.
+ * @returns {Function} Returns the new memoized function.
+ */
+function memoizeCapped(func) {
+  var result = memoize(func, function(key) {
+    if (cache.size === MAX_MEMOIZE_SIZE) {
+      cache.clear();
+    }
+    return key;
+  });
+
+  var cache = result.cache;
+  return result;
+}
+
+module.exports = memoizeCapped;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_nativeCreate.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_nativeCreate.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js");
+
+/* Built-in method references that are verified to be native. */
+var nativeCreate = getNative(Object, 'create');
+
+module.exports = nativeCreate;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_nativeKeys.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_nativeKeys.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var overArg = __webpack_require__(/*! ./_overArg */ "./node_modules/lodash/_overArg.js");
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeKeys = overArg(Object.keys, Object);
+
+module.exports = nativeKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_nodeUtil.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_nodeUtil.js ***!
+  \******************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && "object" == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Detect free variable `process` from Node.js. */
+var freeProcess = moduleExports && freeGlobal.process;
+
+/** Used to access faster Node.js helpers. */
+var nodeUtil = (function() {
+  try {
+    // Use `util.types` for Node.js 10+.
+    var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+    if (types) {
+      return types;
+    }
+
+    // Legacy `process.binding('util')` for Node.js < 10.
+    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+  } catch (e) {}
+}());
+
+module.exports = nodeUtil;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_objectToString.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_objectToString.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+module.exports = objectToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_overArg.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_overArg.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+module.exports = overArg;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_overRest.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_overRest.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var apply = __webpack_require__(/*! ./_apply */ "./node_modules/lodash/_apply.js");
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/**
+ * A specialized version of `baseRest` which transforms the rest array.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @param {Function} transform The rest array transform.
+ * @returns {Function} Returns the new function.
+ */
+function overRest(func, start, transform) {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+    index = -1;
+    var otherArgs = Array(start + 1);
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = transform(array);
+    return apply(func, this, otherArgs);
+  };
+}
+
+module.exports = overRest;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_root.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/_root.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+module.exports = root;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_setToArray.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_setToArray.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+module.exports = setToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_setToString.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_setToString.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ "./node_modules/lodash/_baseSetToString.js"),
+    shortOut = __webpack_require__(/*! ./_shortOut */ "./node_modules/lodash/_shortOut.js");
+
+/**
+ * Sets the `toString` method of `func` to return `string`.
+ *
+ * @private
+ * @param {Function} func The function to modify.
+ * @param {Function} string The `toString` result.
+ * @returns {Function} Returns `func`.
+ */
+var setToString = shortOut(baseSetToString);
+
+module.exports = setToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_shortOut.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_shortOut.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/** Used to detect hot functions by number of calls within a span of milliseconds. */
+var HOT_COUNT = 800,
+    HOT_SPAN = 16;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeNow = Date.now;
+
+/**
+ * Creates a function that'll short out and invoke `identity` instead
+ * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
+ * milliseconds.
+ *
+ * @private
+ * @param {Function} func The function to restrict.
+ * @returns {Function} Returns the new shortable function.
+ */
+function shortOut(func) {
+  var count = 0,
+      lastCalled = 0;
+
+  return function() {
+    var stamp = nativeNow(),
+        remaining = HOT_SPAN - (stamp - lastCalled);
+
+    lastCalled = stamp;
+    if (remaining > 0) {
+      if (++count >= HOT_COUNT) {
+        return arguments[0];
+      }
+    } else {
+      count = 0;
+    }
+    return func.apply(undefined, arguments);
+  };
+}
+
+module.exports = shortOut;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stringToArray.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_stringToArray.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var asciiToArray = __webpack_require__(/*! ./_asciiToArray */ "./node_modules/lodash/_asciiToArray.js"),
+    hasUnicode = __webpack_require__(/*! ./_hasUnicode */ "./node_modules/lodash/_hasUnicode.js"),
+    unicodeToArray = __webpack_require__(/*! ./_unicodeToArray */ "./node_modules/lodash/_unicodeToArray.js");
+
+/**
+ * Converts `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function stringToArray(string) {
+  return hasUnicode(string)
+    ? unicodeToArray(string)
+    : asciiToArray(string);
+}
+
+module.exports = stringToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stringToPath.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_stringToPath.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var memoizeCapped = __webpack_require__(/*! ./_memoizeCapped */ "./node_modules/lodash/_memoizeCapped.js");
+
+/** Used to match property names within property paths. */
+var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+
+/** Used to match backslashes in property paths. */
+var reEscapeChar = /\\(\\)?/g;
+
+/**
+ * Converts `string` to a property path array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the property path array.
+ */
+var stringToPath = memoizeCapped(function(string) {
+  var result = [];
+  if (string.charCodeAt(0) === 46 /* . */) {
+    result.push('');
+  }
+  string.replace(rePropName, function(match, number, quote, subString) {
+    result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));
+  });
+  return result;
+});
+
+module.exports = stringToPath;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_toKey.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/_toKey.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/**
+ * Converts `value` to a string key if it's not a string or symbol.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {string|symbol} Returns the key.
+ */
+function toKey(value) {
+  if (typeof value == 'string' || isSymbol(value)) {
+    return value;
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+module.exports = toKey;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_toSource.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_toSource.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to convert.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+module.exports = toSource;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_unicodeToArray.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_unicodeToArray.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/** Used to compose unicode character classes. */
+var rsAstralRange = '\\ud800-\\udfff',
+    rsComboMarksRange = '\\u0300-\\u036f',
+    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+    rsComboSymbolsRange = '\\u20d0-\\u20ff',
+    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
+    rsVarRange = '\\ufe0e\\ufe0f';
+
+/** Used to compose unicode capture groups. */
+var rsAstral = '[' + rsAstralRange + ']',
+    rsCombo = '[' + rsComboRange + ']',
+    rsFitz = '\\ud83c[\\udffb-\\udfff]',
+    rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
+    rsNonAstral = '[^' + rsAstralRange + ']',
+    rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+    rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+    rsZWJ = '\\u200d';
+
+/** Used to compose unicode regexes. */
+var reOptMod = rsModifier + '?',
+    rsOptVar = '[' + rsVarRange + ']?',
+    rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+    rsSeq = rsOptVar + reOptMod + rsOptJoin,
+    rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
+
+/** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
+var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+
+/**
+ * Converts a Unicode `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function unicodeToArray(string) {
+  return string.match(reUnicode) || [];
+}
+
+module.exports = unicodeToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_wrapperClone.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_wrapperClone.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ "./node_modules/lodash/_LazyWrapper.js"),
+    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ "./node_modules/lodash/_LodashWrapper.js"),
+    copyArray = __webpack_require__(/*! ./_copyArray */ "./node_modules/lodash/_copyArray.js");
+
+/**
+ * Creates a clone of `wrapper`.
+ *
+ * @private
+ * @param {Object} wrapper The wrapper to clone.
+ * @returns {Object} Returns the cloned wrapper.
+ */
+function wrapperClone(wrapper) {
+  if (wrapper instanceof LazyWrapper) {
+    return wrapper.clone();
+  }
+  var result = new LodashWrapper(wrapper.__wrapped__, wrapper.__chain__);
+  result.__actions__ = copyArray(wrapper.__actions__);
+  result.__index__  = wrapper.__index__;
+  result.__values__ = wrapper.__values__;
+  return result;
+}
+
+module.exports = wrapperClone;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/chain.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/chain.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var lodash = __webpack_require__(/*! ./wrapperLodash */ "./node_modules/lodash/wrapperLodash.js");
+
+/**
+ * Creates a `lodash` wrapper instance that wraps `value` with explicit method
+ * chain sequences enabled. The result of such sequences must be unwrapped
+ * with `_#value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 1.3.0
+ * @category Seq
+ * @param {*} value The value to wrap.
+ * @returns {Object} Returns the new `lodash` wrapper instance.
+ * @example
+ *
+ * var users = [
+ *   { 'user': 'barney',  'age': 36 },
+ *   { 'user': 'fred',    'age': 40 },
+ *   { 'user': 'pebbles', 'age': 1 }
+ * ];
+ *
+ * var youngest = _
+ *   .chain(users)
+ *   .sortBy('age')
+ *   .map(function(o) {
+ *     return o.user + ' is ' + o.age;
+ *   })
+ *   .head()
+ *   .value();
+ * // => 'pebbles is 1'
+ */
+function chain(value) {
+  var result = lodash(value);
+  result.__chain__ = true;
+  return result;
+}
+
+module.exports = chain;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/commit.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/commit.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ "./node_modules/lodash/_LodashWrapper.js");
+
+/**
+ * Executes the chain sequence and returns the wrapped result.
+ *
+ * @name commit
+ * @memberOf _
+ * @since 3.2.0
+ * @category Seq
+ * @returns {Object} Returns the new `lodash` wrapper instance.
+ * @example
+ *
+ * var array = [1, 2];
+ * var wrapped = _(array).push(3);
+ *
+ * console.log(array);
+ * // => [1, 2]
+ *
+ * wrapped = wrapped.commit();
+ * console.log(array);
+ * // => [1, 2, 3]
+ *
+ * wrapped.last();
+ * // => 3
+ *
+ * console.log(array);
+ * // => [1, 2, 3]
+ */
+function wrapperCommit() {
+  return new LodashWrapper(this.value(), this.__chain__);
+}
+
+module.exports = wrapperCommit;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/constant.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/constant.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/**
+ * Creates a function that returns `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Util
+ * @param {*} value The value to return from the new function.
+ * @returns {Function} Returns the new constant function.
+ * @example
+ *
+ * var objects = _.times(2, _.constant({ 'a': 1 }));
+ *
+ * console.log(objects);
+ * // => [{ 'a': 1 }, { 'a': 1 }]
+ *
+ * console.log(objects[0] === objects[1]);
+ * // => true
+ */
+function constant(value) {
+  return function() {
+    return value;
+  };
+}
+
+module.exports = constant;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/eq.js":
+/*!***********************************!*\
+  !*** ./node_modules/lodash/eq.js ***!
+  \***********************************/
+/***/ ((module) => {
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+module.exports = eq;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/flatten.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/flatten.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseFlatten = __webpack_require__(/*! ./_baseFlatten */ "./node_modules/lodash/_baseFlatten.js");
+
+/**
+ * Flattens `array` a single level deep.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {Array} array The array to flatten.
+ * @returns {Array} Returns the new flattened array.
+ * @example
+ *
+ * _.flatten([1, [2, [3, [4]], 5]]);
+ * // => [1, 2, [3, [4]], 5]
+ */
+function flatten(array) {
+  var length = array == null ? 0 : array.length;
+  return length ? baseFlatten(array, 1) : [];
+}
+
+module.exports = flatten;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/get.js":
+/*!************************************!*\
+  !*** ./node_modules/lodash/get.js ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGet = __webpack_require__(/*! ./_baseGet */ "./node_modules/lodash/_baseGet.js");
+
+/**
+ * Gets the value at `path` of `object`. If the resolved value is
+ * `undefined`, the `defaultValue` is returned in its place.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.7.0
+ * @category Object
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @param {*} [defaultValue] The value returned for `undefined` resolved values.
+ * @returns {*} Returns the resolved value.
+ * @example
+ *
+ * var object = { 'a': [{ 'b': { 'c': 3 } }] };
+ *
+ * _.get(object, 'a[0].b.c');
+ * // => 3
+ *
+ * _.get(object, ['a', '0', 'b', 'c']);
+ * // => 3
+ *
+ * _.get(object, 'a.b.c', 'default');
+ * // => 'default'
+ */
+function get(object, path, defaultValue) {
+  var result = object == null ? undefined : baseGet(object, path);
+  return result === undefined ? defaultValue : result;
+}
+
+module.exports = get;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/identity.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/identity.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/**
+ * This method returns the first argument it receives.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ *
+ * console.log(_.identity(object) === object);
+ * // => true
+ */
+function identity(value) {
+  return value;
+}
+
+module.exports = identity;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArguments.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/isArguments.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ "./node_modules/lodash/_baseIsArguments.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Built-in value references. */
+var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+    !propertyIsEnumerable.call(value, 'callee');
+};
+
+module.exports = isArguments;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArray.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/isArray.js ***!
+  \****************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+module.exports = isArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArrayLike.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/isArrayLike.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isFunction = __webpack_require__(/*! ./isFunction */ "./node_modules/lodash/isFunction.js"),
+    isLength = __webpack_require__(/*! ./isLength */ "./node_modules/lodash/isLength.js");
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+module.exports = isArrayLike;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isBuffer.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isBuffer.js ***!
+  \*****************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js"),
+    stubFalse = __webpack_require__(/*! ./stubFalse */ "./node_modules/lodash/stubFalse.js");
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && "object" == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+module.exports = isBuffer;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isFunction.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/isFunction.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js");
+
+/** `Object#toString` result references. */
+var asyncTag = '[object AsyncFunction]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    proxyTag = '[object Proxy]';
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  if (!isObject(value)) {
+    return false;
+  }
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+  var tag = baseGetTag(value);
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+}
+
+module.exports = isFunction;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isLength.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isLength.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+module.exports = isLength;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObject.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isObject.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObjectLike.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/isObjectLike.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+module.exports = isObjectLike;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isString.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isString.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var stringTag = '[object String]';
+
+/**
+ * Checks if `value` is classified as a `String` primitive or object.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a string, else `false`.
+ * @example
+ *
+ * _.isString('abc');
+ * // => true
+ *
+ * _.isString(1);
+ * // => false
+ */
+function isString(value) {
+  return typeof value == 'string' ||
+    (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag);
+}
+
+module.exports = isString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isSymbol.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isSymbol.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && baseGetTag(value) == symbolTag);
+}
+
+module.exports = isSymbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isTypedArray.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/isTypedArray.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ "./node_modules/lodash/_baseIsTypedArray.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+
+/**
+ * Checks if `value` is classified as a typed array.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ * @example
+ *
+ * _.isTypedArray(new Uint8Array);
+ * // => true
+ *
+ * _.isTypedArray([]);
+ * // => false
+ */
+var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+
+module.exports = isTypedArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/keys.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/keys.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ "./node_modules/lodash/_arrayLikeKeys.js"),
+    baseKeys = __webpack_require__(/*! ./_baseKeys */ "./node_modules/lodash/_baseKeys.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js");
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+module.exports = keys;
+
 
 /***/ }),
 
@@ -27794,6 +31467,916 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./node_modules/lodash/memoize.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/memoize.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var MapCache = __webpack_require__(/*! ./_MapCache */ "./node_modules/lodash/_MapCache.js");
+
+/** Error message constants. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/**
+ * Creates a function that memoizes the result of `func`. If `resolver` is
+ * provided, it determines the cache key for storing the result based on the
+ * arguments provided to the memoized function. By default, the first argument
+ * provided to the memoized function is used as the map cache key. The `func`
+ * is invoked with the `this` binding of the memoized function.
+ *
+ * **Note:** The cache is exposed as the `cache` property on the memoized
+ * function. Its creation may be customized by replacing the `_.memoize.Cache`
+ * constructor with one whose instances implement the
+ * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
+ * method interface of `clear`, `delete`, `get`, `has`, and `set`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to have its output memoized.
+ * @param {Function} [resolver] The function to resolve the cache key.
+ * @returns {Function} Returns the new memoized function.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ * var other = { 'c': 3, 'd': 4 };
+ *
+ * var values = _.memoize(_.values);
+ * values(object);
+ * // => [1, 2]
+ *
+ * values(other);
+ * // => [3, 4]
+ *
+ * object.a = 2;
+ * values(object);
+ * // => [1, 2]
+ *
+ * // Modify the result cache.
+ * values.cache.set(object, ['a', 'b']);
+ * values(object);
+ * // => ['a', 'b']
+ *
+ * // Replace `_.memoize.Cache`.
+ * _.memoize.Cache = WeakMap;
+ */
+function memoize(func, resolver) {
+  if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  var memoized = function() {
+    var args = arguments,
+        key = resolver ? resolver.apply(this, args) : args[0],
+        cache = memoized.cache;
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result) || cache;
+    return result;
+  };
+  memoized.cache = new (memoize.Cache || MapCache);
+  return memoized;
+}
+
+// Expose `MapCache`.
+memoize.Cache = MapCache;
+
+module.exports = memoize;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/next.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/next.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toArray = __webpack_require__(/*! ./toArray */ "./node_modules/lodash/toArray.js");
+
+/**
+ * Gets the next value on a wrapped object following the
+ * [iterator protocol](https://mdn.io/iteration_protocols#iterator).
+ *
+ * @name next
+ * @memberOf _
+ * @since 4.0.0
+ * @category Seq
+ * @returns {Object} Returns the next iterator value.
+ * @example
+ *
+ * var wrapped = _([1, 2]);
+ *
+ * wrapped.next();
+ * // => { 'done': false, 'value': 1 }
+ *
+ * wrapped.next();
+ * // => { 'done': false, 'value': 2 }
+ *
+ * wrapped.next();
+ * // => { 'done': true, 'value': undefined }
+ */
+function wrapperNext() {
+  if (this.__values__ === undefined) {
+    this.__values__ = toArray(this.value());
+  }
+  var done = this.__index__ >= this.__values__.length,
+      value = done ? undefined : this.__values__[this.__index__++];
+
+  return { 'done': done, 'value': value };
+}
+
+module.exports = wrapperNext;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/plant.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/plant.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseLodash = __webpack_require__(/*! ./_baseLodash */ "./node_modules/lodash/_baseLodash.js"),
+    wrapperClone = __webpack_require__(/*! ./_wrapperClone */ "./node_modules/lodash/_wrapperClone.js");
+
+/**
+ * Creates a clone of the chain sequence planting `value` as the wrapped value.
+ *
+ * @name plant
+ * @memberOf _
+ * @since 3.2.0
+ * @category Seq
+ * @param {*} value The value to plant.
+ * @returns {Object} Returns the new `lodash` wrapper instance.
+ * @example
+ *
+ * function square(n) {
+ *   return n * n;
+ * }
+ *
+ * var wrapped = _([1, 2]).map(square);
+ * var other = wrapped.plant([3, 4]);
+ *
+ * other.value();
+ * // => [9, 16]
+ *
+ * wrapped.value();
+ * // => [1, 4]
+ */
+function wrapperPlant(value) {
+  var result,
+      parent = this;
+
+  while (parent instanceof baseLodash) {
+    var clone = wrapperClone(parent);
+    clone.__index__ = 0;
+    clone.__values__ = undefined;
+    if (result) {
+      previous.__wrapped__ = clone;
+    } else {
+      result = clone;
+    }
+    var previous = clone;
+    parent = parent.__wrapped__;
+  }
+  previous.__wrapped__ = value;
+  return result;
+}
+
+module.exports = wrapperPlant;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/reverse.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/reverse.js ***!
+  \****************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeReverse = arrayProto.reverse;
+
+/**
+ * Reverses `array` so that the first element becomes the last, the second
+ * element becomes the second to last, and so on.
+ *
+ * **Note:** This method mutates `array` and is based on
+ * [`Array#reverse`](https://mdn.io/Array/reverse).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Array
+ * @param {Array} array The array to modify.
+ * @returns {Array} Returns `array`.
+ * @example
+ *
+ * var array = [1, 2, 3];
+ *
+ * _.reverse(array);
+ * // => [3, 2, 1]
+ *
+ * console.log(array);
+ * // => [3, 2, 1]
+ */
+function reverse(array) {
+  return array == null ? array : nativeReverse.call(array);
+}
+
+module.exports = reverse;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/seq.js":
+/*!************************************!*\
+  !*** ./node_modules/lodash/seq.js ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = {
+  'at': __webpack_require__(/*! ./wrapperAt */ "./node_modules/lodash/wrapperAt.js"),
+  'chain': __webpack_require__(/*! ./chain */ "./node_modules/lodash/chain.js"),
+  'commit': __webpack_require__(/*! ./commit */ "./node_modules/lodash/commit.js"),
+  'lodash': __webpack_require__(/*! ./wrapperLodash */ "./node_modules/lodash/wrapperLodash.js"),
+  'next': __webpack_require__(/*! ./next */ "./node_modules/lodash/next.js"),
+  'plant': __webpack_require__(/*! ./plant */ "./node_modules/lodash/plant.js"),
+  'reverse': __webpack_require__(/*! ./wrapperReverse */ "./node_modules/lodash/wrapperReverse.js"),
+  'tap': __webpack_require__(/*! ./tap */ "./node_modules/lodash/tap.js"),
+  'thru': __webpack_require__(/*! ./thru */ "./node_modules/lodash/thru.js"),
+  'toIterator': __webpack_require__(/*! ./toIterator */ "./node_modules/lodash/toIterator.js"),
+  'toJSON': __webpack_require__(/*! ./toJSON */ "./node_modules/lodash/toJSON.js"),
+  'value': __webpack_require__(/*! ./wrapperValue */ "./node_modules/lodash/wrapperValue.js"),
+  'valueOf': __webpack_require__(/*! ./valueOf */ "./node_modules/lodash/valueOf.js"),
+  'wrapperChain': __webpack_require__(/*! ./wrapperChain */ "./node_modules/lodash/wrapperChain.js")
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/stubFalse.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/stubFalse.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = stubFalse;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/tap.js":
+/*!************************************!*\
+  !*** ./node_modules/lodash/tap.js ***!
+  \************************************/
+/***/ ((module) => {
+
+/**
+ * This method invokes `interceptor` and returns `value`. The interceptor
+ * is invoked with one argument; (value). The purpose of this method is to
+ * "tap into" a method chain sequence in order to modify intermediate results.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Seq
+ * @param {*} value The value to provide to `interceptor`.
+ * @param {Function} interceptor The function to invoke.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * _([1, 2, 3])
+ *  .tap(function(array) {
+ *    // Mutate input array.
+ *    array.pop();
+ *  })
+ *  .reverse()
+ *  .value();
+ * // => [2, 1]
+ */
+function tap(value, interceptor) {
+  interceptor(value);
+  return value;
+}
+
+module.exports = tap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/thru.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/thru.js ***!
+  \*************************************/
+/***/ ((module) => {
+
+/**
+ * This method is like `_.tap` except that it returns the result of `interceptor`.
+ * The purpose of this method is to "pass thru" values replacing intermediate
+ * results in a method chain sequence.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Seq
+ * @param {*} value The value to provide to `interceptor`.
+ * @param {Function} interceptor The function to invoke.
+ * @returns {*} Returns the result of `interceptor`.
+ * @example
+ *
+ * _('  abc  ')
+ *  .chain()
+ *  .trim()
+ *  .thru(function(value) {
+ *    return [value];
+ *  })
+ *  .value();
+ * // => ['abc']
+ */
+function thru(value, interceptor) {
+  return interceptor(value);
+}
+
+module.exports = thru;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toArray.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/toArray.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    copyArray = __webpack_require__(/*! ./_copyArray */ "./node_modules/lodash/_copyArray.js"),
+    getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js"),
+    isString = __webpack_require__(/*! ./isString */ "./node_modules/lodash/isString.js"),
+    iteratorToArray = __webpack_require__(/*! ./_iteratorToArray */ "./node_modules/lodash/_iteratorToArray.js"),
+    mapToArray = __webpack_require__(/*! ./_mapToArray */ "./node_modules/lodash/_mapToArray.js"),
+    setToArray = __webpack_require__(/*! ./_setToArray */ "./node_modules/lodash/_setToArray.js"),
+    stringToArray = __webpack_require__(/*! ./_stringToArray */ "./node_modules/lodash/_stringToArray.js"),
+    values = __webpack_require__(/*! ./values */ "./node_modules/lodash/values.js");
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]',
+    setTag = '[object Set]';
+
+/** Built-in value references. */
+var symIterator = Symbol ? Symbol.iterator : undefined;
+
+/**
+ * Converts `value` to an array.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {Array} Returns the converted array.
+ * @example
+ *
+ * _.toArray({ 'a': 1, 'b': 2 });
+ * // => [1, 2]
+ *
+ * _.toArray('abc');
+ * // => ['a', 'b', 'c']
+ *
+ * _.toArray(1);
+ * // => []
+ *
+ * _.toArray(null);
+ * // => []
+ */
+function toArray(value) {
+  if (!value) {
+    return [];
+  }
+  if (isArrayLike(value)) {
+    return isString(value) ? stringToArray(value) : copyArray(value);
+  }
+  if (symIterator && value[symIterator]) {
+    return iteratorToArray(value[symIterator]());
+  }
+  var tag = getTag(value),
+      func = tag == mapTag ? mapToArray : (tag == setTag ? setToArray : values);
+
+  return func(value);
+}
+
+module.exports = toArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toIterator.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/toIterator.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * Enables the wrapper to be iterable.
+ *
+ * @name Symbol.iterator
+ * @memberOf _
+ * @since 4.0.0
+ * @category Seq
+ * @returns {Object} Returns the wrapper object.
+ * @example
+ *
+ * var wrapped = _([1, 2]);
+ *
+ * wrapped[Symbol.iterator]() === wrapped;
+ * // => true
+ *
+ * Array.from(wrapped);
+ * // => [1, 2]
+ */
+function wrapperToIterator() {
+  return this;
+}
+
+module.exports = wrapperToIterator;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toJSON.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/toJSON.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./wrapperValue */ "./node_modules/lodash/wrapperValue.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toString.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/toString.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseToString = __webpack_require__(/*! ./_baseToString */ "./node_modules/lodash/_baseToString.js");
+
+/**
+ * Converts `value` to a string. An empty string is returned for `null`
+ * and `undefined` values. The sign of `-0` is preserved.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ * @example
+ *
+ * _.toString(null);
+ * // => ''
+ *
+ * _.toString(-0);
+ * // => '-0'
+ *
+ * _.toString([1, 2, 3]);
+ * // => '1,2,3'
+ */
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+module.exports = toString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/valueOf.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/valueOf.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./wrapperValue */ "./node_modules/lodash/wrapperValue.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/values.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/values.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseValues = __webpack_require__(/*! ./_baseValues */ "./node_modules/lodash/_baseValues.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+
+/**
+ * Creates an array of the own enumerable string keyed property values of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property values.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.values(new Foo);
+ * // => [1, 2] (iteration order is not guaranteed)
+ *
+ * _.values('hi');
+ * // => ['h', 'i']
+ */
+function values(object) {
+  return object == null ? [] : baseValues(object, keys(object));
+}
+
+module.exports = values;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/wrapperAt.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/wrapperAt.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ "./node_modules/lodash/_LazyWrapper.js"),
+    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ "./node_modules/lodash/_LodashWrapper.js"),
+    baseAt = __webpack_require__(/*! ./_baseAt */ "./node_modules/lodash/_baseAt.js"),
+    flatRest = __webpack_require__(/*! ./_flatRest */ "./node_modules/lodash/_flatRest.js"),
+    isIndex = __webpack_require__(/*! ./_isIndex */ "./node_modules/lodash/_isIndex.js"),
+    thru = __webpack_require__(/*! ./thru */ "./node_modules/lodash/thru.js");
+
+/**
+ * This method is the wrapper version of `_.at`.
+ *
+ * @name at
+ * @memberOf _
+ * @since 1.0.0
+ * @category Seq
+ * @param {...(string|string[])} [paths] The property paths to pick.
+ * @returns {Object} Returns the new `lodash` wrapper instance.
+ * @example
+ *
+ * var object = { 'a': [{ 'b': { 'c': 3 } }, 4] };
+ *
+ * _(object).at(['a[0].b.c', 'a[1]']).value();
+ * // => [3, 4]
+ */
+var wrapperAt = flatRest(function(paths) {
+  var length = paths.length,
+      start = length ? paths[0] : 0,
+      value = this.__wrapped__,
+      interceptor = function(object) { return baseAt(object, paths); };
+
+  if (length > 1 || this.__actions__.length ||
+      !(value instanceof LazyWrapper) || !isIndex(start)) {
+    return this.thru(interceptor);
+  }
+  value = value.slice(start, +start + (length ? 1 : 0));
+  value.__actions__.push({
+    'func': thru,
+    'args': [interceptor],
+    'thisArg': undefined
+  });
+  return new LodashWrapper(value, this.__chain__).thru(function(array) {
+    if (length && !array.length) {
+      array.push(undefined);
+    }
+    return array;
+  });
+});
+
+module.exports = wrapperAt;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/wrapperChain.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/wrapperChain.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var chain = __webpack_require__(/*! ./chain */ "./node_modules/lodash/chain.js");
+
+/**
+ * Creates a `lodash` wrapper instance with explicit method chain sequences enabled.
+ *
+ * @name chain
+ * @memberOf _
+ * @since 0.1.0
+ * @category Seq
+ * @returns {Object} Returns the new `lodash` wrapper instance.
+ * @example
+ *
+ * var users = [
+ *   { 'user': 'barney', 'age': 36 },
+ *   { 'user': 'fred',   'age': 40 }
+ * ];
+ *
+ * // A sequence without explicit chaining.
+ * _(users).head();
+ * // => { 'user': 'barney', 'age': 36 }
+ *
+ * // A sequence with explicit chaining.
+ * _(users)
+ *   .chain()
+ *   .head()
+ *   .pick('user')
+ *   .value();
+ * // => { 'user': 'barney' }
+ */
+function wrapperChain() {
+  return chain(this);
+}
+
+module.exports = wrapperChain;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/wrapperLodash.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/wrapperLodash.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ "./node_modules/lodash/_LazyWrapper.js"),
+    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ "./node_modules/lodash/_LodashWrapper.js"),
+    baseLodash = __webpack_require__(/*! ./_baseLodash */ "./node_modules/lodash/_baseLodash.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js"),
+    wrapperClone = __webpack_require__(/*! ./_wrapperClone */ "./node_modules/lodash/_wrapperClone.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Creates a `lodash` object which wraps `value` to enable implicit method
+ * chain sequences. Methods that operate on and return arrays, collections,
+ * and functions can be chained together. Methods that retrieve a single value
+ * or may return a primitive value will automatically end the chain sequence
+ * and return the unwrapped value. Otherwise, the value must be unwrapped
+ * with `_#value`.
+ *
+ * Explicit chain sequences, which must be unwrapped with `_#value`, may be
+ * enabled using `_.chain`.
+ *
+ * The execution of chained methods is lazy, that is, it's deferred until
+ * `_#value` is implicitly or explicitly called.
+ *
+ * Lazy evaluation allows several methods to support shortcut fusion.
+ * Shortcut fusion is an optimization to merge iteratee calls; this avoids
+ * the creation of intermediate arrays and can greatly reduce the number of
+ * iteratee executions. Sections of a chain sequence qualify for shortcut
+ * fusion if the section is applied to an array and iteratees accept only
+ * one argument. The heuristic for whether a section qualifies for shortcut
+ * fusion is subject to change.
+ *
+ * Chaining is supported in custom builds as long as the `_#value` method is
+ * directly or indirectly included in the build.
+ *
+ * In addition to lodash methods, wrappers have `Array` and `String` methods.
+ *
+ * The wrapper `Array` methods are:
+ * `concat`, `join`, `pop`, `push`, `shift`, `sort`, `splice`, and `unshift`
+ *
+ * The wrapper `String` methods are:
+ * `replace` and `split`
+ *
+ * The wrapper methods that support shortcut fusion are:
+ * `at`, `compact`, `drop`, `dropRight`, `dropWhile`, `filter`, `find`,
+ * `findLast`, `head`, `initial`, `last`, `map`, `reject`, `reverse`, `slice`,
+ * `tail`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, and `toArray`
+ *
+ * The chainable wrapper methods are:
+ * `after`, `ary`, `assign`, `assignIn`, `assignInWith`, `assignWith`, `at`,
+ * `before`, `bind`, `bindAll`, `bindKey`, `castArray`, `chain`, `chunk`,
+ * `commit`, `compact`, `concat`, `conforms`, `constant`, `countBy`, `create`,
+ * `curry`, `debounce`, `defaults`, `defaultsDeep`, `defer`, `delay`,
+ * `difference`, `differenceBy`, `differenceWith`, `drop`, `dropRight`,
+ * `dropRightWhile`, `dropWhile`, `extend`, `extendWith`, `fill`, `filter`,
+ * `flatMap`, `flatMapDeep`, `flatMapDepth`, `flatten`, `flattenDeep`,
+ * `flattenDepth`, `flip`, `flow`, `flowRight`, `fromPairs`, `functions`,
+ * `functionsIn`, `groupBy`, `initial`, `intersection`, `intersectionBy`,
+ * `intersectionWith`, `invert`, `invertBy`, `invokeMap`, `iteratee`, `keyBy`,
+ * `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`, `matchesProperty`,
+ * `memoize`, `merge`, `mergeWith`, `method`, `methodOf`, `mixin`, `negate`,
+ * `nthArg`, `omit`, `omitBy`, `once`, `orderBy`, `over`, `overArgs`,
+ * `overEvery`, `overSome`, `partial`, `partialRight`, `partition`, `pick`,
+ * `pickBy`, `plant`, `property`, `propertyOf`, `pull`, `pullAll`, `pullAllBy`,
+ * `pullAllWith`, `pullAt`, `push`, `range`, `rangeRight`, `rearg`, `reject`,
+ * `remove`, `rest`, `reverse`, `sampleSize`, `set`, `setWith`, `shuffle`,
+ * `slice`, `sort`, `sortBy`, `splice`, `spread`, `tail`, `take`, `takeRight`,
+ * `takeRightWhile`, `takeWhile`, `tap`, `throttle`, `thru`, `toArray`,
+ * `toPairs`, `toPairsIn`, `toPath`, `toPlainObject`, `transform`, `unary`,
+ * `union`, `unionBy`, `unionWith`, `uniq`, `uniqBy`, `uniqWith`, `unset`,
+ * `unshift`, `unzip`, `unzipWith`, `update`, `updateWith`, `values`,
+ * `valuesIn`, `without`, `wrap`, `xor`, `xorBy`, `xorWith`, `zip`,
+ * `zipObject`, `zipObjectDeep`, and `zipWith`
+ *
+ * The wrapper methods that are **not** chainable by default are:
+ * `add`, `attempt`, `camelCase`, `capitalize`, `ceil`, `clamp`, `clone`,
+ * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `conformsTo`, `deburr`,
+ * `defaultTo`, `divide`, `each`, `eachRight`, `endsWith`, `eq`, `escape`,
+ * `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`, `findLast`,
+ * `findLastIndex`, `findLastKey`, `first`, `floor`, `forEach`, `forEachRight`,
+ * `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `get`, `gt`, `gte`, `has`,
+ * `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`, `invoke`,
+ * `isArguments`, `isArray`, `isArrayBuffer`, `isArrayLike`, `isArrayLikeObject`,
+ * `isBoolean`, `isBuffer`, `isDate`, `isElement`, `isEmpty`, `isEqual`,
+ * `isEqualWith`, `isError`, `isFinite`, `isFunction`, `isInteger`, `isLength`,
+ * `isMap`, `isMatch`, `isMatchWith`, `isNaN`, `isNative`, `isNil`, `isNull`,
+ * `isNumber`, `isObject`, `isObjectLike`, `isPlainObject`, `isRegExp`,
+ * `isSafeInteger`, `isSet`, `isString`, `isUndefined`, `isTypedArray`,
+ * `isWeakMap`, `isWeakSet`, `join`, `kebabCase`, `last`, `lastIndexOf`,
+ * `lowerCase`, `lowerFirst`, `lt`, `lte`, `max`, `maxBy`, `mean`, `meanBy`,
+ * `min`, `minBy`, `multiply`, `noConflict`, `noop`, `now`, `nth`, `pad`,
+ * `padEnd`, `padStart`, `parseInt`, `pop`, `random`, `reduce`, `reduceRight`,
+ * `repeat`, `result`, `round`, `runInContext`, `sample`, `shift`, `size`,
+ * `snakeCase`, `some`, `sortedIndex`, `sortedIndexBy`, `sortedLastIndex`,
+ * `sortedLastIndexBy`, `startCase`, `startsWith`, `stubArray`, `stubFalse`,
+ * `stubObject`, `stubString`, `stubTrue`, `subtract`, `sum`, `sumBy`,
+ * `template`, `times`, `toFinite`, `toInteger`, `toJSON`, `toLength`,
+ * `toLower`, `toNumber`, `toSafeInteger`, `toString`, `toUpper`, `trim`,
+ * `trimEnd`, `trimStart`, `truncate`, `unescape`, `uniqueId`, `upperCase`,
+ * `upperFirst`, `value`, and `words`
+ *
+ * @name _
+ * @constructor
+ * @category Seq
+ * @param {*} value The value to wrap in a `lodash` instance.
+ * @returns {Object} Returns the new `lodash` wrapper instance.
+ * @example
+ *
+ * function square(n) {
+ *   return n * n;
+ * }
+ *
+ * var wrapped = _([1, 2, 3]);
+ *
+ * // Returns an unwrapped value.
+ * wrapped.reduce(_.add);
+ * // => 6
+ *
+ * // Returns a wrapped value.
+ * var squares = wrapped.map(square);
+ *
+ * _.isArray(squares);
+ * // => false
+ *
+ * _.isArray(squares.value());
+ * // => true
+ */
+function lodash(value) {
+  if (isObjectLike(value) && !isArray(value) && !(value instanceof LazyWrapper)) {
+    if (value instanceof LodashWrapper) {
+      return value;
+    }
+    if (hasOwnProperty.call(value, '__wrapped__')) {
+      return wrapperClone(value);
+    }
+  }
+  return new LodashWrapper(value);
+}
+
+// Ensure wrappers are instances of `baseLodash`.
+lodash.prototype = baseLodash.prototype;
+lodash.prototype.constructor = lodash;
+
+module.exports = lodash;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/wrapperReverse.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/wrapperReverse.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ "./node_modules/lodash/_LazyWrapper.js"),
+    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ "./node_modules/lodash/_LodashWrapper.js"),
+    reverse = __webpack_require__(/*! ./reverse */ "./node_modules/lodash/reverse.js"),
+    thru = __webpack_require__(/*! ./thru */ "./node_modules/lodash/thru.js");
+
+/**
+ * This method is the wrapper version of `_.reverse`.
+ *
+ * **Note:** This method mutates the wrapped array.
+ *
+ * @name reverse
+ * @memberOf _
+ * @since 0.1.0
+ * @category Seq
+ * @returns {Object} Returns the new `lodash` wrapper instance.
+ * @example
+ *
+ * var array = [1, 2, 3];
+ *
+ * _(array).reverse().value()
+ * // => [3, 2, 1]
+ *
+ * console.log(array);
+ * // => [3, 2, 1]
+ */
+function wrapperReverse() {
+  var value = this.__wrapped__;
+  if (value instanceof LazyWrapper) {
+    var wrapped = value;
+    if (this.__actions__.length) {
+      wrapped = new LazyWrapper(this);
+    }
+    wrapped = wrapped.reverse();
+    wrapped.__actions__.push({
+      'func': thru,
+      'args': [reverse],
+      'thisArg': undefined
+    });
+    return new LodashWrapper(wrapped, this.__chain__);
+  }
+  return this.thru(reverse);
+}
+
+module.exports = wrapperReverse;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/wrapperValue.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/wrapperValue.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseWrapperValue = __webpack_require__(/*! ./_baseWrapperValue */ "./node_modules/lodash/_baseWrapperValue.js");
+
+/**
+ * Executes the chain sequence to resolve the unwrapped value.
+ *
+ * @name value
+ * @memberOf _
+ * @since 0.1.0
+ * @alias toJSON, valueOf
+ * @category Seq
+ * @returns {*} Returns the resolved unwrapped value.
+ * @example
+ *
+ * _([1, 2, 3]).value();
+ * // => [1, 2, 3]
+ */
+function wrapperValue() {
+  return baseWrapperValue(this.__wrapped__, this.__actions__);
+}
+
+module.exports = wrapperValue;
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -28310,6 +32893,117 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./resources/js/components/MainComponent.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/MainComponent.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MainComponent_vue_vue_type_template_id_3ee370e9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MainComponent.vue?vue&type=template&id=3ee370e9& */ "./resources/js/components/MainComponent.vue?vue&type=template&id=3ee370e9&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _MainComponent_vue_vue_type_template_id_3ee370e9___WEBPACK_IMPORTED_MODULE_0__.render,
+  _MainComponent_vue_vue_type_template_id_3ee370e9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/MainComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/DashboardPage.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/pages/DashboardPage.vue ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DashboardPage_vue_vue_type_template_id_576da70a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DashboardPage.vue?vue&type=template&id=576da70a& */ "./resources/js/pages/DashboardPage.vue?vue&type=template&id=576da70a&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _DashboardPage_vue_vue_type_template_id_576da70a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DashboardPage_vue_vue_type_template_id_576da70a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/DashboardPage.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/LoginPage.vue":
+/*!******************************************!*\
+  !*** ./resources/js/pages/LoginPage.vue ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _LoginPage_vue_vue_type_template_id_373c9342___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginPage.vue?vue&type=template&id=373c9342& */ "./resources/js/pages/LoginPage.vue?vue&type=template&id=373c9342&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _LoginPage_vue_vue_type_template_id_373c9342___WEBPACK_IMPORTED_MODULE_0__.render,
+  _LoginPage_vue_vue_type_template_id_373c9342___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/LoginPage.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/pages/MasterPage.vue":
 /*!*******************************************!*\
   !*** ./resources/js/pages/MasterPage.vue ***!
@@ -28347,6 +33041,57 @@ component.options.__file = "resources/js/pages/MasterPage.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/MainComponent.vue?vue&type=template&id=3ee370e9&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/MainComponent.vue?vue&type=template&id=3ee370e9& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MainComponent_vue_vue_type_template_id_3ee370e9___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MainComponent_vue_vue_type_template_id_3ee370e9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MainComponent_vue_vue_type_template_id_3ee370e9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MainComponent.vue?vue&type=template&id=3ee370e9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/MainComponent.vue?vue&type=template&id=3ee370e9&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/DashboardPage.vue?vue&type=template&id=576da70a&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/pages/DashboardPage.vue?vue&type=template&id=576da70a& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardPage_vue_vue_type_template_id_576da70a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardPage_vue_vue_type_template_id_576da70a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardPage_vue_vue_type_template_id_576da70a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DashboardPage.vue?vue&type=template&id=576da70a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/DashboardPage.vue?vue&type=template&id=576da70a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/LoginPage.vue?vue&type=template&id=373c9342&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/pages/LoginPage.vue?vue&type=template&id=373c9342& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginPage_vue_vue_type_template_id_373c9342___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginPage_vue_vue_type_template_id_373c9342___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginPage_vue_vue_type_template_id_373c9342___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LoginPage.vue?vue&type=template&id=373c9342& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/LoginPage.vue?vue&type=template&id=373c9342&");
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/MasterPage.vue?vue&type=template&id=3e2861da&":
 /*!**************************************************************************!*\
   !*** ./resources/js/pages/MasterPage.vue?vue&type=template&id=3e2861da& ***!
@@ -28360,6 +33105,85 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MasterPage_vue_vue_type_template_id_3e2861da___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MasterPage_vue_vue_type_template_id_3e2861da___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MasterPage.vue?vue&type=template&id=3e2861da& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/MasterPage.vue?vue&type=template&id=3e2861da&");
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/MainComponent.vue?vue&type=template&id=3ee370e9&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/MainComponent.vue?vue&type=template&id=3ee370e9& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "main" }, [
+    _vm._v("\n    welcome to main component\n"),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/DashboardPage.vue?vue&type=template&id=576da70a&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/DashboardPage.vue?vue&type=template&id=576da70a& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "dashboard-page" }, [_c("router-view")], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/LoginPage.vue?vue&type=template&id=373c9342&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/LoginPage.vue?vue&type=template&id=373c9342& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "login-page" }, [
+    _vm._v("\n    welcome to login page\n"),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
 
 
 /***/ }),
@@ -28383,7 +33207,7 @@ var render = function () {
   return _c(
     "div",
     { staticClass: "master-page" },
-    [_c("v-app", [_vm._v("\n        welcome to master page\n    ")])],
+    [_c("v-app", [_c("router-view")], 1)],
     1
   )
 }
@@ -28503,6 +33327,3173 @@ function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-router/dist/vue-router.esm.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vue-router/dist/vue-router.esm.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/*!
+  * vue-router v3.5.3
+  * (c) 2021 Evan You
+  * @license MIT
+  */
+/*  */
+
+function assert (condition, message) {
+  if (!condition) {
+    throw new Error(("[vue-router] " + message))
+  }
+}
+
+function warn (condition, message) {
+  if (!condition) {
+    typeof console !== 'undefined' && console.warn(("[vue-router] " + message));
+  }
+}
+
+function extend (a, b) {
+  for (var key in b) {
+    a[key] = b[key];
+  }
+  return a
+}
+
+/*  */
+
+var encodeReserveRE = /[!'()*]/g;
+var encodeReserveReplacer = function (c) { return '%' + c.charCodeAt(0).toString(16); };
+var commaRE = /%2C/g;
+
+// fixed encodeURIComponent which is more conformant to RFC3986:
+// - escapes [!'()*]
+// - preserve commas
+var encode = function (str) { return encodeURIComponent(str)
+    .replace(encodeReserveRE, encodeReserveReplacer)
+    .replace(commaRE, ','); };
+
+function decode (str) {
+  try {
+    return decodeURIComponent(str)
+  } catch (err) {
+    if (true) {
+      warn(false, ("Error decoding \"" + str + "\". Leaving it intact."));
+    }
+  }
+  return str
+}
+
+function resolveQuery (
+  query,
+  extraQuery,
+  _parseQuery
+) {
+  if ( extraQuery === void 0 ) extraQuery = {};
+
+  var parse = _parseQuery || parseQuery;
+  var parsedQuery;
+  try {
+    parsedQuery = parse(query || '');
+  } catch (e) {
+     true && warn(false, e.message);
+    parsedQuery = {};
+  }
+  for (var key in extraQuery) {
+    var value = extraQuery[key];
+    parsedQuery[key] = Array.isArray(value)
+      ? value.map(castQueryParamValue)
+      : castQueryParamValue(value);
+  }
+  return parsedQuery
+}
+
+var castQueryParamValue = function (value) { return (value == null || typeof value === 'object' ? value : String(value)); };
+
+function parseQuery (query) {
+  var res = {};
+
+  query = query.trim().replace(/^(\?|#|&)/, '');
+
+  if (!query) {
+    return res
+  }
+
+  query.split('&').forEach(function (param) {
+    var parts = param.replace(/\+/g, ' ').split('=');
+    var key = decode(parts.shift());
+    var val = parts.length > 0 ? decode(parts.join('=')) : null;
+
+    if (res[key] === undefined) {
+      res[key] = val;
+    } else if (Array.isArray(res[key])) {
+      res[key].push(val);
+    } else {
+      res[key] = [res[key], val];
+    }
+  });
+
+  return res
+}
+
+function stringifyQuery (obj) {
+  var res = obj
+    ? Object.keys(obj)
+      .map(function (key) {
+        var val = obj[key];
+
+        if (val === undefined) {
+          return ''
+        }
+
+        if (val === null) {
+          return encode(key)
+        }
+
+        if (Array.isArray(val)) {
+          var result = [];
+          val.forEach(function (val2) {
+            if (val2 === undefined) {
+              return
+            }
+            if (val2 === null) {
+              result.push(encode(key));
+            } else {
+              result.push(encode(key) + '=' + encode(val2));
+            }
+          });
+          return result.join('&')
+        }
+
+        return encode(key) + '=' + encode(val)
+      })
+      .filter(function (x) { return x.length > 0; })
+      .join('&')
+    : null;
+  return res ? ("?" + res) : ''
+}
+
+/*  */
+
+var trailingSlashRE = /\/?$/;
+
+function createRoute (
+  record,
+  location,
+  redirectedFrom,
+  router
+) {
+  var stringifyQuery = router && router.options.stringifyQuery;
+
+  var query = location.query || {};
+  try {
+    query = clone(query);
+  } catch (e) {}
+
+  var route = {
+    name: location.name || (record && record.name),
+    meta: (record && record.meta) || {},
+    path: location.path || '/',
+    hash: location.hash || '',
+    query: query,
+    params: location.params || {},
+    fullPath: getFullPath(location, stringifyQuery),
+    matched: record ? formatMatch(record) : []
+  };
+  if (redirectedFrom) {
+    route.redirectedFrom = getFullPath(redirectedFrom, stringifyQuery);
+  }
+  return Object.freeze(route)
+}
+
+function clone (value) {
+  if (Array.isArray(value)) {
+    return value.map(clone)
+  } else if (value && typeof value === 'object') {
+    var res = {};
+    for (var key in value) {
+      res[key] = clone(value[key]);
+    }
+    return res
+  } else {
+    return value
+  }
+}
+
+// the starting route that represents the initial state
+var START = createRoute(null, {
+  path: '/'
+});
+
+function formatMatch (record) {
+  var res = [];
+  while (record) {
+    res.unshift(record);
+    record = record.parent;
+  }
+  return res
+}
+
+function getFullPath (
+  ref,
+  _stringifyQuery
+) {
+  var path = ref.path;
+  var query = ref.query; if ( query === void 0 ) query = {};
+  var hash = ref.hash; if ( hash === void 0 ) hash = '';
+
+  var stringify = _stringifyQuery || stringifyQuery;
+  return (path || '/') + stringify(query) + hash
+}
+
+function isSameRoute (a, b, onlyPath) {
+  if (b === START) {
+    return a === b
+  } else if (!b) {
+    return false
+  } else if (a.path && b.path) {
+    return a.path.replace(trailingSlashRE, '') === b.path.replace(trailingSlashRE, '') && (onlyPath ||
+      a.hash === b.hash &&
+      isObjectEqual(a.query, b.query))
+  } else if (a.name && b.name) {
+    return (
+      a.name === b.name &&
+      (onlyPath || (
+        a.hash === b.hash &&
+      isObjectEqual(a.query, b.query) &&
+      isObjectEqual(a.params, b.params))
+      )
+    )
+  } else {
+    return false
+  }
+}
+
+function isObjectEqual (a, b) {
+  if ( a === void 0 ) a = {};
+  if ( b === void 0 ) b = {};
+
+  // handle null value #1566
+  if (!a || !b) { return a === b }
+  var aKeys = Object.keys(a).sort();
+  var bKeys = Object.keys(b).sort();
+  if (aKeys.length !== bKeys.length) {
+    return false
+  }
+  return aKeys.every(function (key, i) {
+    var aVal = a[key];
+    var bKey = bKeys[i];
+    if (bKey !== key) { return false }
+    var bVal = b[key];
+    // query values can be null and undefined
+    if (aVal == null || bVal == null) { return aVal === bVal }
+    // check nested equality
+    if (typeof aVal === 'object' && typeof bVal === 'object') {
+      return isObjectEqual(aVal, bVal)
+    }
+    return String(aVal) === String(bVal)
+  })
+}
+
+function isIncludedRoute (current, target) {
+  return (
+    current.path.replace(trailingSlashRE, '/').indexOf(
+      target.path.replace(trailingSlashRE, '/')
+    ) === 0 &&
+    (!target.hash || current.hash === target.hash) &&
+    queryIncludes(current.query, target.query)
+  )
+}
+
+function queryIncludes (current, target) {
+  for (var key in target) {
+    if (!(key in current)) {
+      return false
+    }
+  }
+  return true
+}
+
+function handleRouteEntered (route) {
+  for (var i = 0; i < route.matched.length; i++) {
+    var record = route.matched[i];
+    for (var name in record.instances) {
+      var instance = record.instances[name];
+      var cbs = record.enteredCbs[name];
+      if (!instance || !cbs) { continue }
+      delete record.enteredCbs[name];
+      for (var i$1 = 0; i$1 < cbs.length; i$1++) {
+        if (!instance._isBeingDestroyed) { cbs[i$1](instance); }
+      }
+    }
+  }
+}
+
+var View = {
+  name: 'RouterView',
+  functional: true,
+  props: {
+    name: {
+      type: String,
+      default: 'default'
+    }
+  },
+  render: function render (_, ref) {
+    var props = ref.props;
+    var children = ref.children;
+    var parent = ref.parent;
+    var data = ref.data;
+
+    // used by devtools to display a router-view badge
+    data.routerView = true;
+
+    // directly use parent context's createElement() function
+    // so that components rendered by router-view can resolve named slots
+    var h = parent.$createElement;
+    var name = props.name;
+    var route = parent.$route;
+    var cache = parent._routerViewCache || (parent._routerViewCache = {});
+
+    // determine current view depth, also check to see if the tree
+    // has been toggled inactive but kept-alive.
+    var depth = 0;
+    var inactive = false;
+    while (parent && parent._routerRoot !== parent) {
+      var vnodeData = parent.$vnode ? parent.$vnode.data : {};
+      if (vnodeData.routerView) {
+        depth++;
+      }
+      if (vnodeData.keepAlive && parent._directInactive && parent._inactive) {
+        inactive = true;
+      }
+      parent = parent.$parent;
+    }
+    data.routerViewDepth = depth;
+
+    // render previous view if the tree is inactive and kept-alive
+    if (inactive) {
+      var cachedData = cache[name];
+      var cachedComponent = cachedData && cachedData.component;
+      if (cachedComponent) {
+        // #2301
+        // pass props
+        if (cachedData.configProps) {
+          fillPropsinData(cachedComponent, data, cachedData.route, cachedData.configProps);
+        }
+        return h(cachedComponent, data, children)
+      } else {
+        // render previous empty view
+        return h()
+      }
+    }
+
+    var matched = route.matched[depth];
+    var component = matched && matched.components[name];
+
+    // render empty node if no matched route or no config component
+    if (!matched || !component) {
+      cache[name] = null;
+      return h()
+    }
+
+    // cache component
+    cache[name] = { component: component };
+
+    // attach instance registration hook
+    // this will be called in the instance's injected lifecycle hooks
+    data.registerRouteInstance = function (vm, val) {
+      // val could be undefined for unregistration
+      var current = matched.instances[name];
+      if (
+        (val && current !== vm) ||
+        (!val && current === vm)
+      ) {
+        matched.instances[name] = val;
+      }
+    }
+
+    // also register instance in prepatch hook
+    // in case the same component instance is reused across different routes
+    ;(data.hook || (data.hook = {})).prepatch = function (_, vnode) {
+      matched.instances[name] = vnode.componentInstance;
+    };
+
+    // register instance in init hook
+    // in case kept-alive component be actived when routes changed
+    data.hook.init = function (vnode) {
+      if (vnode.data.keepAlive &&
+        vnode.componentInstance &&
+        vnode.componentInstance !== matched.instances[name]
+      ) {
+        matched.instances[name] = vnode.componentInstance;
+      }
+
+      // if the route transition has already been confirmed then we weren't
+      // able to call the cbs during confirmation as the component was not
+      // registered yet, so we call it here.
+      handleRouteEntered(route);
+    };
+
+    var configProps = matched.props && matched.props[name];
+    // save route and configProps in cache
+    if (configProps) {
+      extend(cache[name], {
+        route: route,
+        configProps: configProps
+      });
+      fillPropsinData(component, data, route, configProps);
+    }
+
+    return h(component, data, children)
+  }
+};
+
+function fillPropsinData (component, data, route, configProps) {
+  // resolve props
+  var propsToPass = data.props = resolveProps(route, configProps);
+  if (propsToPass) {
+    // clone to prevent mutation
+    propsToPass = data.props = extend({}, propsToPass);
+    // pass non-declared props as attrs
+    var attrs = data.attrs = data.attrs || {};
+    for (var key in propsToPass) {
+      if (!component.props || !(key in component.props)) {
+        attrs[key] = propsToPass[key];
+        delete propsToPass[key];
+      }
+    }
+  }
+}
+
+function resolveProps (route, config) {
+  switch (typeof config) {
+    case 'undefined':
+      return
+    case 'object':
+      return config
+    case 'function':
+      return config(route)
+    case 'boolean':
+      return config ? route.params : undefined
+    default:
+      if (true) {
+        warn(
+          false,
+          "props in \"" + (route.path) + "\" is a " + (typeof config) + ", " +
+          "expecting an object, function or boolean."
+        );
+      }
+  }
+}
+
+/*  */
+
+function resolvePath (
+  relative,
+  base,
+  append
+) {
+  var firstChar = relative.charAt(0);
+  if (firstChar === '/') {
+    return relative
+  }
+
+  if (firstChar === '?' || firstChar === '#') {
+    return base + relative
+  }
+
+  var stack = base.split('/');
+
+  // remove trailing segment if:
+  // - not appending
+  // - appending to trailing slash (last segment is empty)
+  if (!append || !stack[stack.length - 1]) {
+    stack.pop();
+  }
+
+  // resolve relative path
+  var segments = relative.replace(/^\//, '').split('/');
+  for (var i = 0; i < segments.length; i++) {
+    var segment = segments[i];
+    if (segment === '..') {
+      stack.pop();
+    } else if (segment !== '.') {
+      stack.push(segment);
+    }
+  }
+
+  // ensure leading slash
+  if (stack[0] !== '') {
+    stack.unshift('');
+  }
+
+  return stack.join('/')
+}
+
+function parsePath (path) {
+  var hash = '';
+  var query = '';
+
+  var hashIndex = path.indexOf('#');
+  if (hashIndex >= 0) {
+    hash = path.slice(hashIndex);
+    path = path.slice(0, hashIndex);
+  }
+
+  var queryIndex = path.indexOf('?');
+  if (queryIndex >= 0) {
+    query = path.slice(queryIndex + 1);
+    path = path.slice(0, queryIndex);
+  }
+
+  return {
+    path: path,
+    query: query,
+    hash: hash
+  }
+}
+
+function cleanPath (path) {
+  return path.replace(/\/+/g, '/')
+}
+
+var isarray = Array.isArray || function (arr) {
+  return Object.prototype.toString.call(arr) == '[object Array]';
+};
+
+/**
+ * Expose `pathToRegexp`.
+ */
+var pathToRegexp_1 = pathToRegexp;
+var parse_1 = parse;
+var compile_1 = compile;
+var tokensToFunction_1 = tokensToFunction;
+var tokensToRegExp_1 = tokensToRegExp;
+
+/**
+ * The main path matching regexp utility.
+ *
+ * @type {RegExp}
+ */
+var PATH_REGEXP = new RegExp([
+  // Match escaped characters that would otherwise appear in future matches.
+  // This allows the user to escape special characters that won't transform.
+  '(\\\\.)',
+  // Match Express-style parameters and un-named parameters with a prefix
+  // and optional suffixes. Matches appear as:
+  //
+  // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?", undefined]
+  // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined, undefined]
+  // "/*"            => ["/", undefined, undefined, undefined, undefined, "*"]
+  '([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))'
+].join('|'), 'g');
+
+/**
+ * Parse a string for the raw tokens.
+ *
+ * @param  {string}  str
+ * @param  {Object=} options
+ * @return {!Array}
+ */
+function parse (str, options) {
+  var tokens = [];
+  var key = 0;
+  var index = 0;
+  var path = '';
+  var defaultDelimiter = options && options.delimiter || '/';
+  var res;
+
+  while ((res = PATH_REGEXP.exec(str)) != null) {
+    var m = res[0];
+    var escaped = res[1];
+    var offset = res.index;
+    path += str.slice(index, offset);
+    index = offset + m.length;
+
+    // Ignore already escaped sequences.
+    if (escaped) {
+      path += escaped[1];
+      continue
+    }
+
+    var next = str[index];
+    var prefix = res[2];
+    var name = res[3];
+    var capture = res[4];
+    var group = res[5];
+    var modifier = res[6];
+    var asterisk = res[7];
+
+    // Push the current path onto the tokens.
+    if (path) {
+      tokens.push(path);
+      path = '';
+    }
+
+    var partial = prefix != null && next != null && next !== prefix;
+    var repeat = modifier === '+' || modifier === '*';
+    var optional = modifier === '?' || modifier === '*';
+    var delimiter = res[2] || defaultDelimiter;
+    var pattern = capture || group;
+
+    tokens.push({
+      name: name || key++,
+      prefix: prefix || '',
+      delimiter: delimiter,
+      optional: optional,
+      repeat: repeat,
+      partial: partial,
+      asterisk: !!asterisk,
+      pattern: pattern ? escapeGroup(pattern) : (asterisk ? '.*' : '[^' + escapeString(delimiter) + ']+?')
+    });
+  }
+
+  // Match any characters still remaining.
+  if (index < str.length) {
+    path += str.substr(index);
+  }
+
+  // If the path exists, push it onto the end.
+  if (path) {
+    tokens.push(path);
+  }
+
+  return tokens
+}
+
+/**
+ * Compile a string to a template function for the path.
+ *
+ * @param  {string}             str
+ * @param  {Object=}            options
+ * @return {!function(Object=, Object=)}
+ */
+function compile (str, options) {
+  return tokensToFunction(parse(str, options), options)
+}
+
+/**
+ * Prettier encoding of URI path segments.
+ *
+ * @param  {string}
+ * @return {string}
+ */
+function encodeURIComponentPretty (str) {
+  return encodeURI(str).replace(/[\/?#]/g, function (c) {
+    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+  })
+}
+
+/**
+ * Encode the asterisk parameter. Similar to `pretty`, but allows slashes.
+ *
+ * @param  {string}
+ * @return {string}
+ */
+function encodeAsterisk (str) {
+  return encodeURI(str).replace(/[?#]/g, function (c) {
+    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+  })
+}
+
+/**
+ * Expose a method for transforming tokens into the path function.
+ */
+function tokensToFunction (tokens, options) {
+  // Compile all the tokens into regexps.
+  var matches = new Array(tokens.length);
+
+  // Compile all the patterns before compilation.
+  for (var i = 0; i < tokens.length; i++) {
+    if (typeof tokens[i] === 'object') {
+      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$', flags(options));
+    }
+  }
+
+  return function (obj, opts) {
+    var path = '';
+    var data = obj || {};
+    var options = opts || {};
+    var encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent;
+
+    for (var i = 0; i < tokens.length; i++) {
+      var token = tokens[i];
+
+      if (typeof token === 'string') {
+        path += token;
+
+        continue
+      }
+
+      var value = data[token.name];
+      var segment;
+
+      if (value == null) {
+        if (token.optional) {
+          // Prepend partial segment prefixes.
+          if (token.partial) {
+            path += token.prefix;
+          }
+
+          continue
+        } else {
+          throw new TypeError('Expected "' + token.name + '" to be defined')
+        }
+      }
+
+      if (isarray(value)) {
+        if (!token.repeat) {
+          throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
+        }
+
+        if (value.length === 0) {
+          if (token.optional) {
+            continue
+          } else {
+            throw new TypeError('Expected "' + token.name + '" to not be empty')
+          }
+        }
+
+        for (var j = 0; j < value.length; j++) {
+          segment = encode(value[j]);
+
+          if (!matches[i].test(segment)) {
+            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '", but received `' + JSON.stringify(segment) + '`')
+          }
+
+          path += (j === 0 ? token.prefix : token.delimiter) + segment;
+        }
+
+        continue
+      }
+
+      segment = token.asterisk ? encodeAsterisk(value) : encode(value);
+
+      if (!matches[i].test(segment)) {
+        throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but received "' + segment + '"')
+      }
+
+      path += token.prefix + segment;
+    }
+
+    return path
+  }
+}
+
+/**
+ * Escape a regular expression string.
+ *
+ * @param  {string} str
+ * @return {string}
+ */
+function escapeString (str) {
+  return str.replace(/([.+*?=^!:${}()[\]|\/\\])/g, '\\$1')
+}
+
+/**
+ * Escape the capturing group by escaping special characters and meaning.
+ *
+ * @param  {string} group
+ * @return {string}
+ */
+function escapeGroup (group) {
+  return group.replace(/([=!:$\/()])/g, '\\$1')
+}
+
+/**
+ * Attach the keys as a property of the regexp.
+ *
+ * @param  {!RegExp} re
+ * @param  {Array}   keys
+ * @return {!RegExp}
+ */
+function attachKeys (re, keys) {
+  re.keys = keys;
+  return re
+}
+
+/**
+ * Get the flags for a regexp from the options.
+ *
+ * @param  {Object} options
+ * @return {string}
+ */
+function flags (options) {
+  return options && options.sensitive ? '' : 'i'
+}
+
+/**
+ * Pull out keys from a regexp.
+ *
+ * @param  {!RegExp} path
+ * @param  {!Array}  keys
+ * @return {!RegExp}
+ */
+function regexpToRegexp (path, keys) {
+  // Use a negative lookahead to match only capturing groups.
+  var groups = path.source.match(/\((?!\?)/g);
+
+  if (groups) {
+    for (var i = 0; i < groups.length; i++) {
+      keys.push({
+        name: i,
+        prefix: null,
+        delimiter: null,
+        optional: false,
+        repeat: false,
+        partial: false,
+        asterisk: false,
+        pattern: null
+      });
+    }
+  }
+
+  return attachKeys(path, keys)
+}
+
+/**
+ * Transform an array into a regexp.
+ *
+ * @param  {!Array}  path
+ * @param  {Array}   keys
+ * @param  {!Object} options
+ * @return {!RegExp}
+ */
+function arrayToRegexp (path, keys, options) {
+  var parts = [];
+
+  for (var i = 0; i < path.length; i++) {
+    parts.push(pathToRegexp(path[i], keys, options).source);
+  }
+
+  var regexp = new RegExp('(?:' + parts.join('|') + ')', flags(options));
+
+  return attachKeys(regexp, keys)
+}
+
+/**
+ * Create a path regexp from string input.
+ *
+ * @param  {string}  path
+ * @param  {!Array}  keys
+ * @param  {!Object} options
+ * @return {!RegExp}
+ */
+function stringToRegexp (path, keys, options) {
+  return tokensToRegExp(parse(path, options), keys, options)
+}
+
+/**
+ * Expose a function for taking tokens and returning a RegExp.
+ *
+ * @param  {!Array}          tokens
+ * @param  {(Array|Object)=} keys
+ * @param  {Object=}         options
+ * @return {!RegExp}
+ */
+function tokensToRegExp (tokens, keys, options) {
+  if (!isarray(keys)) {
+    options = /** @type {!Object} */ (keys || options);
+    keys = [];
+  }
+
+  options = options || {};
+
+  var strict = options.strict;
+  var end = options.end !== false;
+  var route = '';
+
+  // Iterate over the tokens and create our regexp string.
+  for (var i = 0; i < tokens.length; i++) {
+    var token = tokens[i];
+
+    if (typeof token === 'string') {
+      route += escapeString(token);
+    } else {
+      var prefix = escapeString(token.prefix);
+      var capture = '(?:' + token.pattern + ')';
+
+      keys.push(token);
+
+      if (token.repeat) {
+        capture += '(?:' + prefix + capture + ')*';
+      }
+
+      if (token.optional) {
+        if (!token.partial) {
+          capture = '(?:' + prefix + '(' + capture + '))?';
+        } else {
+          capture = prefix + '(' + capture + ')?';
+        }
+      } else {
+        capture = prefix + '(' + capture + ')';
+      }
+
+      route += capture;
+    }
+  }
+
+  var delimiter = escapeString(options.delimiter || '/');
+  var endsWithDelimiter = route.slice(-delimiter.length) === delimiter;
+
+  // In non-strict mode we allow a slash at the end of match. If the path to
+  // match already ends with a slash, we remove it for consistency. The slash
+  // is valid at the end of a path match, not in the middle. This is important
+  // in non-ending mode, where "/test/" shouldn't match "/test//route".
+  if (!strict) {
+    route = (endsWithDelimiter ? route.slice(0, -delimiter.length) : route) + '(?:' + delimiter + '(?=$))?';
+  }
+
+  if (end) {
+    route += '$';
+  } else {
+    // In non-ending mode, we need the capturing groups to match as much as
+    // possible by using a positive lookahead to the end or next path segment.
+    route += strict && endsWithDelimiter ? '' : '(?=' + delimiter + '|$)';
+  }
+
+  return attachKeys(new RegExp('^' + route, flags(options)), keys)
+}
+
+/**
+ * Normalize the given path string, returning a regular expression.
+ *
+ * An empty array can be passed in for the keys, which will hold the
+ * placeholder key descriptions. For example, using `/user/:id`, `keys` will
+ * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
+ *
+ * @param  {(string|RegExp|Array)} path
+ * @param  {(Array|Object)=}       keys
+ * @param  {Object=}               options
+ * @return {!RegExp}
+ */
+function pathToRegexp (path, keys, options) {
+  if (!isarray(keys)) {
+    options = /** @type {!Object} */ (keys || options);
+    keys = [];
+  }
+
+  options = options || {};
+
+  if (path instanceof RegExp) {
+    return regexpToRegexp(path, /** @type {!Array} */ (keys))
+  }
+
+  if (isarray(path)) {
+    return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
+  }
+
+  return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
+}
+pathToRegexp_1.parse = parse_1;
+pathToRegexp_1.compile = compile_1;
+pathToRegexp_1.tokensToFunction = tokensToFunction_1;
+pathToRegexp_1.tokensToRegExp = tokensToRegExp_1;
+
+/*  */
+
+// $flow-disable-line
+var regexpCompileCache = Object.create(null);
+
+function fillParams (
+  path,
+  params,
+  routeMsg
+) {
+  params = params || {};
+  try {
+    var filler =
+      regexpCompileCache[path] ||
+      (regexpCompileCache[path] = pathToRegexp_1.compile(path));
+
+    // Fix #2505 resolving asterisk routes { name: 'not-found', params: { pathMatch: '/not-found' }}
+    // and fix #3106 so that you can work with location descriptor object having params.pathMatch equal to empty string
+    if (typeof params.pathMatch === 'string') { params[0] = params.pathMatch; }
+
+    return filler(params, { pretty: true })
+  } catch (e) {
+    if (true) {
+      // Fix #3072 no warn if `pathMatch` is string
+      warn(typeof params.pathMatch === 'string', ("missing param for " + routeMsg + ": " + (e.message)));
+    }
+    return ''
+  } finally {
+    // delete the 0 if it was added
+    delete params[0];
+  }
+}
+
+/*  */
+
+function normalizeLocation (
+  raw,
+  current,
+  append,
+  router
+) {
+  var next = typeof raw === 'string' ? { path: raw } : raw;
+  // named target
+  if (next._normalized) {
+    return next
+  } else if (next.name) {
+    next = extend({}, raw);
+    var params = next.params;
+    if (params && typeof params === 'object') {
+      next.params = extend({}, params);
+    }
+    return next
+  }
+
+  // relative params
+  if (!next.path && next.params && current) {
+    next = extend({}, next);
+    next._normalized = true;
+    var params$1 = extend(extend({}, current.params), next.params);
+    if (current.name) {
+      next.name = current.name;
+      next.params = params$1;
+    } else if (current.matched.length) {
+      var rawPath = current.matched[current.matched.length - 1].path;
+      next.path = fillParams(rawPath, params$1, ("path " + (current.path)));
+    } else if (true) {
+      warn(false, "relative params navigation requires a current route.");
+    }
+    return next
+  }
+
+  var parsedPath = parsePath(next.path || '');
+  var basePath = (current && current.path) || '/';
+  var path = parsedPath.path
+    ? resolvePath(parsedPath.path, basePath, append || next.append)
+    : basePath;
+
+  var query = resolveQuery(
+    parsedPath.query,
+    next.query,
+    router && router.options.parseQuery
+  );
+
+  var hash = next.hash || parsedPath.hash;
+  if (hash && hash.charAt(0) !== '#') {
+    hash = "#" + hash;
+  }
+
+  return {
+    _normalized: true,
+    path: path,
+    query: query,
+    hash: hash
+  }
+}
+
+/*  */
+
+// work around weird flow bug
+var toTypes = [String, Object];
+var eventTypes = [String, Array];
+
+var noop = function () {};
+
+var warnedCustomSlot;
+var warnedTagProp;
+var warnedEventProp;
+
+var Link = {
+  name: 'RouterLink',
+  props: {
+    to: {
+      type: toTypes,
+      required: true
+    },
+    tag: {
+      type: String,
+      default: 'a'
+    },
+    custom: Boolean,
+    exact: Boolean,
+    exactPath: Boolean,
+    append: Boolean,
+    replace: Boolean,
+    activeClass: String,
+    exactActiveClass: String,
+    ariaCurrentValue: {
+      type: String,
+      default: 'page'
+    },
+    event: {
+      type: eventTypes,
+      default: 'click'
+    }
+  },
+  render: function render (h) {
+    var this$1 = this;
+
+    var router = this.$router;
+    var current = this.$route;
+    var ref = router.resolve(
+      this.to,
+      current,
+      this.append
+    );
+    var location = ref.location;
+    var route = ref.route;
+    var href = ref.href;
+
+    var classes = {};
+    var globalActiveClass = router.options.linkActiveClass;
+    var globalExactActiveClass = router.options.linkExactActiveClass;
+    // Support global empty active class
+    var activeClassFallback =
+      globalActiveClass == null ? 'router-link-active' : globalActiveClass;
+    var exactActiveClassFallback =
+      globalExactActiveClass == null
+        ? 'router-link-exact-active'
+        : globalExactActiveClass;
+    var activeClass =
+      this.activeClass == null ? activeClassFallback : this.activeClass;
+    var exactActiveClass =
+      this.exactActiveClass == null
+        ? exactActiveClassFallback
+        : this.exactActiveClass;
+
+    var compareTarget = route.redirectedFrom
+      ? createRoute(null, normalizeLocation(route.redirectedFrom), null, router)
+      : route;
+
+    classes[exactActiveClass] = isSameRoute(current, compareTarget, this.exactPath);
+    classes[activeClass] = this.exact || this.exactPath
+      ? classes[exactActiveClass]
+      : isIncludedRoute(current, compareTarget);
+
+    var ariaCurrentValue = classes[exactActiveClass] ? this.ariaCurrentValue : null;
+
+    var handler = function (e) {
+      if (guardEvent(e)) {
+        if (this$1.replace) {
+          router.replace(location, noop);
+        } else {
+          router.push(location, noop);
+        }
+      }
+    };
+
+    var on = { click: guardEvent };
+    if (Array.isArray(this.event)) {
+      this.event.forEach(function (e) {
+        on[e] = handler;
+      });
+    } else {
+      on[this.event] = handler;
+    }
+
+    var data = { class: classes };
+
+    var scopedSlot =
+      !this.$scopedSlots.$hasNormal &&
+      this.$scopedSlots.default &&
+      this.$scopedSlots.default({
+        href: href,
+        route: route,
+        navigate: handler,
+        isActive: classes[activeClass],
+        isExactActive: classes[exactActiveClass]
+      });
+
+    if (scopedSlot) {
+      if ( true && !this.custom) {
+        !warnedCustomSlot && warn(false, 'In Vue Router 4, the v-slot API will by default wrap its content with an <a> element. Use the custom prop to remove this warning:\n<router-link v-slot="{ navigate, href }" custom></router-link>\n');
+        warnedCustomSlot = true;
+      }
+      if (scopedSlot.length === 1) {
+        return scopedSlot[0]
+      } else if (scopedSlot.length > 1 || !scopedSlot.length) {
+        if (true) {
+          warn(
+            false,
+            ("<router-link> with to=\"" + (this.to) + "\" is trying to use a scoped slot but it didn't provide exactly one child. Wrapping the content with a span element.")
+          );
+        }
+        return scopedSlot.length === 0 ? h() : h('span', {}, scopedSlot)
+      }
+    }
+
+    if (true) {
+      if ('tag' in this.$options.propsData && !warnedTagProp) {
+        warn(
+          false,
+          "<router-link>'s tag prop is deprecated and has been removed in Vue Router 4. Use the v-slot API to remove this warning: https://next.router.vuejs.org/guide/migration/#removal-of-event-and-tag-props-in-router-link."
+        );
+        warnedTagProp = true;
+      }
+      if ('event' in this.$options.propsData && !warnedEventProp) {
+        warn(
+          false,
+          "<router-link>'s event prop is deprecated and has been removed in Vue Router 4. Use the v-slot API to remove this warning: https://next.router.vuejs.org/guide/migration/#removal-of-event-and-tag-props-in-router-link."
+        );
+        warnedEventProp = true;
+      }
+    }
+
+    if (this.tag === 'a') {
+      data.on = on;
+      data.attrs = { href: href, 'aria-current': ariaCurrentValue };
+    } else {
+      // find the first <a> child and apply listener and href
+      var a = findAnchor(this.$slots.default);
+      if (a) {
+        // in case the <a> is a static node
+        a.isStatic = false;
+        var aData = (a.data = extend({}, a.data));
+        aData.on = aData.on || {};
+        // transform existing events in both objects into arrays so we can push later
+        for (var event in aData.on) {
+          var handler$1 = aData.on[event];
+          if (event in on) {
+            aData.on[event] = Array.isArray(handler$1) ? handler$1 : [handler$1];
+          }
+        }
+        // append new listeners for router-link
+        for (var event$1 in on) {
+          if (event$1 in aData.on) {
+            // on[event] is always a function
+            aData.on[event$1].push(on[event$1]);
+          } else {
+            aData.on[event$1] = handler;
+          }
+        }
+
+        var aAttrs = (a.data.attrs = extend({}, a.data.attrs));
+        aAttrs.href = href;
+        aAttrs['aria-current'] = ariaCurrentValue;
+      } else {
+        // doesn't have <a> child, apply listener to self
+        data.on = on;
+      }
+    }
+
+    return h(this.tag, data, this.$slots.default)
+  }
+};
+
+function guardEvent (e) {
+  // don't redirect with control keys
+  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) { return }
+  // don't redirect when preventDefault called
+  if (e.defaultPrevented) { return }
+  // don't redirect on right click
+  if (e.button !== undefined && e.button !== 0) { return }
+  // don't redirect if `target="_blank"`
+  if (e.currentTarget && e.currentTarget.getAttribute) {
+    var target = e.currentTarget.getAttribute('target');
+    if (/\b_blank\b/i.test(target)) { return }
+  }
+  // this may be a Weex event which doesn't have this method
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  return true
+}
+
+function findAnchor (children) {
+  if (children) {
+    var child;
+    for (var i = 0; i < children.length; i++) {
+      child = children[i];
+      if (child.tag === 'a') {
+        return child
+      }
+      if (child.children && (child = findAnchor(child.children))) {
+        return child
+      }
+    }
+  }
+}
+
+var _Vue;
+
+function install (Vue) {
+  if (install.installed && _Vue === Vue) { return }
+  install.installed = true;
+
+  _Vue = Vue;
+
+  var isDef = function (v) { return v !== undefined; };
+
+  var registerInstance = function (vm, callVal) {
+    var i = vm.$options._parentVnode;
+    if (isDef(i) && isDef(i = i.data) && isDef(i = i.registerRouteInstance)) {
+      i(vm, callVal);
+    }
+  };
+
+  Vue.mixin({
+    beforeCreate: function beforeCreate () {
+      if (isDef(this.$options.router)) {
+        this._routerRoot = this;
+        this._router = this.$options.router;
+        this._router.init(this);
+        Vue.util.defineReactive(this, '_route', this._router.history.current);
+      } else {
+        this._routerRoot = (this.$parent && this.$parent._routerRoot) || this;
+      }
+      registerInstance(this, this);
+    },
+    destroyed: function destroyed () {
+      registerInstance(this);
+    }
+  });
+
+  Object.defineProperty(Vue.prototype, '$router', {
+    get: function get () { return this._routerRoot._router }
+  });
+
+  Object.defineProperty(Vue.prototype, '$route', {
+    get: function get () { return this._routerRoot._route }
+  });
+
+  Vue.component('RouterView', View);
+  Vue.component('RouterLink', Link);
+
+  var strats = Vue.config.optionMergeStrategies;
+  // use the same hook merging strategy for route hooks
+  strats.beforeRouteEnter = strats.beforeRouteLeave = strats.beforeRouteUpdate = strats.created;
+}
+
+/*  */
+
+var inBrowser = typeof window !== 'undefined';
+
+/*  */
+
+function createRouteMap (
+  routes,
+  oldPathList,
+  oldPathMap,
+  oldNameMap,
+  parentRoute
+) {
+  // the path list is used to control path matching priority
+  var pathList = oldPathList || [];
+  // $flow-disable-line
+  var pathMap = oldPathMap || Object.create(null);
+  // $flow-disable-line
+  var nameMap = oldNameMap || Object.create(null);
+
+  routes.forEach(function (route) {
+    addRouteRecord(pathList, pathMap, nameMap, route, parentRoute);
+  });
+
+  // ensure wildcard routes are always at the end
+  for (var i = 0, l = pathList.length; i < l; i++) {
+    if (pathList[i] === '*') {
+      pathList.push(pathList.splice(i, 1)[0]);
+      l--;
+      i--;
+    }
+  }
+
+  if (true) {
+    // warn if routes do not include leading slashes
+    var found = pathList
+    // check for missing leading slash
+      .filter(function (path) { return path && path.charAt(0) !== '*' && path.charAt(0) !== '/'; });
+
+    if (found.length > 0) {
+      var pathNames = found.map(function (path) { return ("- " + path); }).join('\n');
+      warn(false, ("Non-nested routes must include a leading slash character. Fix the following routes: \n" + pathNames));
+    }
+  }
+
+  return {
+    pathList: pathList,
+    pathMap: pathMap,
+    nameMap: nameMap
+  }
+}
+
+function addRouteRecord (
+  pathList,
+  pathMap,
+  nameMap,
+  route,
+  parent,
+  matchAs
+) {
+  var path = route.path;
+  var name = route.name;
+  if (true) {
+    assert(path != null, "\"path\" is required in a route configuration.");
+    assert(
+      typeof route.component !== 'string',
+      "route config \"component\" for path: " + (String(
+        path || name
+      )) + " cannot be a " + "string id. Use an actual component instead."
+    );
+
+    warn(
+      // eslint-disable-next-line no-control-regex
+      !/[^\u0000-\u007F]+/.test(path),
+      "Route with path \"" + path + "\" contains unencoded characters, make sure " +
+        "your path is correctly encoded before passing it to the router. Use " +
+        "encodeURI to encode static segments of your path."
+    );
+  }
+
+  var pathToRegexpOptions =
+    route.pathToRegexpOptions || {};
+  var normalizedPath = normalizePath(path, parent, pathToRegexpOptions.strict);
+
+  if (typeof route.caseSensitive === 'boolean') {
+    pathToRegexpOptions.sensitive = route.caseSensitive;
+  }
+
+  var record = {
+    path: normalizedPath,
+    regex: compileRouteRegex(normalizedPath, pathToRegexpOptions),
+    components: route.components || { default: route.component },
+    alias: route.alias
+      ? typeof route.alias === 'string'
+        ? [route.alias]
+        : route.alias
+      : [],
+    instances: {},
+    enteredCbs: {},
+    name: name,
+    parent: parent,
+    matchAs: matchAs,
+    redirect: route.redirect,
+    beforeEnter: route.beforeEnter,
+    meta: route.meta || {},
+    props:
+      route.props == null
+        ? {}
+        : route.components
+          ? route.props
+          : { default: route.props }
+  };
+
+  if (route.children) {
+    // Warn if route is named, does not redirect and has a default child route.
+    // If users navigate to this route by name, the default child will
+    // not be rendered (GH Issue #629)
+    if (true) {
+      if (
+        route.name &&
+        !route.redirect &&
+        route.children.some(function (child) { return /^\/?$/.test(child.path); })
+      ) {
+        warn(
+          false,
+          "Named Route '" + (route.name) + "' has a default child route. " +
+            "When navigating to this named route (:to=\"{name: '" + (route.name) + "'\"), " +
+            "the default child route will not be rendered. Remove the name from " +
+            "this route and use the name of the default child route for named " +
+            "links instead."
+        );
+      }
+    }
+    route.children.forEach(function (child) {
+      var childMatchAs = matchAs
+        ? cleanPath((matchAs + "/" + (child.path)))
+        : undefined;
+      addRouteRecord(pathList, pathMap, nameMap, child, record, childMatchAs);
+    });
+  }
+
+  if (!pathMap[record.path]) {
+    pathList.push(record.path);
+    pathMap[record.path] = record;
+  }
+
+  if (route.alias !== undefined) {
+    var aliases = Array.isArray(route.alias) ? route.alias : [route.alias];
+    for (var i = 0; i < aliases.length; ++i) {
+      var alias = aliases[i];
+      if ( true && alias === path) {
+        warn(
+          false,
+          ("Found an alias with the same value as the path: \"" + path + "\". You have to remove that alias. It will be ignored in development.")
+        );
+        // skip in dev to make it work
+        continue
+      }
+
+      var aliasRoute = {
+        path: alias,
+        children: route.children
+      };
+      addRouteRecord(
+        pathList,
+        pathMap,
+        nameMap,
+        aliasRoute,
+        parent,
+        record.path || '/' // matchAs
+      );
+    }
+  }
+
+  if (name) {
+    if (!nameMap[name]) {
+      nameMap[name] = record;
+    } else if ( true && !matchAs) {
+      warn(
+        false,
+        "Duplicate named routes definition: " +
+          "{ name: \"" + name + "\", path: \"" + (record.path) + "\" }"
+      );
+    }
+  }
+}
+
+function compileRouteRegex (
+  path,
+  pathToRegexpOptions
+) {
+  var regex = pathToRegexp_1(path, [], pathToRegexpOptions);
+  if (true) {
+    var keys = Object.create(null);
+    regex.keys.forEach(function (key) {
+      warn(
+        !keys[key.name],
+        ("Duplicate param keys in route with path: \"" + path + "\"")
+      );
+      keys[key.name] = true;
+    });
+  }
+  return regex
+}
+
+function normalizePath (
+  path,
+  parent,
+  strict
+) {
+  if (!strict) { path = path.replace(/\/$/, ''); }
+  if (path[0] === '/') { return path }
+  if (parent == null) { return path }
+  return cleanPath(((parent.path) + "/" + path))
+}
+
+/*  */
+
+
+
+function createMatcher (
+  routes,
+  router
+) {
+  var ref = createRouteMap(routes);
+  var pathList = ref.pathList;
+  var pathMap = ref.pathMap;
+  var nameMap = ref.nameMap;
+
+  function addRoutes (routes) {
+    createRouteMap(routes, pathList, pathMap, nameMap);
+  }
+
+  function addRoute (parentOrRoute, route) {
+    var parent = (typeof parentOrRoute !== 'object') ? nameMap[parentOrRoute] : undefined;
+    // $flow-disable-line
+    createRouteMap([route || parentOrRoute], pathList, pathMap, nameMap, parent);
+
+    // add aliases of parent
+    if (parent && parent.alias.length) {
+      createRouteMap(
+        // $flow-disable-line route is defined if parent is
+        parent.alias.map(function (alias) { return ({ path: alias, children: [route] }); }),
+        pathList,
+        pathMap,
+        nameMap,
+        parent
+      );
+    }
+  }
+
+  function getRoutes () {
+    return pathList.map(function (path) { return pathMap[path]; })
+  }
+
+  function match (
+    raw,
+    currentRoute,
+    redirectedFrom
+  ) {
+    var location = normalizeLocation(raw, currentRoute, false, router);
+    var name = location.name;
+
+    if (name) {
+      var record = nameMap[name];
+      if (true) {
+        warn(record, ("Route with name '" + name + "' does not exist"));
+      }
+      if (!record) { return _createRoute(null, location) }
+      var paramNames = record.regex.keys
+        .filter(function (key) { return !key.optional; })
+        .map(function (key) { return key.name; });
+
+      if (typeof location.params !== 'object') {
+        location.params = {};
+      }
+
+      if (currentRoute && typeof currentRoute.params === 'object') {
+        for (var key in currentRoute.params) {
+          if (!(key in location.params) && paramNames.indexOf(key) > -1) {
+            location.params[key] = currentRoute.params[key];
+          }
+        }
+      }
+
+      location.path = fillParams(record.path, location.params, ("named route \"" + name + "\""));
+      return _createRoute(record, location, redirectedFrom)
+    } else if (location.path) {
+      location.params = {};
+      for (var i = 0; i < pathList.length; i++) {
+        var path = pathList[i];
+        var record$1 = pathMap[path];
+        if (matchRoute(record$1.regex, location.path, location.params)) {
+          return _createRoute(record$1, location, redirectedFrom)
+        }
+      }
+    }
+    // no match
+    return _createRoute(null, location)
+  }
+
+  function redirect (
+    record,
+    location
+  ) {
+    var originalRedirect = record.redirect;
+    var redirect = typeof originalRedirect === 'function'
+      ? originalRedirect(createRoute(record, location, null, router))
+      : originalRedirect;
+
+    if (typeof redirect === 'string') {
+      redirect = { path: redirect };
+    }
+
+    if (!redirect || typeof redirect !== 'object') {
+      if (true) {
+        warn(
+          false, ("invalid redirect option: " + (JSON.stringify(redirect)))
+        );
+      }
+      return _createRoute(null, location)
+    }
+
+    var re = redirect;
+    var name = re.name;
+    var path = re.path;
+    var query = location.query;
+    var hash = location.hash;
+    var params = location.params;
+    query = re.hasOwnProperty('query') ? re.query : query;
+    hash = re.hasOwnProperty('hash') ? re.hash : hash;
+    params = re.hasOwnProperty('params') ? re.params : params;
+
+    if (name) {
+      // resolved named direct
+      var targetRecord = nameMap[name];
+      if (true) {
+        assert(targetRecord, ("redirect failed: named route \"" + name + "\" not found."));
+      }
+      return match({
+        _normalized: true,
+        name: name,
+        query: query,
+        hash: hash,
+        params: params
+      }, undefined, location)
+    } else if (path) {
+      // 1. resolve relative redirect
+      var rawPath = resolveRecordPath(path, record);
+      // 2. resolve params
+      var resolvedPath = fillParams(rawPath, params, ("redirect route with path \"" + rawPath + "\""));
+      // 3. rematch with existing query and hash
+      return match({
+        _normalized: true,
+        path: resolvedPath,
+        query: query,
+        hash: hash
+      }, undefined, location)
+    } else {
+      if (true) {
+        warn(false, ("invalid redirect option: " + (JSON.stringify(redirect))));
+      }
+      return _createRoute(null, location)
+    }
+  }
+
+  function alias (
+    record,
+    location,
+    matchAs
+  ) {
+    var aliasedPath = fillParams(matchAs, location.params, ("aliased route with path \"" + matchAs + "\""));
+    var aliasedMatch = match({
+      _normalized: true,
+      path: aliasedPath
+    });
+    if (aliasedMatch) {
+      var matched = aliasedMatch.matched;
+      var aliasedRecord = matched[matched.length - 1];
+      location.params = aliasedMatch.params;
+      return _createRoute(aliasedRecord, location)
+    }
+    return _createRoute(null, location)
+  }
+
+  function _createRoute (
+    record,
+    location,
+    redirectedFrom
+  ) {
+    if (record && record.redirect) {
+      return redirect(record, redirectedFrom || location)
+    }
+    if (record && record.matchAs) {
+      return alias(record, location, record.matchAs)
+    }
+    return createRoute(record, location, redirectedFrom, router)
+  }
+
+  return {
+    match: match,
+    addRoute: addRoute,
+    getRoutes: getRoutes,
+    addRoutes: addRoutes
+  }
+}
+
+function matchRoute (
+  regex,
+  path,
+  params
+) {
+  var m = path.match(regex);
+
+  if (!m) {
+    return false
+  } else if (!params) {
+    return true
+  }
+
+  for (var i = 1, len = m.length; i < len; ++i) {
+    var key = regex.keys[i - 1];
+    if (key) {
+      // Fix #1994: using * with props: true generates a param named 0
+      params[key.name || 'pathMatch'] = typeof m[i] === 'string' ? decode(m[i]) : m[i];
+    }
+  }
+
+  return true
+}
+
+function resolveRecordPath (path, record) {
+  return resolvePath(path, record.parent ? record.parent.path : '/', true)
+}
+
+/*  */
+
+// use User Timing api (if present) for more accurate key precision
+var Time =
+  inBrowser && window.performance && window.performance.now
+    ? window.performance
+    : Date;
+
+function genStateKey () {
+  return Time.now().toFixed(3)
+}
+
+var _key = genStateKey();
+
+function getStateKey () {
+  return _key
+}
+
+function setStateKey (key) {
+  return (_key = key)
+}
+
+/*  */
+
+var positionStore = Object.create(null);
+
+function setupScroll () {
+  // Prevent browser scroll behavior on History popstate
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  // Fix for #1585 for Firefox
+  // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
+  // Fix for #2774 Support for apps loaded from Windows file shares not mapped to network drives: replaced location.origin with
+  // window.location.protocol + '//' + window.location.host
+  // location.host contains the port and location.hostname doesn't
+  var protocolAndPath = window.location.protocol + '//' + window.location.host;
+  var absolutePath = window.location.href.replace(protocolAndPath, '');
+  // preserve existing history state as it could be overriden by the user
+  var stateCopy = extend({}, window.history.state);
+  stateCopy.key = getStateKey();
+  window.history.replaceState(stateCopy, '', absolutePath);
+  window.addEventListener('popstate', handlePopState);
+  return function () {
+    window.removeEventListener('popstate', handlePopState);
+  }
+}
+
+function handleScroll (
+  router,
+  to,
+  from,
+  isPop
+) {
+  if (!router.app) {
+    return
+  }
+
+  var behavior = router.options.scrollBehavior;
+  if (!behavior) {
+    return
+  }
+
+  if (true) {
+    assert(typeof behavior === 'function', "scrollBehavior must be a function");
+  }
+
+  // wait until re-render finishes before scrolling
+  router.app.$nextTick(function () {
+    var position = getScrollPosition();
+    var shouldScroll = behavior.call(
+      router,
+      to,
+      from,
+      isPop ? position : null
+    );
+
+    if (!shouldScroll) {
+      return
+    }
+
+    if (typeof shouldScroll.then === 'function') {
+      shouldScroll
+        .then(function (shouldScroll) {
+          scrollToPosition((shouldScroll), position);
+        })
+        .catch(function (err) {
+          if (true) {
+            assert(false, err.toString());
+          }
+        });
+    } else {
+      scrollToPosition(shouldScroll, position);
+    }
+  });
+}
+
+function saveScrollPosition () {
+  var key = getStateKey();
+  if (key) {
+    positionStore[key] = {
+      x: window.pageXOffset,
+      y: window.pageYOffset
+    };
+  }
+}
+
+function handlePopState (e) {
+  saveScrollPosition();
+  if (e.state && e.state.key) {
+    setStateKey(e.state.key);
+  }
+}
+
+function getScrollPosition () {
+  var key = getStateKey();
+  if (key) {
+    return positionStore[key]
+  }
+}
+
+function getElementPosition (el, offset) {
+  var docEl = document.documentElement;
+  var docRect = docEl.getBoundingClientRect();
+  var elRect = el.getBoundingClientRect();
+  return {
+    x: elRect.left - docRect.left - offset.x,
+    y: elRect.top - docRect.top - offset.y
+  }
+}
+
+function isValidPosition (obj) {
+  return isNumber(obj.x) || isNumber(obj.y)
+}
+
+function normalizePosition (obj) {
+  return {
+    x: isNumber(obj.x) ? obj.x : window.pageXOffset,
+    y: isNumber(obj.y) ? obj.y : window.pageYOffset
+  }
+}
+
+function normalizeOffset (obj) {
+  return {
+    x: isNumber(obj.x) ? obj.x : 0,
+    y: isNumber(obj.y) ? obj.y : 0
+  }
+}
+
+function isNumber (v) {
+  return typeof v === 'number'
+}
+
+var hashStartsWithNumberRE = /^#\d/;
+
+function scrollToPosition (shouldScroll, position) {
+  var isObject = typeof shouldScroll === 'object';
+  if (isObject && typeof shouldScroll.selector === 'string') {
+    // getElementById would still fail if the selector contains a more complicated query like #main[data-attr]
+    // but at the same time, it doesn't make much sense to select an element with an id and an extra selector
+    var el = hashStartsWithNumberRE.test(shouldScroll.selector) // $flow-disable-line
+      ? document.getElementById(shouldScroll.selector.slice(1)) // $flow-disable-line
+      : document.querySelector(shouldScroll.selector);
+
+    if (el) {
+      var offset =
+        shouldScroll.offset && typeof shouldScroll.offset === 'object'
+          ? shouldScroll.offset
+          : {};
+      offset = normalizeOffset(offset);
+      position = getElementPosition(el, offset);
+    } else if (isValidPosition(shouldScroll)) {
+      position = normalizePosition(shouldScroll);
+    }
+  } else if (isObject && isValidPosition(shouldScroll)) {
+    position = normalizePosition(shouldScroll);
+  }
+
+  if (position) {
+    // $flow-disable-line
+    if ('scrollBehavior' in document.documentElement.style) {
+      window.scrollTo({
+        left: position.x,
+        top: position.y,
+        // $flow-disable-line
+        behavior: shouldScroll.behavior
+      });
+    } else {
+      window.scrollTo(position.x, position.y);
+    }
+  }
+}
+
+/*  */
+
+var supportsPushState =
+  inBrowser &&
+  (function () {
+    var ua = window.navigator.userAgent;
+
+    if (
+      (ua.indexOf('Android 2.') !== -1 || ua.indexOf('Android 4.0') !== -1) &&
+      ua.indexOf('Mobile Safari') !== -1 &&
+      ua.indexOf('Chrome') === -1 &&
+      ua.indexOf('Windows Phone') === -1
+    ) {
+      return false
+    }
+
+    return window.history && typeof window.history.pushState === 'function'
+  })();
+
+function pushState (url, replace) {
+  saveScrollPosition();
+  // try...catch the pushState call to get around Safari
+  // DOM Exception 18 where it limits to 100 pushState calls
+  var history = window.history;
+  try {
+    if (replace) {
+      // preserve existing history state as it could be overriden by the user
+      var stateCopy = extend({}, history.state);
+      stateCopy.key = getStateKey();
+      history.replaceState(stateCopy, '', url);
+    } else {
+      history.pushState({ key: setStateKey(genStateKey()) }, '', url);
+    }
+  } catch (e) {
+    window.location[replace ? 'replace' : 'assign'](url);
+  }
+}
+
+function replaceState (url) {
+  pushState(url, true);
+}
+
+/*  */
+
+function runQueue (queue, fn, cb) {
+  var step = function (index) {
+    if (index >= queue.length) {
+      cb();
+    } else {
+      if (queue[index]) {
+        fn(queue[index], function () {
+          step(index + 1);
+        });
+      } else {
+        step(index + 1);
+      }
+    }
+  };
+  step(0);
+}
+
+// When changing thing, also edit router.d.ts
+var NavigationFailureType = {
+  redirected: 2,
+  aborted: 4,
+  cancelled: 8,
+  duplicated: 16
+};
+
+function createNavigationRedirectedError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.redirected,
+    ("Redirected when going from \"" + (from.fullPath) + "\" to \"" + (stringifyRoute(
+      to
+    )) + "\" via a navigation guard.")
+  )
+}
+
+function createNavigationDuplicatedError (from, to) {
+  var error = createRouterError(
+    from,
+    to,
+    NavigationFailureType.duplicated,
+    ("Avoided redundant navigation to current location: \"" + (from.fullPath) + "\".")
+  );
+  // backwards compatible with the first introduction of Errors
+  error.name = 'NavigationDuplicated';
+  return error
+}
+
+function createNavigationCancelledError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.cancelled,
+    ("Navigation cancelled from \"" + (from.fullPath) + "\" to \"" + (to.fullPath) + "\" with a new navigation.")
+  )
+}
+
+function createNavigationAbortedError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.aborted,
+    ("Navigation aborted from \"" + (from.fullPath) + "\" to \"" + (to.fullPath) + "\" via a navigation guard.")
+  )
+}
+
+function createRouterError (from, to, type, message) {
+  var error = new Error(message);
+  error._isRouter = true;
+  error.from = from;
+  error.to = to;
+  error.type = type;
+
+  return error
+}
+
+var propertiesToLog = ['params', 'query', 'hash'];
+
+function stringifyRoute (to) {
+  if (typeof to === 'string') { return to }
+  if ('path' in to) { return to.path }
+  var location = {};
+  propertiesToLog.forEach(function (key) {
+    if (key in to) { location[key] = to[key]; }
+  });
+  return JSON.stringify(location, null, 2)
+}
+
+function isError (err) {
+  return Object.prototype.toString.call(err).indexOf('Error') > -1
+}
+
+function isNavigationFailure (err, errorType) {
+  return (
+    isError(err) &&
+    err._isRouter &&
+    (errorType == null || err.type === errorType)
+  )
+}
+
+/*  */
+
+function resolveAsyncComponents (matched) {
+  return function (to, from, next) {
+    var hasAsync = false;
+    var pending = 0;
+    var error = null;
+
+    flatMapComponents(matched, function (def, _, match, key) {
+      // if it's a function and doesn't have cid attached,
+      // assume it's an async component resolve function.
+      // we are not using Vue's default async resolving mechanism because
+      // we want to halt the navigation until the incoming component has been
+      // resolved.
+      if (typeof def === 'function' && def.cid === undefined) {
+        hasAsync = true;
+        pending++;
+
+        var resolve = once(function (resolvedDef) {
+          if (isESModule(resolvedDef)) {
+            resolvedDef = resolvedDef.default;
+          }
+          // save resolved on async factory in case it's used elsewhere
+          def.resolved = typeof resolvedDef === 'function'
+            ? resolvedDef
+            : _Vue.extend(resolvedDef);
+          match.components[key] = resolvedDef;
+          pending--;
+          if (pending <= 0) {
+            next();
+          }
+        });
+
+        var reject = once(function (reason) {
+          var msg = "Failed to resolve async component " + key + ": " + reason;
+           true && warn(false, msg);
+          if (!error) {
+            error = isError(reason)
+              ? reason
+              : new Error(msg);
+            next(error);
+          }
+        });
+
+        var res;
+        try {
+          res = def(resolve, reject);
+        } catch (e) {
+          reject(e);
+        }
+        if (res) {
+          if (typeof res.then === 'function') {
+            res.then(resolve, reject);
+          } else {
+            // new syntax in Vue 2.3
+            var comp = res.component;
+            if (comp && typeof comp.then === 'function') {
+              comp.then(resolve, reject);
+            }
+          }
+        }
+      }
+    });
+
+    if (!hasAsync) { next(); }
+  }
+}
+
+function flatMapComponents (
+  matched,
+  fn
+) {
+  return flatten(matched.map(function (m) {
+    return Object.keys(m.components).map(function (key) { return fn(
+      m.components[key],
+      m.instances[key],
+      m, key
+    ); })
+  }))
+}
+
+function flatten (arr) {
+  return Array.prototype.concat.apply([], arr)
+}
+
+var hasSymbol =
+  typeof Symbol === 'function' &&
+  typeof Symbol.toStringTag === 'symbol';
+
+function isESModule (obj) {
+  return obj.__esModule || (hasSymbol && obj[Symbol.toStringTag] === 'Module')
+}
+
+// in Webpack 2, require.ensure now also returns a Promise
+// so the resolve/reject functions may get called an extra time
+// if the user uses an arrow function shorthand that happens to
+// return that Promise.
+function once (fn) {
+  var called = false;
+  return function () {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    if (called) { return }
+    called = true;
+    return fn.apply(this, args)
+  }
+}
+
+/*  */
+
+var History = function History (router, base) {
+  this.router = router;
+  this.base = normalizeBase(base);
+  // start with a route object that stands for "nowhere"
+  this.current = START;
+  this.pending = null;
+  this.ready = false;
+  this.readyCbs = [];
+  this.readyErrorCbs = [];
+  this.errorCbs = [];
+  this.listeners = [];
+};
+
+History.prototype.listen = function listen (cb) {
+  this.cb = cb;
+};
+
+History.prototype.onReady = function onReady (cb, errorCb) {
+  if (this.ready) {
+    cb();
+  } else {
+    this.readyCbs.push(cb);
+    if (errorCb) {
+      this.readyErrorCbs.push(errorCb);
+    }
+  }
+};
+
+History.prototype.onError = function onError (errorCb) {
+  this.errorCbs.push(errorCb);
+};
+
+History.prototype.transitionTo = function transitionTo (
+  location,
+  onComplete,
+  onAbort
+) {
+    var this$1 = this;
+
+  var route;
+  // catch redirect option https://github.com/vuejs/vue-router/issues/3201
+  try {
+    route = this.router.match(location, this.current);
+  } catch (e) {
+    this.errorCbs.forEach(function (cb) {
+      cb(e);
+    });
+    // Exception should still be thrown
+    throw e
+  }
+  var prev = this.current;
+  this.confirmTransition(
+    route,
+    function () {
+      this$1.updateRoute(route);
+      onComplete && onComplete(route);
+      this$1.ensureURL();
+      this$1.router.afterHooks.forEach(function (hook) {
+        hook && hook(route, prev);
+      });
+
+      // fire ready cbs once
+      if (!this$1.ready) {
+        this$1.ready = true;
+        this$1.readyCbs.forEach(function (cb) {
+          cb(route);
+        });
+      }
+    },
+    function (err) {
+      if (onAbort) {
+        onAbort(err);
+      }
+      if (err && !this$1.ready) {
+        // Initial redirection should not mark the history as ready yet
+        // because it's triggered by the redirection instead
+        // https://github.com/vuejs/vue-router/issues/3225
+        // https://github.com/vuejs/vue-router/issues/3331
+        if (!isNavigationFailure(err, NavigationFailureType.redirected) || prev !== START) {
+          this$1.ready = true;
+          this$1.readyErrorCbs.forEach(function (cb) {
+            cb(err);
+          });
+        }
+      }
+    }
+  );
+};
+
+History.prototype.confirmTransition = function confirmTransition (route, onComplete, onAbort) {
+    var this$1 = this;
+
+  var current = this.current;
+  this.pending = route;
+  var abort = function (err) {
+    // changed after adding errors with
+    // https://github.com/vuejs/vue-router/pull/3047 before that change,
+    // redirect and aborted navigation would produce an err == null
+    if (!isNavigationFailure(err) && isError(err)) {
+      if (this$1.errorCbs.length) {
+        this$1.errorCbs.forEach(function (cb) {
+          cb(err);
+        });
+      } else {
+        if (true) {
+          warn(false, 'uncaught error during route navigation:');
+        }
+        console.error(err);
+      }
+    }
+    onAbort && onAbort(err);
+  };
+  var lastRouteIndex = route.matched.length - 1;
+  var lastCurrentIndex = current.matched.length - 1;
+  if (
+    isSameRoute(route, current) &&
+    // in the case the route map has been dynamically appended to
+    lastRouteIndex === lastCurrentIndex &&
+    route.matched[lastRouteIndex] === current.matched[lastCurrentIndex]
+  ) {
+    this.ensureURL();
+    if (route.hash) {
+      handleScroll(this.router, current, route, false);
+    }
+    return abort(createNavigationDuplicatedError(current, route))
+  }
+
+  var ref = resolveQueue(
+    this.current.matched,
+    route.matched
+  );
+    var updated = ref.updated;
+    var deactivated = ref.deactivated;
+    var activated = ref.activated;
+
+  var queue = [].concat(
+    // in-component leave guards
+    extractLeaveGuards(deactivated),
+    // global before hooks
+    this.router.beforeHooks,
+    // in-component update hooks
+    extractUpdateHooks(updated),
+    // in-config enter guards
+    activated.map(function (m) { return m.beforeEnter; }),
+    // async components
+    resolveAsyncComponents(activated)
+  );
+
+  var iterator = function (hook, next) {
+    if (this$1.pending !== route) {
+      return abort(createNavigationCancelledError(current, route))
+    }
+    try {
+      hook(route, current, function (to) {
+        if (to === false) {
+          // next(false) -> abort navigation, ensure current URL
+          this$1.ensureURL(true);
+          abort(createNavigationAbortedError(current, route));
+        } else if (isError(to)) {
+          this$1.ensureURL(true);
+          abort(to);
+        } else if (
+          typeof to === 'string' ||
+          (typeof to === 'object' &&
+            (typeof to.path === 'string' || typeof to.name === 'string'))
+        ) {
+          // next('/') or next({ path: '/' }) -> redirect
+          abort(createNavigationRedirectedError(current, route));
+          if (typeof to === 'object' && to.replace) {
+            this$1.replace(to);
+          } else {
+            this$1.push(to);
+          }
+        } else {
+          // confirm transition and pass on the value
+          next(to);
+        }
+      });
+    } catch (e) {
+      abort(e);
+    }
+  };
+
+  runQueue(queue, iterator, function () {
+    // wait until async components are resolved before
+    // extracting in-component enter guards
+    var enterGuards = extractEnterGuards(activated);
+    var queue = enterGuards.concat(this$1.router.resolveHooks);
+    runQueue(queue, iterator, function () {
+      if (this$1.pending !== route) {
+        return abort(createNavigationCancelledError(current, route))
+      }
+      this$1.pending = null;
+      onComplete(route);
+      if (this$1.router.app) {
+        this$1.router.app.$nextTick(function () {
+          handleRouteEntered(route);
+        });
+      }
+    });
+  });
+};
+
+History.prototype.updateRoute = function updateRoute (route) {
+  this.current = route;
+  this.cb && this.cb(route);
+};
+
+History.prototype.setupListeners = function setupListeners () {
+  // Default implementation is empty
+};
+
+History.prototype.teardown = function teardown () {
+  // clean up event listeners
+  // https://github.com/vuejs/vue-router/issues/2341
+  this.listeners.forEach(function (cleanupListener) {
+    cleanupListener();
+  });
+  this.listeners = [];
+
+  // reset current history route
+  // https://github.com/vuejs/vue-router/issues/3294
+  this.current = START;
+  this.pending = null;
+};
+
+function normalizeBase (base) {
+  if (!base) {
+    if (inBrowser) {
+      // respect <base> tag
+      var baseEl = document.querySelector('base');
+      base = (baseEl && baseEl.getAttribute('href')) || '/';
+      // strip full URL origin
+      base = base.replace(/^https?:\/\/[^\/]+/, '');
+    } else {
+      base = '/';
+    }
+  }
+  // make sure there's the starting slash
+  if (base.charAt(0) !== '/') {
+    base = '/' + base;
+  }
+  // remove trailing slash
+  return base.replace(/\/$/, '')
+}
+
+function resolveQueue (
+  current,
+  next
+) {
+  var i;
+  var max = Math.max(current.length, next.length);
+  for (i = 0; i < max; i++) {
+    if (current[i] !== next[i]) {
+      break
+    }
+  }
+  return {
+    updated: next.slice(0, i),
+    activated: next.slice(i),
+    deactivated: current.slice(i)
+  }
+}
+
+function extractGuards (
+  records,
+  name,
+  bind,
+  reverse
+) {
+  var guards = flatMapComponents(records, function (def, instance, match, key) {
+    var guard = extractGuard(def, name);
+    if (guard) {
+      return Array.isArray(guard)
+        ? guard.map(function (guard) { return bind(guard, instance, match, key); })
+        : bind(guard, instance, match, key)
+    }
+  });
+  return flatten(reverse ? guards.reverse() : guards)
+}
+
+function extractGuard (
+  def,
+  key
+) {
+  if (typeof def !== 'function') {
+    // extend now so that global mixins are applied.
+    def = _Vue.extend(def);
+  }
+  return def.options[key]
+}
+
+function extractLeaveGuards (deactivated) {
+  return extractGuards(deactivated, 'beforeRouteLeave', bindGuard, true)
+}
+
+function extractUpdateHooks (updated) {
+  return extractGuards(updated, 'beforeRouteUpdate', bindGuard)
+}
+
+function bindGuard (guard, instance) {
+  if (instance) {
+    return function boundRouteGuard () {
+      return guard.apply(instance, arguments)
+    }
+  }
+}
+
+function extractEnterGuards (
+  activated
+) {
+  return extractGuards(
+    activated,
+    'beforeRouteEnter',
+    function (guard, _, match, key) {
+      return bindEnterGuard(guard, match, key)
+    }
+  )
+}
+
+function bindEnterGuard (
+  guard,
+  match,
+  key
+) {
+  return function routeEnterGuard (to, from, next) {
+    return guard(to, from, function (cb) {
+      if (typeof cb === 'function') {
+        if (!match.enteredCbs[key]) {
+          match.enteredCbs[key] = [];
+        }
+        match.enteredCbs[key].push(cb);
+      }
+      next(cb);
+    })
+  }
+}
+
+/*  */
+
+var HTML5History = /*@__PURE__*/(function (History) {
+  function HTML5History (router, base) {
+    History.call(this, router, base);
+
+    this._startLocation = getLocation(this.base);
+  }
+
+  if ( History ) HTML5History.__proto__ = History;
+  HTML5History.prototype = Object.create( History && History.prototype );
+  HTML5History.prototype.constructor = HTML5History;
+
+  HTML5History.prototype.setupListeners = function setupListeners () {
+    var this$1 = this;
+
+    if (this.listeners.length > 0) {
+      return
+    }
+
+    var router = this.router;
+    var expectScroll = router.options.scrollBehavior;
+    var supportsScroll = supportsPushState && expectScroll;
+
+    if (supportsScroll) {
+      this.listeners.push(setupScroll());
+    }
+
+    var handleRoutingEvent = function () {
+      var current = this$1.current;
+
+      // Avoiding first `popstate` event dispatched in some browsers but first
+      // history route not updated since async guard at the same time.
+      var location = getLocation(this$1.base);
+      if (this$1.current === START && location === this$1._startLocation) {
+        return
+      }
+
+      this$1.transitionTo(location, function (route) {
+        if (supportsScroll) {
+          handleScroll(router, route, current, true);
+        }
+      });
+    };
+    window.addEventListener('popstate', handleRoutingEvent);
+    this.listeners.push(function () {
+      window.removeEventListener('popstate', handleRoutingEvent);
+    });
+  };
+
+  HTML5History.prototype.go = function go (n) {
+    window.history.go(n);
+  };
+
+  HTML5History.prototype.push = function push (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    var ref = this;
+    var fromRoute = ref.current;
+    this.transitionTo(location, function (route) {
+      pushState(cleanPath(this$1.base + route.fullPath));
+      handleScroll(this$1.router, route, fromRoute, false);
+      onComplete && onComplete(route);
+    }, onAbort);
+  };
+
+  HTML5History.prototype.replace = function replace (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    var ref = this;
+    var fromRoute = ref.current;
+    this.transitionTo(location, function (route) {
+      replaceState(cleanPath(this$1.base + route.fullPath));
+      handleScroll(this$1.router, route, fromRoute, false);
+      onComplete && onComplete(route);
+    }, onAbort);
+  };
+
+  HTML5History.prototype.ensureURL = function ensureURL (push) {
+    if (getLocation(this.base) !== this.current.fullPath) {
+      var current = cleanPath(this.base + this.current.fullPath);
+      push ? pushState(current) : replaceState(current);
+    }
+  };
+
+  HTML5History.prototype.getCurrentLocation = function getCurrentLocation () {
+    return getLocation(this.base)
+  };
+
+  return HTML5History;
+}(History));
+
+function getLocation (base) {
+  var path = window.location.pathname;
+  var pathLowerCase = path.toLowerCase();
+  var baseLowerCase = base.toLowerCase();
+  // base="/a" shouldn't turn path="/app" into "/a/pp"
+  // https://github.com/vuejs/vue-router/issues/3555
+  // so we ensure the trailing slash in the base
+  if (base && ((pathLowerCase === baseLowerCase) ||
+    (pathLowerCase.indexOf(cleanPath(baseLowerCase + '/')) === 0))) {
+    path = path.slice(base.length);
+  }
+  return (path || '/') + window.location.search + window.location.hash
+}
+
+/*  */
+
+var HashHistory = /*@__PURE__*/(function (History) {
+  function HashHistory (router, base, fallback) {
+    History.call(this, router, base);
+    // check history fallback deeplinking
+    if (fallback && checkFallback(this.base)) {
+      return
+    }
+    ensureSlash();
+  }
+
+  if ( History ) HashHistory.__proto__ = History;
+  HashHistory.prototype = Object.create( History && History.prototype );
+  HashHistory.prototype.constructor = HashHistory;
+
+  // this is delayed until the app mounts
+  // to avoid the hashchange listener being fired too early
+  HashHistory.prototype.setupListeners = function setupListeners () {
+    var this$1 = this;
+
+    if (this.listeners.length > 0) {
+      return
+    }
+
+    var router = this.router;
+    var expectScroll = router.options.scrollBehavior;
+    var supportsScroll = supportsPushState && expectScroll;
+
+    if (supportsScroll) {
+      this.listeners.push(setupScroll());
+    }
+
+    var handleRoutingEvent = function () {
+      var current = this$1.current;
+      if (!ensureSlash()) {
+        return
+      }
+      this$1.transitionTo(getHash(), function (route) {
+        if (supportsScroll) {
+          handleScroll(this$1.router, route, current, true);
+        }
+        if (!supportsPushState) {
+          replaceHash(route.fullPath);
+        }
+      });
+    };
+    var eventType = supportsPushState ? 'popstate' : 'hashchange';
+    window.addEventListener(
+      eventType,
+      handleRoutingEvent
+    );
+    this.listeners.push(function () {
+      window.removeEventListener(eventType, handleRoutingEvent);
+    });
+  };
+
+  HashHistory.prototype.push = function push (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    var ref = this;
+    var fromRoute = ref.current;
+    this.transitionTo(
+      location,
+      function (route) {
+        pushHash(route.fullPath);
+        handleScroll(this$1.router, route, fromRoute, false);
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
+  };
+
+  HashHistory.prototype.replace = function replace (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    var ref = this;
+    var fromRoute = ref.current;
+    this.transitionTo(
+      location,
+      function (route) {
+        replaceHash(route.fullPath);
+        handleScroll(this$1.router, route, fromRoute, false);
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
+  };
+
+  HashHistory.prototype.go = function go (n) {
+    window.history.go(n);
+  };
+
+  HashHistory.prototype.ensureURL = function ensureURL (push) {
+    var current = this.current.fullPath;
+    if (getHash() !== current) {
+      push ? pushHash(current) : replaceHash(current);
+    }
+  };
+
+  HashHistory.prototype.getCurrentLocation = function getCurrentLocation () {
+    return getHash()
+  };
+
+  return HashHistory;
+}(History));
+
+function checkFallback (base) {
+  var location = getLocation(base);
+  if (!/^\/#/.test(location)) {
+    window.location.replace(cleanPath(base + '/#' + location));
+    return true
+  }
+}
+
+function ensureSlash () {
+  var path = getHash();
+  if (path.charAt(0) === '/') {
+    return true
+  }
+  replaceHash('/' + path);
+  return false
+}
+
+function getHash () {
+  // We can't use window.location.hash here because it's not
+  // consistent across browsers - Firefox will pre-decode it!
+  var href = window.location.href;
+  var index = href.indexOf('#');
+  // empty path
+  if (index < 0) { return '' }
+
+  href = href.slice(index + 1);
+
+  return href
+}
+
+function getUrl (path) {
+  var href = window.location.href;
+  var i = href.indexOf('#');
+  var base = i >= 0 ? href.slice(0, i) : href;
+  return (base + "#" + path)
+}
+
+function pushHash (path) {
+  if (supportsPushState) {
+    pushState(getUrl(path));
+  } else {
+    window.location.hash = path;
+  }
+}
+
+function replaceHash (path) {
+  if (supportsPushState) {
+    replaceState(getUrl(path));
+  } else {
+    window.location.replace(getUrl(path));
+  }
+}
+
+/*  */
+
+var AbstractHistory = /*@__PURE__*/(function (History) {
+  function AbstractHistory (router, base) {
+    History.call(this, router, base);
+    this.stack = [];
+    this.index = -1;
+  }
+
+  if ( History ) AbstractHistory.__proto__ = History;
+  AbstractHistory.prototype = Object.create( History && History.prototype );
+  AbstractHistory.prototype.constructor = AbstractHistory;
+
+  AbstractHistory.prototype.push = function push (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    this.transitionTo(
+      location,
+      function (route) {
+        this$1.stack = this$1.stack.slice(0, this$1.index + 1).concat(route);
+        this$1.index++;
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
+  };
+
+  AbstractHistory.prototype.replace = function replace (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    this.transitionTo(
+      location,
+      function (route) {
+        this$1.stack = this$1.stack.slice(0, this$1.index).concat(route);
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
+  };
+
+  AbstractHistory.prototype.go = function go (n) {
+    var this$1 = this;
+
+    var targetIndex = this.index + n;
+    if (targetIndex < 0 || targetIndex >= this.stack.length) {
+      return
+    }
+    var route = this.stack[targetIndex];
+    this.confirmTransition(
+      route,
+      function () {
+        var prev = this$1.current;
+        this$1.index = targetIndex;
+        this$1.updateRoute(route);
+        this$1.router.afterHooks.forEach(function (hook) {
+          hook && hook(route, prev);
+        });
+      },
+      function (err) {
+        if (isNavigationFailure(err, NavigationFailureType.duplicated)) {
+          this$1.index = targetIndex;
+        }
+      }
+    );
+  };
+
+  AbstractHistory.prototype.getCurrentLocation = function getCurrentLocation () {
+    var current = this.stack[this.stack.length - 1];
+    return current ? current.fullPath : '/'
+  };
+
+  AbstractHistory.prototype.ensureURL = function ensureURL () {
+    // noop
+  };
+
+  return AbstractHistory;
+}(History));
+
+/*  */
+
+var VueRouter = function VueRouter (options) {
+  if ( options === void 0 ) options = {};
+
+  if (true) {
+    warn(this instanceof VueRouter, "Router must be called with the new operator.");
+  }
+  this.app = null;
+  this.apps = [];
+  this.options = options;
+  this.beforeHooks = [];
+  this.resolveHooks = [];
+  this.afterHooks = [];
+  this.matcher = createMatcher(options.routes || [], this);
+
+  var mode = options.mode || 'hash';
+  this.fallback =
+    mode === 'history' && !supportsPushState && options.fallback !== false;
+  if (this.fallback) {
+    mode = 'hash';
+  }
+  if (!inBrowser) {
+    mode = 'abstract';
+  }
+  this.mode = mode;
+
+  switch (mode) {
+    case 'history':
+      this.history = new HTML5History(this, options.base);
+      break
+    case 'hash':
+      this.history = new HashHistory(this, options.base, this.fallback);
+      break
+    case 'abstract':
+      this.history = new AbstractHistory(this, options.base);
+      break
+    default:
+      if (true) {
+        assert(false, ("invalid mode: " + mode));
+      }
+  }
+};
+
+var prototypeAccessors = { currentRoute: { configurable: true } };
+
+VueRouter.prototype.match = function match (raw, current, redirectedFrom) {
+  return this.matcher.match(raw, current, redirectedFrom)
+};
+
+prototypeAccessors.currentRoute.get = function () {
+  return this.history && this.history.current
+};
+
+VueRouter.prototype.init = function init (app /* Vue component instance */) {
+    var this$1 = this;
+
+   true &&
+    assert(
+      install.installed,
+      "not installed. Make sure to call `Vue.use(VueRouter)` " +
+        "before creating root instance."
+    );
+
+  this.apps.push(app);
+
+  // set up app destroyed handler
+  // https://github.com/vuejs/vue-router/issues/2639
+  app.$once('hook:destroyed', function () {
+    // clean out app from this.apps array once destroyed
+    var index = this$1.apps.indexOf(app);
+    if (index > -1) { this$1.apps.splice(index, 1); }
+    // ensure we still have a main app or null if no apps
+    // we do not release the router so it can be reused
+    if (this$1.app === app) { this$1.app = this$1.apps[0] || null; }
+
+    if (!this$1.app) { this$1.history.teardown(); }
+  });
+
+  // main app previously initialized
+  // return as we don't need to set up new history listener
+  if (this.app) {
+    return
+  }
+
+  this.app = app;
+
+  var history = this.history;
+
+  if (history instanceof HTML5History || history instanceof HashHistory) {
+    var handleInitialScroll = function (routeOrError) {
+      var from = history.current;
+      var expectScroll = this$1.options.scrollBehavior;
+      var supportsScroll = supportsPushState && expectScroll;
+
+      if (supportsScroll && 'fullPath' in routeOrError) {
+        handleScroll(this$1, routeOrError, from, false);
+      }
+    };
+    var setupListeners = function (routeOrError) {
+      history.setupListeners();
+      handleInitialScroll(routeOrError);
+    };
+    history.transitionTo(
+      history.getCurrentLocation(),
+      setupListeners,
+      setupListeners
+    );
+  }
+
+  history.listen(function (route) {
+    this$1.apps.forEach(function (app) {
+      app._route = route;
+    });
+  });
+};
+
+VueRouter.prototype.beforeEach = function beforeEach (fn) {
+  return registerHook(this.beforeHooks, fn)
+};
+
+VueRouter.prototype.beforeResolve = function beforeResolve (fn) {
+  return registerHook(this.resolveHooks, fn)
+};
+
+VueRouter.prototype.afterEach = function afterEach (fn) {
+  return registerHook(this.afterHooks, fn)
+};
+
+VueRouter.prototype.onReady = function onReady (cb, errorCb) {
+  this.history.onReady(cb, errorCb);
+};
+
+VueRouter.prototype.onError = function onError (errorCb) {
+  this.history.onError(errorCb);
+};
+
+VueRouter.prototype.push = function push (location, onComplete, onAbort) {
+    var this$1 = this;
+
+  // $flow-disable-line
+  if (!onComplete && !onAbort && typeof Promise !== 'undefined') {
+    return new Promise(function (resolve, reject) {
+      this$1.history.push(location, resolve, reject);
+    })
+  } else {
+    this.history.push(location, onComplete, onAbort);
+  }
+};
+
+VueRouter.prototype.replace = function replace (location, onComplete, onAbort) {
+    var this$1 = this;
+
+  // $flow-disable-line
+  if (!onComplete && !onAbort && typeof Promise !== 'undefined') {
+    return new Promise(function (resolve, reject) {
+      this$1.history.replace(location, resolve, reject);
+    })
+  } else {
+    this.history.replace(location, onComplete, onAbort);
+  }
+};
+
+VueRouter.prototype.go = function go (n) {
+  this.history.go(n);
+};
+
+VueRouter.prototype.back = function back () {
+  this.go(-1);
+};
+
+VueRouter.prototype.forward = function forward () {
+  this.go(1);
+};
+
+VueRouter.prototype.getMatchedComponents = function getMatchedComponents (to) {
+  var route = to
+    ? to.matched
+      ? to
+      : this.resolve(to).route
+    : this.currentRoute;
+  if (!route) {
+    return []
+  }
+  return [].concat.apply(
+    [],
+    route.matched.map(function (m) {
+      return Object.keys(m.components).map(function (key) {
+        return m.components[key]
+      })
+    })
+  )
+};
+
+VueRouter.prototype.resolve = function resolve (
+  to,
+  current,
+  append
+) {
+  current = current || this.history.current;
+  var location = normalizeLocation(to, current, append, this);
+  var route = this.match(location, current);
+  var fullPath = route.redirectedFrom || route.fullPath;
+  var base = this.history.base;
+  var href = createHref(base, fullPath, this.mode);
+  return {
+    location: location,
+    route: route,
+    href: href,
+    // for backwards compat
+    normalizedTo: location,
+    resolved: route
+  }
+};
+
+VueRouter.prototype.getRoutes = function getRoutes () {
+  return this.matcher.getRoutes()
+};
+
+VueRouter.prototype.addRoute = function addRoute (parentOrRoute, route) {
+  this.matcher.addRoute(parentOrRoute, route);
+  if (this.history.current !== START) {
+    this.history.transitionTo(this.history.getCurrentLocation());
+  }
+};
+
+VueRouter.prototype.addRoutes = function addRoutes (routes) {
+  if (true) {
+    warn(false, 'router.addRoutes() is deprecated and has been removed in Vue Router 4. Use router.addRoute() instead.');
+  }
+  this.matcher.addRoutes(routes);
+  if (this.history.current !== START) {
+    this.history.transitionTo(this.history.getCurrentLocation());
+  }
+};
+
+Object.defineProperties( VueRouter.prototype, prototypeAccessors );
+
+function registerHook (list, fn) {
+  list.push(fn);
+  return function () {
+    var i = list.indexOf(fn);
+    if (i > -1) { list.splice(i, 1); }
+  }
+}
+
+function createHref (base, fullPath, mode) {
+  var path = mode === 'hash' ? '#' + fullPath : fullPath;
+  return base ? cleanPath(base + '/' + path) : path
+}
+
+VueRouter.install = install;
+VueRouter.version = '3.5.3';
+VueRouter.isNavigationFailure = isNavigationFailure;
+VueRouter.NavigationFailureType = NavigationFailureType;
+VueRouter.START_LOCATION = START;
+
+if (inBrowser && window.Vue) {
+  window.Vue.use(VueRouter);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueRouter);
 
 
 /***/ }),
@@ -86823,6 +94814,1272 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 
 /***/ }),
 
+/***/ "./node_modules/vuex/dist/vuex.esm.js":
+/*!********************************************!*\
+  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Store": () => (/* binding */ Store),
+/* harmony export */   "createLogger": () => (/* binding */ createLogger),
+/* harmony export */   "createNamespacedHelpers": () => (/* binding */ createNamespacedHelpers),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "install": () => (/* binding */ install),
+/* harmony export */   "mapActions": () => (/* binding */ mapActions),
+/* harmony export */   "mapGetters": () => (/* binding */ mapGetters),
+/* harmony export */   "mapMutations": () => (/* binding */ mapMutations),
+/* harmony export */   "mapState": () => (/* binding */ mapState)
+/* harmony export */ });
+/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */
+function applyMixin (Vue) {
+  var version = Number(Vue.version.split('.')[0]);
+
+  if (version >= 2) {
+    Vue.mixin({ beforeCreate: vuexInit });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit;
+      _init.call(this, options);
+    };
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+    var options = this.$options;
+    // store injection
+    if (options.store) {
+      this.$store = typeof options.store === 'function'
+        ? options.store()
+        : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
+    }
+  }
+}
+
+var target = typeof window !== 'undefined'
+  ? window
+  : typeof __webpack_require__.g !== 'undefined'
+    ? __webpack_require__.g
+    : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook;
+
+  devtoolHook.emit('vuex:init', store);
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  }, { prepend: true });
+
+  store.subscribeAction(function (action, state) {
+    devtoolHook.emit('vuex:action', action, state);
+  }, { prepend: true });
+}
+
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+function find (list, f) {
+  return list.filter(f)[0]
+}
+
+/**
+ * Deep copy the given object considering circular structure.
+ * This function caches all nested objects and its copies.
+ * If it detects circular structure, use cached copy to avoid infinite loop.
+ *
+ * @param {*} obj
+ * @param {Array<Object>} cache
+ * @return {*}
+ */
+function deepCopy (obj, cache) {
+  if ( cache === void 0 ) cache = [];
+
+  // just return if obj is immutable value
+  if (obj === null || typeof obj !== 'object') {
+    return obj
+  }
+
+  // if obj is hit, it is in circular structure
+  var hit = find(cache, function (c) { return c.original === obj; });
+  if (hit) {
+    return hit.copy
+  }
+
+  var copy = Array.isArray(obj) ? [] : {};
+  // put the copy into cache at first
+  // because we want to refer it in recursive deepCopy
+  cache.push({
+    original: obj,
+    copy: copy
+  });
+
+  Object.keys(obj).forEach(function (key) {
+    copy[key] = deepCopy(obj[key], cache);
+  });
+
+  return copy
+}
+
+/**
+ * forEach for object
+ */
+function forEachValue (obj, fn) {
+  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+function partial (fn, arg) {
+  return function () {
+    return fn(arg)
+  }
+}
+
+// Base data struct for store's module, package with some attribute and method
+var Module = function Module (rawModule, runtime) {
+  this.runtime = runtime;
+  // Store some children item
+  this._children = Object.create(null);
+  // Store the origin module object which passed by programmer
+  this._rawModule = rawModule;
+  var rawState = rawModule.state;
+
+  // Store the origin module's state
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
+};
+
+var prototypeAccessors = { namespaced: { configurable: true } };
+
+prototypeAccessors.namespaced.get = function () {
+  return !!this._rawModule.namespaced
+};
+
+Module.prototype.addChild = function addChild (key, module) {
+  this._children[key] = module;
+};
+
+Module.prototype.removeChild = function removeChild (key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild (key) {
+  return this._children[key]
+};
+
+Module.prototype.hasChild = function hasChild (key) {
+  return key in this._children
+};
+
+Module.prototype.update = function update (rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild (fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter (fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction (fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation (fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties( Module.prototype, prototypeAccessors );
+
+var ModuleCollection = function ModuleCollection (rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get (path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key)
+  }, this.root)
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace (path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '')
+  }, '')
+};
+
+ModuleCollection.prototype.update = function update$1 (rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
+    var this$1 = this;
+    if ( runtime === void 0 ) runtime = true;
+
+  if ((true)) {
+    assertRawModule(path, rawModule);
+  }
+
+  var newModule = new Module(rawModule, runtime);
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  }
+
+  // register nested modules
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  var child = parent.getChild(key);
+
+  if (!child) {
+    if ((true)) {
+      console.warn(
+        "[vuex] trying to unregister module '" + key + "', which is " +
+        "not registered"
+      );
+    }
+    return
+  }
+
+  if (!child.runtime) {
+    return
+  }
+
+  parent.removeChild(key);
+};
+
+ModuleCollection.prototype.isRegistered = function isRegistered (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+
+  if (parent) {
+    return parent.hasChild(key)
+  }
+
+  return false
+};
+
+function update (path, targetModule, newModule) {
+  if ((true)) {
+    assertRawModule(path, newModule);
+  }
+
+  // update target module
+  targetModule.update(newModule);
+
+  // update nested modules
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if ((true)) {
+          console.warn(
+            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
+            'manual reload is needed'
+          );
+        }
+        return
+      }
+      update(
+        path.concat(key),
+        targetModule.getChild(key),
+        newModule.modules[key]
+      );
+    }
+  }
+}
+
+var functionAssert = {
+  assert: function (value) { return typeof value === 'function'; },
+  expected: 'function'
+};
+
+var objectAssert = {
+  assert: function (value) { return typeof value === 'function' ||
+    (typeof value === 'object' && typeof value.handler === 'function'); },
+  expected: 'function or object with "handler" function'
+};
+
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule (path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) { return }
+
+    var assertOptions = assertTypes[key];
+
+    forEachValue(rawModule[key], function (value, type) {
+      assert(
+        assertOptions.assert(value),
+        makeAssertionMessage(path, key, type, value, assertOptions.expected)
+      );
+    });
+  });
+}
+
+function makeAssertionMessage (path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+  if (path.length > 0) {
+    buf += " in module \"" + (path.join('.')) + "\"";
+  }
+  buf += " is " + (JSON.stringify(value)) + ".";
+  return buf
+}
+
+var Vue; // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if ((true)) {
+    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
+    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
+    assert(this instanceof Store, "store must be called with the new operator.");
+  }
+
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  // store internal state
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+  this._makeLocalGettersCache = Object.create(null);
+
+  // bind commit and dispatch to self
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+  };
+  this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  };
+
+  // strict mode
+  this.strict = strict;
+
+  var state = this._modules.root.state;
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], this._modules.root);
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state);
+
+  // apply plugins
+  plugins.forEach(function (plugin) { return plugin(this$1); });
+
+  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
+  if (useDevtools) {
+    devtoolPlugin(this);
+  }
+};
+
+var prototypeAccessors$1 = { state: { configurable: true } };
+
+prototypeAccessors$1.state.get = function () {
+  return this._vm._data.$$state
+};
+
+prototypeAccessors$1.state.set = function (v) {
+  if ((true)) {
+    assert(false, "use store.replaceState() to explicit replace store state.");
+  }
+};
+
+Store.prototype.commit = function commit (_type, _payload, _options) {
+    var this$1 = this;
+
+  // check object-style commit
+  var ref = unifyObjectStyle(_type, _payload, _options);
+    var type = ref.type;
+    var payload = ref.payload;
+    var options = ref.options;
+
+  var mutation = { type: type, payload: payload };
+  var entry = this._mutations[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown mutation type: " + type));
+    }
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload);
+    });
+  });
+
+  this._subscribers
+    .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+    .forEach(function (sub) { return sub(mutation, this$1.state); });
+
+  if (
+    ( true) &&
+    options && options.silent
+  ) {
+    console.warn(
+      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
+      'Use the filter functionality in the vue-devtools'
+    );
+  }
+};
+
+Store.prototype.dispatch = function dispatch (_type, _payload) {
+    var this$1 = this;
+
+  // check object-style dispatch
+  var ref = unifyObjectStyle(_type, _payload);
+    var type = ref.type;
+    var payload = ref.payload;
+
+  var action = { type: type, payload: payload };
+  var entry = this._actions[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown action type: " + type));
+    }
+    return
+  }
+
+  try {
+    this._actionSubscribers
+      .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+      .filter(function (sub) { return sub.before; })
+      .forEach(function (sub) { return sub.before(action, this$1.state); });
+  } catch (e) {
+    if ((true)) {
+      console.warn("[vuex] error in before action subscribers: ");
+      console.error(e);
+    }
+  }
+
+  var result = entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload);
+
+  return new Promise(function (resolve, reject) {
+    result.then(function (res) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.after; })
+          .forEach(function (sub) { return sub.after(action, this$1.state); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in after action subscribers: ");
+          console.error(e);
+        }
+      }
+      resolve(res);
+    }, function (error) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.error; })
+          .forEach(function (sub) { return sub.error(action, this$1.state, error); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in error action subscribers: ");
+          console.error(e);
+        }
+      }
+      reject(error);
+    });
+  })
+};
+
+Store.prototype.subscribe = function subscribe (fn, options) {
+  return genericSubscribe(fn, this._subscribers, options)
+};
+
+Store.prototype.subscribeAction = function subscribeAction (fn, options) {
+  var subs = typeof fn === 'function' ? { before: fn } : fn;
+  return genericSubscribe(subs, this._actionSubscribers, options)
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  if ((true)) {
+    assert(typeof getter === 'function', "store.watch only accepts a function.");
+  }
+  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule (path, rawModule, options) {
+    if ( options === void 0 ) options = {};
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+    assert(path.length > 0, 'cannot register the root module by using registerModule.');
+  }
+
+  this._modules.register(path, rawModule);
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
+  // reset store to update getters...
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  this._modules.unregister(path);
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+  resetStore(this);
+};
+
+Store.prototype.hasModule = function hasModule (path) {
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  return this._modules.isRegistered(path)
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  this._modules.update(newOptions);
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors$1 );
+
+function genericSubscribe (fn, subs, options) {
+  if (subs.indexOf(fn) < 0) {
+    options && options.prepend
+      ? subs.unshift(fn)
+      : subs.push(fn);
+  }
+  return function () {
+    var i = subs.indexOf(fn);
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  }
+}
+
+function resetStore (store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state;
+  // init all modules
+  installModule(store, state, [], store._modules.root, true);
+  // reset vm
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM (store, state, hot) {
+  var oldVm = store._vm;
+
+  // bind store public getters
+  store.getters = {};
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure environment.
+    computed[key] = partial(fn, store);
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; },
+      enumerable: true // for local getters
+    });
+  });
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent;
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+    Vue.nextTick(function () { return oldVm.$destroy(); });
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+  var namespace = store._modules.getNamespace(path);
+
+  // register in namespace map
+  if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] && ("development" !== 'production')) {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
+    store._modulesNamespaceMap[namespace] = module;
+  }
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+    store._withCommit(function () {
+      if ((true)) {
+        if (moduleName in parentState) {
+          console.warn(
+            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
+          );
+        }
+      }
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+function makeLocalContext (store, namespace, path) {
+  var noNamespace = namespace === '';
+
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._actions[type]) {
+          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      return store.dispatch(type, payload)
+    },
+
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._mutations[type]) {
+          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      store.commit(type, payload, options);
+    }
+  };
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? function () { return store.getters; }
+        : function () { return makeLocalGetters(store, namespace); }
+    },
+    state: {
+      get: function () { return getNestedState(store.state, path); }
+    }
+  });
+
+  return local
+}
+
+function makeLocalGetters (store, namespace) {
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
+
+      // extract local getter type
+      var localType = type.slice(splitPos);
+
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace]
+}
+
+function registerMutation (store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler (payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction (store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler (payload) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload);
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+        throw err
+      })
+    } else {
+      return res
+    }
+  });
+}
+
+function registerGetter (store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if ((true)) {
+      console.error(("[vuex] duplicate getter key: " + type));
+    }
+    return
+  }
+  store._wrappedGetters[type] = function wrappedGetter (store) {
+    return rawGetter(
+      local.state, // local state
+      local.getters, // local getters
+      store.state, // root state
+      store.getters // root getters
+    )
+  };
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch(function () { return this._data.$$state }, function () {
+    if ((true)) {
+      assert(store._committing, "do not mutate vuex store state outside mutation handlers.");
+    }
+  }, { deep: true, sync: true });
+}
+
+function getNestedState (state, path) {
+  return path.reduce(function (state, key) { return state[key]; }, state)
+}
+
+function unifyObjectStyle (type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if ((true)) {
+    assert(typeof type === 'string', ("expects string as the type, but found " + (typeof type) + "."));
+  }
+
+  return { type: type, payload: payload, options: options }
+}
+
+function install (_Vue) {
+  if (Vue && _Vue === Vue) {
+    if ((true)) {
+      console.error(
+        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+      );
+    }
+    return
+  }
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+
+/**
+ * Reduce the code which written in Vue.js for getting the state.
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
+ * @param {Object}
+ */
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+  if (( true) && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+        if (!module) {
+          return
+        }
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for committing the mutation
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept another params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+  if (( true) && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // Get the commit method from store
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for getting the getters
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} getters
+ * @return {Object}
+ */
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+  if (( true) && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    // The namespace has been mutated by normalizeNamespace
+    val = namespace + val;
+    res[key] = function mappedGetter () {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if (( true) && !(val in this.$store.getters)) {
+        console.error(("[vuex] unknown getter: " + val));
+        return
+      }
+      return this.$store.getters[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for dispatch the action
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+  if (( true) && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // get dispatch function from store
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
+ * @param {String} namespace
+ * @return {Object}
+ */
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
+
+/**
+ * Normalize the map
+ * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
+ * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+ * @param {Array|Object} map
+ * @return {Object}
+ */
+function normalizeMap (map) {
+  if (!isValidMap(map)) {
+    return []
+  }
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+/**
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
+}
+
+/**
+ * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
+ * @param {Function} fn
+ * @return {Function}
+ */
+function normalizeNamespace (fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+    return fn(namespace, map)
+  }
+}
+
+/**
+ * Search a special module from store by namespace. if module not exist, print error message.
+ * @param {Object} store
+ * @param {String} helper
+ * @param {String} namespace
+ * @return {Object}
+ */
+function getModuleByNamespace (store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+  if (( true) && !module) {
+    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
+  }
+  return module
+}
+
+// Credits: borrowed code from fcomb/redux-logger
+
+function createLogger (ref) {
+  if ( ref === void 0 ) ref = {};
+  var collapsed = ref.collapsed; if ( collapsed === void 0 ) collapsed = true;
+  var filter = ref.filter; if ( filter === void 0 ) filter = function (mutation, stateBefore, stateAfter) { return true; };
+  var transformer = ref.transformer; if ( transformer === void 0 ) transformer = function (state) { return state; };
+  var mutationTransformer = ref.mutationTransformer; if ( mutationTransformer === void 0 ) mutationTransformer = function (mut) { return mut; };
+  var actionFilter = ref.actionFilter; if ( actionFilter === void 0 ) actionFilter = function (action, state) { return true; };
+  var actionTransformer = ref.actionTransformer; if ( actionTransformer === void 0 ) actionTransformer = function (act) { return act; };
+  var logMutations = ref.logMutations; if ( logMutations === void 0 ) logMutations = true;
+  var logActions = ref.logActions; if ( logActions === void 0 ) logActions = true;
+  var logger = ref.logger; if ( logger === void 0 ) logger = console;
+
+  return function (store) {
+    var prevState = deepCopy(store.state);
+
+    if (typeof logger === 'undefined') {
+      return
+    }
+
+    if (logMutations) {
+      store.subscribe(function (mutation, state) {
+        var nextState = deepCopy(state);
+
+        if (filter(mutation, prevState, nextState)) {
+          var formattedTime = getFormattedTime();
+          var formattedMutation = mutationTransformer(mutation);
+          var message = "mutation " + (mutation.type) + formattedTime;
+
+          startMessage(logger, message, collapsed);
+          logger.log('%c prev state', 'color: #9E9E9E; font-weight: bold', transformer(prevState));
+          logger.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
+          logger.log('%c next state', 'color: #4CAF50; font-weight: bold', transformer(nextState));
+          endMessage(logger);
+        }
+
+        prevState = nextState;
+      });
+    }
+
+    if (logActions) {
+      store.subscribeAction(function (action, state) {
+        if (actionFilter(action, state)) {
+          var formattedTime = getFormattedTime();
+          var formattedAction = actionTransformer(action);
+          var message = "action " + (action.type) + formattedTime;
+
+          startMessage(logger, message, collapsed);
+          logger.log('%c action', 'color: #03A9F4; font-weight: bold', formattedAction);
+          endMessage(logger);
+        }
+      });
+    }
+  }
+}
+
+function startMessage (logger, message, collapsed) {
+  var startMessage = collapsed
+    ? logger.groupCollapsed
+    : logger.group;
+
+  // render
+  try {
+    startMessage.call(logger, message);
+  } catch (e) {
+    logger.log(message);
+  }
+}
+
+function endMessage (logger) {
+  try {
+    logger.groupEnd();
+  } catch (e) {
+    logger.log('—— log end ——');
+  }
+}
+
+function getFormattedTime () {
+  var time = new Date();
+  return (" @ " + (pad(time.getHours(), 2)) + ":" + (pad(time.getMinutes(), 2)) + ":" + (pad(time.getSeconds(), 2)) + "." + (pad(time.getMilliseconds(), 3)))
+}
+
+function repeat (str, times) {
+  return (new Array(times + 1)).join(str)
+}
+
+function pad (num, maxLength) {
+  return repeat('0', maxLength - num.toString().length) + num
+}
+
+var index = {
+  Store: Store,
+  install: install,
+  version: '3.6.2',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers,
+  createLogger: createLogger
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (index);
+
+
+
+/***/ }),
+
 /***/ "./resources/js sync recursive \\.vue$/":
 /*!************************************!*\
   !*** ./resources/js/ sync \.vue$/ ***!
@@ -86830,6 +96087,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./components/MainComponent.vue": "./resources/js/components/MainComponent.vue",
+	"./pages/DashboardPage.vue": "./resources/js/pages/DashboardPage.vue",
+	"./pages/LoginPage.vue": "./resources/js/pages/LoginPage.vue",
 	"./pages/MasterPage.vue": "./resources/js/pages/MasterPage.vue"
 };
 

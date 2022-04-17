@@ -10,8 +10,13 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 import vuetify from './plugins/vuetify'
 
+import router from './router/index'
+import store from './store/index'
+
 
 const app = new Vue({
     el: '#app',
-    vuetify
+    vuetify,
+    router,
+    store
 });
