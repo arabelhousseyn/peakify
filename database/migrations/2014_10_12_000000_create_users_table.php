@@ -23,6 +23,7 @@ return new class extends Migration
             $table->timestamp('banned_at')->nullable();
             $table->time('start_at')->nullable();
             $table->time('end_at')->nullable();
+            $table->enum('type',['admin','agent']);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -23,9 +23,17 @@ class LoginController extends Controller
             if(Auth::attempt($data))
             {
                 $user = Auth::user();
-                $token = $user->createToken('peakify')->plainTextToken;
-                $user['token'] = $token;
-                return response(['data' => $user],200);
+                if($user->type == 'admin')
+                {
+                    $token = $user->createToken('peakify')->plainTextToken;
+                    $user['token'] = $token;
+                    return response(['data' => $user],200);
+                }
+
+                if($user->type == 'agent')
+                {
+
+                }
             }
 
             return response(['message' => 'Une de vos informations est incorrecte.'],404);
