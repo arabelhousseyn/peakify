@@ -27,9 +27,10 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "vuetify": "^2.6.4",
+        "moment": "^2.29.3",
+        "vue-router": "^3.5.3",
         "vue-toast-notification": "^0.6.2",
-        "vuex": "^3.6.2",
-        "vue-router": "^3.5.3"
+        "vuetify": "^2.6.4",
+        "vuex": "^3.6.2"
     }
 }
