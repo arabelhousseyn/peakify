@@ -7,7 +7,7 @@
             <menu-bar-component />
         </v-app-bar>
 
-        <v-navigation-drawer app color="primary" v-model="drawer" fixed dark>
+        <v-navigation-drawer app color="primary" v-model="drawer" fixed>
             <v-list>
                 <v-list-item class="px-2 d-flex justify-content-center">
                     <a href="/home"><img style="width: 150px;" :src="$store.state.logo"></img></a>
@@ -17,7 +17,7 @@
             <v-list dark>
                 <v-list-item-group
                     v-model="selectedItem"
-                    color="primary"
+                    color="white"
                 >
                     <v-list-item
                         @click="()=>{this.$router.push('/').catch(err => {})}"
@@ -32,6 +32,7 @@
                     </v-list-item>
 
                     <v-list-group
+                        color="white"
                         prepend-icon="mdi-account"
                         no-action
                     >
@@ -67,91 +68,6 @@
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-group>
-
-                    <v-list-item
-                        @click="()=>{this.$router.push('/home/provinces').catch(err => {})}"
-                        style="border-right: 4px solid;"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>mdi-home-map-marker</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Willayas</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item
-                        @click="()=>{this.$router.push('/home/signs').catch(err => {})}"
-                        style="border-right: 4px solid;"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>mdi-bookmark</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Marques</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item
-                        @click="()=>{this.$router.push('/home/types').catch(err => {})}"
-                        style="border-right: 4px solid;"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>mdi-collage</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Types</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item
-                        @click="()=>{this.$router.push('/home/orders').catch(err => {})}"
-                        style="border-right: 4px solid;"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>mdi-cart</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Commandes</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item
-                        @click="()=>{this.$router.push('/home/notifications').catch(err => {})}"
-                        style="border-right: 4px solid;"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>mdi-broadcast</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Envoi des notifications</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item
-                        @click="()=>{this.$router.push('/home/statistics').catch(err => {})}"
-                        style="border-right: 4px solid;"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>mdi-chart-box</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Statistiques</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item
-                        @click="()=>{this.$router.push('/home/ads').catch(err => {})}"
-                        style="border-right: 4px solid;"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>mdi-google-ads</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Publicités</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>
@@ -215,7 +131,6 @@ export default {
             else{
                 this.selectedItem = null
             }
-
         }
     },
     mounted() {

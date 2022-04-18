@@ -5689,90 +5689,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5946,7 +5862,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_HeaderComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/HeaderComponent */ "./resources/js/components/HeaderComponent.vue");
-/* harmony import */ var _components_FooterComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/FooterComponent */ "./resources/js/components/FooterComponent.vue");
 //
 //
 //
@@ -5954,16 +5869,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {
-    FooterComponent: _components_FooterComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
-    HeaderComponent: _components_HeaderComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
   mounted: function mounted() {
     this.$store.commit('CHECK_AUTH');
-    console.log(this.$store.state);
   }
 });
 
@@ -41241,7 +41151,7 @@ var render = function () {
       _c(
         "v-navigation-drawer",
         {
-          attrs: { app: "", color: "primary", fixed: "", dark: "" },
+          attrs: { app: "", color: "primary", fixed: "" },
           model: {
             value: _vm.drawer,
             callback: function ($$v) {
@@ -41277,7 +41187,7 @@ var render = function () {
               _c(
                 "v-list-item-group",
                 {
-                  attrs: { color: "primary" },
+                  attrs: { color: "white" },
                   model: {
                     value: _vm.selectedItem,
                     callback: function ($$v) {
@@ -41316,7 +41226,11 @@ var render = function () {
                   _c(
                     "v-list-group",
                     {
-                      attrs: { "prepend-icon": "mdi-account", "no-action": "" },
+                      attrs: {
+                        color: "white",
+                        "prepend-icon": "mdi-account",
+                        "no-action": "",
+                      },
                       scopedSlots: _vm._u([
                         {
                           key: "activator",
@@ -41424,206 +41338,6 @@ var render = function () {
                             1
                           ),
                         ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticStyle: { "border-right": "4px solid" },
-                      on: {
-                        click: function () {
-                          this$1.$router
-                            .push("/home/provinces")
-                            .catch(function (err) {})
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-home-map-marker")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Willayas")])],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticStyle: { "border-right": "4px solid" },
-                      on: {
-                        click: function () {
-                          this$1.$router
-                            .push("/home/signs")
-                            .catch(function (err) {})
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-bookmark")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Marques")])],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticStyle: { "border-right": "4px solid" },
-                      on: {
-                        click: function () {
-                          this$1.$router
-                            .push("/home/types")
-                            .catch(function (err) {})
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-collage")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Types")])],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticStyle: { "border-right": "4px solid" },
-                      on: {
-                        click: function () {
-                          this$1.$router
-                            .push("/home/orders")
-                            .catch(function (err) {})
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-cart")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Commandes")])],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticStyle: { "border-right": "4px solid" },
-                      on: {
-                        click: function () {
-                          this$1.$router
-                            .push("/home/notifications")
-                            .catch(function (err) {})
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-broadcast")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [
-                          _c("v-list-item-title", [
-                            _vm._v("Envoi des notifications"),
-                          ]),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticStyle: { "border-right": "4px solid" },
-                      on: {
-                        click: function () {
-                          this$1.$router
-                            .push("/home/statistics")
-                            .catch(function (err) {})
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-chart-box")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Statistiques")])],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    {
-                      staticStyle: { "border-right": "4px solid" },
-                      on: {
-                        click: function () {
-                          this$1.$router
-                            .push("/home/ads")
-                            .catch(function (err) {})
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-google-ads")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Publicités")])],
                         1
                       ),
                     ],
@@ -41867,13 +41581,7 @@ var render = function () {
   return _c(
     "div",
     { staticClass: "dashboard-page" },
-    [
-      _c("header-component"),
-      _vm._v(" "),
-      _c("router-view"),
-      _vm._v(" "),
-      _c("footer-component"),
-    ],
+    [_c("header-component"), _vm._v(" "), _c("v-main", [_c("router-view")], 1)],
     1
   )
 }
