@@ -1,6 +1,8 @@
 @component('mail::message')
 # Peakify
 
+{{ $date }}
+
 Le mot de passe a été changé avec succès.
 
 @component('mail::button', ['url' => env('app_url')])

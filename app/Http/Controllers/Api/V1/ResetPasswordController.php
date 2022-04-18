@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Mail\PasswordReseted;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -30,7 +32,7 @@ class ResetPasswordController extends Controller
                     'password' => Hash::make($request->new_password)
                 ]);
 
-                Mail::to($user->email)->send(new PasswordReseted());
+                Mail::to($user->email)->send(new PasswordReseted(Carbon::now()->locale(App::getLocale())->toDateTimeString()));
 
                 DB::table('password_resets')->where('token',$token)->delete();
 
