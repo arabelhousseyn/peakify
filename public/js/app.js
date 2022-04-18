@@ -5731,8 +5731,37 @@ __webpack_require__.r(__webpack_exports__);
       return localStorage.getItem('token') == this.token ? true : false;
     },
     reset: function reset() {
+      var _this = this;
+
       this.disabled = true;
       this.loading = true;
+      axios.get('/sanctum/csrf-cookie').then(function (res) {
+        axios.put("/api/reset-password/".concat(_this.token), _this.data).then(function (e) {
+          _this.loading = false;
+          localStorage.removeItem('token');
+
+          _this.$toast.open({
+            message: 'Mot de passe changé',
+            type: 'success'
+          });
+
+          _this.$router.push('/');
+        })["catch"](function (err) {
+          if (err.response.status == 422) {
+            var errors = err.response.data.errors;
+            var values = Object.values(errors);
+
+            for (var i = 0; i < values.length; i++) {
+              _this.errors.push(values[i][0]);
+            }
+
+            _this.hasError = true;
+            _this.loading = false;
+            _this.data.new_password = null;
+            _this.data.new_password_confirmation = null;
+          }
+        });
+      });
     },
     check: function check() {
       if (this.hasError) {

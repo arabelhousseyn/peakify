@@ -82,6 +82,32 @@ export default {
         {
             this.disabled = true
             this.loading = true
+
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.put(`/api/reset-password/${this.token}`,this.data).then(e=>{
+                    this.loading = false
+                    localStorage.removeItem('token')
+                    this.$toast.open({
+                        message : 'Mot de passe changé',
+                        type : 'success'
+                    })
+                    this.$router.push('/')
+                }).catch(err => {
+                    if(err.response.status == 422)
+                    {
+                        let errors = err.response.data.errors
+                        let values = Object.values(errors)
+                        for (let i = 0;i<values.length;i++)
+                        {
+                            this.errors.push(values[i][0])
+                        }
+                        this.hasError = true
+                        this.loading = false
+                        this.data.new_password = null
+                        this.data.new_password_confirmation = null
+                    }
+                })
+            })
         },
         check()
         {

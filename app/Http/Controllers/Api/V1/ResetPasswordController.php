@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Mail\PasswordReseted;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
 {
@@ -27,6 +29,8 @@ class ResetPasswordController extends Controller
                 User::where('_id',$user->_id)->update([
                     'password' => Hash::make($request->new_password)
                 ]);
+
+                Mail::to($user->email)->send(new PasswordReseted());
 
                 DB::table('password_resets')->where('token',$token)->delete();
 
