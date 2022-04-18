@@ -41379,9 +41379,14 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main" }, [
-    _vm._v("\n    welcome to main component\n"),
-  ])
+  return _c(
+    "div",
+    { staticClass: "main" },
+    _vm._l(15, function (item, index) {
+      return _c("p", { key: index }, [_vm._v("soon")])
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

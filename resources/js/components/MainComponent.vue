@@ -1,5 +1,5 @@
 <template>
     <div class="main">
-        welcome to main component
+        <p v-for="(item, index) in 15" :key="index">soon</p>
     </div>
 </template>
