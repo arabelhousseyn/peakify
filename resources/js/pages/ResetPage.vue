@@ -7,3 +7,23 @@
         </v-container>
     </div>
 </template>
+
+<script>
+export default {
+    data : ()=>({
+        token : window.location.search.replace('?token=','')
+    }),
+    methods : {
+        check()
+        {
+            return (localStorage.getItem('token') == this.token) ? true : false
+        }
+    },
+    mounted() {
+       if(!this.check())
+       {
+           this.$router.push('/')
+       }
+    }
+}
+</script>

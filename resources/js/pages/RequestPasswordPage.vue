@@ -66,6 +66,7 @@ export default {
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.post('/api/request-reset-password',this.data).then(e=>{
                     this.loading = false
+                    localStorage.setItem('token',e.data.token)
                     this.$toast.open({
                         message : 'Vérifier votre boîte de réception ou vos spams',
                         type : 'success'

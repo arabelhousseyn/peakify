@@ -30,7 +30,7 @@ class RequestResetPassowrdController extends Controller
             ]);
             $url = env('app_url') . '/reset?token=' . $token;
             Mail::to($request->email)->send(new RequestPassword($url));
-            return response()->noContent();
+            return response(['token' => $token],200);
         }
     }
 }
