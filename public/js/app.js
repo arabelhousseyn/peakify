@@ -5660,19 +5660,104 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      token: window.location.search.replace('?token=', '')
+      token: window.location.search.replace('?token=', ''),
+      data: {
+        old_password: null,
+        new_password: null,
+        new_password_confirmation: null
+      },
+      disabled: true,
+      loading: false,
+      hasError: false,
+      errors: [],
+      show1: false,
+      show2: false,
+      show3: false
     };
   },
   methods: {
-    check: function check() {
+    verifyToken: function verifyToken() {
       return localStorage.getItem('token') == this.token ? true : false;
+    },
+    reset: function reset() {
+      this.disabled = true;
+      this.loading = true;
+    },
+    check: function check() {
+      if (this.hasError) {
+        this.hasError = false;
+        this.errors = [];
+      }
+
+      this.disabled = this.data.old_password == null || this.data.new_password == null || this.data.new_password_confirmation == null ? true : false;
     }
   },
   mounted: function mounted() {
-    if (!this.check()) {
+    if (!this.verifyToken()) {
       this.$router.push('/');
     }
   }
@@ -39969,7 +40054,7 @@ var render = function () {
                                 : "mdi-eye-off",
                               type: _vm.show1 ? "text" : "password",
                               name: "input-10-1",
-                              label: "Mote de passe",
+                              label: "Mot de passe",
                               hint: "Au moins 8 caractères",
                               counter: "",
                             },
@@ -40362,9 +40447,183 @@ var render = function () {
         "v-container",
         { attrs: { fluid: "" } },
         [
-          _c("v-row", { staticClass: "justify-content-center" }, [
-            _c("h1", [_vm._v("Soon.")]),
-          ]),
+          _c(
+            "v-row",
+            {
+              staticClass: "justify-content-center",
+              staticStyle: { "margin-top": "200px" },
+            },
+            [
+              _c(
+                "v-card",
+                {
+                  attrs: { color: "background", elevation: "1", width: "500" },
+                },
+                [
+                  _c("div", { staticClass: "flex justify-content-center" }, [
+                    _c(
+                      "p",
+                      {
+                        staticClass: "text-h6 white--text",
+                        staticStyle: { "margin-top": "19px" },
+                      },
+                      [_vm._v("Réinitialiser le mot de passe")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-card-text", [
+                    _c(
+                      "form",
+                      {
+                        attrs: { method: "post" },
+                        on: {
+                          submit: function ($event) {
+                            $event.preventDefault()
+                            return _vm.reset.apply(null, arguments)
+                          },
+                        },
+                      },
+                      [
+                        _c("v-text-field", {
+                          attrs: {
+                            color: "primary",
+                            "append-icon": _vm.show1
+                              ? "mdi-eye"
+                              : "mdi-eye-off",
+                            type: _vm.show1 ? "text" : "password",
+                            name: "input-10-1",
+                            label: "Ancien mot de passe",
+                            hint: "Au moins 8 caractères",
+                            counter: "",
+                          },
+                          on: {
+                            keydown: _vm.check,
+                            "click:append": function ($event) {
+                              _vm.show1 = !_vm.show1
+                            },
+                          },
+                          model: {
+                            value: _vm.data.old_password,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.data, "old_password", $$v)
+                            },
+                            expression: "data.old_password",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            color: "primary",
+                            "append-icon": _vm.show2
+                              ? "mdi-eye"
+                              : "mdi-eye-off",
+                            type: _vm.show2 ? "text" : "password",
+                            name: "input-10-1",
+                            label: "Nouveau mot de passe",
+                            hint: "Au moins 8 caractères",
+                            counter: "",
+                          },
+                          on: {
+                            keydown: _vm.check,
+                            "click:append": function ($event) {
+                              _vm.show2 = !_vm.show2
+                            },
+                          },
+                          model: {
+                            value: _vm.data.new_password,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.data, "new_password", $$v)
+                            },
+                            expression: "data.new_password",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            color: "primary",
+                            "append-icon": _vm.show3
+                              ? "mdi-eye"
+                              : "mdi-eye-off",
+                            type: _vm.show3 ? "text" : "password",
+                            name: "input-10-1",
+                            label: "Confirmer mot de passe",
+                            hint: "Au moins 8 caractères",
+                            counter: "",
+                          },
+                          on: {
+                            keydown: _vm.check,
+                            "click:append": function ($event) {
+                              _vm.show3 = !_vm.show3
+                            },
+                          },
+                          model: {
+                            value: _vm.data.new_password_confirmation,
+                            callback: function ($$v) {
+                              _vm.$set(
+                                _vm.data,
+                                "new_password_confirmation",
+                                $$v
+                              )
+                            },
+                            expression: "data.new_password_confirmation",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm.hasError
+                          ? _c(
+                              "v-alert",
+                              {
+                                attrs: {
+                                  border: "right",
+                                  "colored-border": "",
+                                  type: "error",
+                                  elevation: "2",
+                                },
+                              },
+                              [
+                                _c(
+                                  "ul",
+                                  _vm._l(_vm.errors, function (error, index) {
+                                    return _c("li", { key: index }, [
+                                      _c("span", [_vm._v(_vm._s(error))]),
+                                    ])
+                                  }),
+                                  0
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: {
+                              disabled: _vm.disabled,
+                              type: "submit",
+                              color: "primary",
+                            },
+                          },
+                          [
+                            !_vm.loading
+                              ? _c("span", { staticClass: "text-uppercase" }, [
+                                  _vm._v("Réinitialiser"),
+                                ])
+                              : _c("v-progress-circular", {
+                                  attrs: { indeterminate: "", color: "white" },
+                                }),
+                          ],
+                          1
+                        ),
+                      ],
+                      1
+                    ),
+                  ]),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
         ],
         1
       ),

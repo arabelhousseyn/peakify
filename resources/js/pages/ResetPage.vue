@@ -1,8 +1,69 @@
 <template>
     <div class="reset-page">
         <v-container fluid>
-            <v-row class="justify-content-center">
-                <h1>Soon.</h1>
+            <v-row class="justify-content-center" style="margin-top: 200px;">
+                <v-card color="background" elevation="1" width="500">
+                    <div class="flex justify-content-center">
+                        <p class="text-h6 white--text" style="margin-top: 19px;">Réinitialiser le mot de passe</p>
+                    </div>
+                    <v-card-text>
+                        <form @submit.prevent="reset" method="post">
+                            <v-text-field
+                                @keydown="check"
+                                v-model="data.old_password"
+                                color="primary"
+                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show1 ? 'text' : 'password'"
+                                name="input-10-1"
+                                label="Ancien mot de passe"
+                                hint="Au moins 8 caractères"
+                                counter
+                                @click:append="show1 = !show1"
+                            ></v-text-field>
+
+                            <v-text-field
+                                @keydown="check"
+                                v-model="data.new_password"
+                                color="primary"
+                                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show2 ? 'text' : 'password'"
+                                name="input-10-1"
+                                label="Nouveau mot de passe"
+                                hint="Au moins 8 caractères"
+                                counter
+                                @click:append="show2 = !show2"
+                            ></v-text-field>
+
+                            <v-text-field
+                                @keydown="check"
+                                v-model="data.new_password_confirmation"
+                                color="primary"
+                                :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show3 ? 'text' : 'password'"
+                                name="input-10-1"
+                                label="Confirmer mot de passe"
+                                hint="Au moins 8 caractères"
+                                counter
+                                @click:append="show3 = !show3"
+                            ></v-text-field>
+
+                            <v-alert v-if="hasError" border="right" colored-border type="error" elevation="2">
+                                <ul>
+                                    <li v-for="(error,index) in errors" :key="index"><span>{{error}}</span></li>
+                                </ul>
+                            </v-alert>
+
+                                    <v-btn :disabled="disabled" type="submit" color="primary">
+                                        <span v-if="!loading" class="text-uppercase">Réinitialiser</span>
+                                        <v-progress-circular
+                                            v-else
+                                            indeterminate
+                                            color="white"
+                                        ></v-progress-circular>
+                                    </v-btn>
+                        </form>
+                    </v-card-text>
+                </v-card>
             </v-row>
         </v-container>
     </div>
@@ -11,16 +72,43 @@
 <script>
 export default {
     data : ()=>({
-        token : window.location.search.replace('?token=','')
+        token : window.location.search.replace('?token=',''),
+        data : {
+            old_password : null,
+            new_password : null,
+            new_password_confirmation : null,
+        },
+        disabled : true,
+        loading : false,
+        hasError : false,
+        errors : [],
+        show1 : false,
+        show2 : false,
+        show3 : false,
     }),
     methods : {
-        check()
+        verifyToken()
         {
             return (localStorage.getItem('token') == this.token) ? true : false
+        },
+        reset()
+        {
+            this.disabled = true
+            this.loading = true
+        },
+        check()
+        {
+            if(this.hasError)
+            {
+                this.hasError = false
+                this.errors = []
+            }
+            this.disabled = (this.data.old_password == null || this.data.new_password == null
+            || this.data.new_password_confirmation == null) ? true : false
         }
     },
     mounted() {
-       if(!this.check())
+       if(!this.verifyToken())
        {
            this.$router.push('/')
        }

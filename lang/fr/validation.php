@@ -150,7 +150,7 @@ return [
             'exists' => 'Email n\'existse pas.'
         ],
         'password' => [
-            'required' => 'Mote de passe requis.',
+            'required' => 'Mot de passe requis.',
         ],
         'has_email' => [
             'required' => 'Erreur dans serveur.',

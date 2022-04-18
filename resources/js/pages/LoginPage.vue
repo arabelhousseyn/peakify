@@ -23,7 +23,7 @@
                                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                 :type="show1 ? 'text' : 'password'"
                                 name="input-10-1"
-                                label="Mote de passe"
+                                label="Mot de passe"
                                 hint="Au moins 8 caractères"
                                 counter
                                 @click:append="show1 = !show1"
