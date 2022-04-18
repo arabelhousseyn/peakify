@@ -7,10 +7,10 @@
             <menu-bar-component />
         </v-app-bar>
 
-        <v-navigation-drawer app color="secondary" v-model="drawer" fixed>
+        <v-navigation-drawer app color="primary" v-model="drawer" fixed dark>
             <v-list>
                 <v-list-item class="px-2 d-flex justify-content-center">
-                    <a href="/home"><img style="width: 150px;" :src="$store.state.sm_logo"></img></a>
+                    <a href="/home"><img style="width: 150px;" :src="$store.state.logo"></img></a>
                 </v-list-item>
             </v-list>
 

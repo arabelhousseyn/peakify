@@ -94,9 +94,9 @@ export default {
                 axios.post('/api/login',form).then(e=>{
                     this.loading = false
                     this.$store.commit('SET_AUTH',true)
-                    this.$store.commit('SET_USER',e.data)
+                    this.$store.commit('SET_USER',e.data.data)
                     localStorage.setItem('isAuth',true)
-                    localStorage.setItem('data',JSON.stringify(e.data))
+                    localStorage.setItem('data',JSON.stringify(e.data.data))
                     this.$router.push('/home')
                 }).catch(err => {
                     if(err.response.status == 404)

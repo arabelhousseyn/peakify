@@ -8,7 +8,7 @@
         >
             <template v-slot:activator="{ on, attrs }">
                 <v-avatar size="35">
-                    <v-img src=""></v-img>
+                    <v-img :src="$store.state.user_logo"></v-img>
                 </v-avatar>
                 <v-btn v-bind="attrs" v-on="on" elevation="0" color="white">
                     {{ $store.state.user.full_name }} <span><v-icon>mdi-menu-down</v-icon> </span>
@@ -20,14 +20,14 @@
                     <v-list-item @click="AdminProfileForward" link>
                         <v-list-item-avatar>
                             <img
-                                src=""
-                                :alt="$store.state.user.fullName"
+                                :src="$store.state.user_logo"
+                                :alt="$store.state.user.full_name"
                             >
                         </v-list-item-avatar>
 
                         <v-list-item-content>
                             <v-list-item-title>{{ $store.state.user.full_name }}</v-list-item-title>
-                            <v-list-item-subtitle>Admin</v-list-item-subtitle>
+                            <v-list-item-subtitle>{{ $store.state.user.type }}</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
@@ -67,7 +67,7 @@ export default {
             axios.get('/sanctum/csrf-cookie').then(res =>{
                 axios.get('api/admin/logout',{headers : { 'Authorization' : 'Bearer ' + this.$store.state.user.token }})
                     .then(e =>{
-                        if(e.status == 200)
+                        if(e.status == 204)
                         {
                             this.$store.commit('SET_OUT')
                             this.$toast.open({
@@ -88,9 +88,6 @@ export default {
             this.menu = false
             this.$router.push('/home/profile').catch(err => {});
         }
-    },
-    mounted() {
-
     }
 }
 </script>
