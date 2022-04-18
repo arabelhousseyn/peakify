@@ -8,18 +8,6 @@
                     </div>
                     <v-card-text>
                         <form @submit.prevent="reset" method="post">
-                            <v-text-field
-                                @keydown="check"
-                                v-model="data.old_password"
-                                color="primary"
-                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="show1 ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="Ancien mot de passe"
-                                hint="Au moins 8 caractères"
-                                counter
-                                @click:append="show1 = !show1"
-                            ></v-text-field>
 
                             <v-text-field
                                 @keydown="check"
@@ -74,7 +62,6 @@ export default {
     data : ()=>({
         token : window.location.search.replace('?token=',''),
         data : {
-            old_password : null,
             new_password : null,
             new_password_confirmation : null,
         },
@@ -103,8 +90,7 @@ export default {
                 this.hasError = false
                 this.errors = []
             }
-            this.disabled = (this.data.old_password == null || this.data.new_password == null
-            || this.data.new_password_confirmation == null) ? true : false
+            this.disabled = (this.data.new_password == null || this.data.new_password_confirmation == null) ? true : false
         }
     },
     mounted() {

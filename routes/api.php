@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\V1\{
     LoginController,
-    RequestResetPassowrdController
+    RequestResetPassowrdController,
+    ResetPasswordController
 };
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -21,6 +22,7 @@ Route::middleware('throttle:login')->group(function (){
 // reset password
 
 Route::post('request-reset-password',RequestResetPassowrdController::class);
+Route::put('reset-password/{token}',ResetPasswordController::class);
 
 
 Route::middleware('auth:sanctum')->group(function (){

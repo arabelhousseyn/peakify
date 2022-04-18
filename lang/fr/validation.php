@@ -156,6 +156,10 @@ return [
             'required' => 'Erreur dans serveur.',
             'boolean' => 'Erreur dans serveur.',
         ],
+        'new_password' => [
+            'required' => 'Nouveau mot de passe requis.',
+            'confirmed' => 'Mot de passe ne correspond pas.'
+        ]
     ],
 
     /*

@@ -5709,24 +5709,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       token: window.location.search.replace('?token=', ''),
       data: {
-        old_password: null,
         new_password: null,
         new_password_confirmation: null
       },
@@ -5753,7 +5740,7 @@ __webpack_require__.r(__webpack_exports__);
         this.errors = [];
       }
 
-      this.disabled = this.data.old_password == null || this.data.new_password == null || this.data.new_password_confirmation == null ? true : false;
+      this.disabled = this.data.new_password == null || this.data.new_password_confirmation == null ? true : false;
     }
   },
   mounted: function mounted() {
@@ -40484,33 +40471,6 @@ var render = function () {
                         },
                       },
                       [
-                        _c("v-text-field", {
-                          attrs: {
-                            color: "primary",
-                            "append-icon": _vm.show1
-                              ? "mdi-eye"
-                              : "mdi-eye-off",
-                            type: _vm.show1 ? "text" : "password",
-                            name: "input-10-1",
-                            label: "Ancien mot de passe",
-                            hint: "Au moins 8 caractères",
-                            counter: "",
-                          },
-                          on: {
-                            keydown: _vm.check,
-                            "click:append": function ($event) {
-                              _vm.show1 = !_vm.show1
-                            },
-                          },
-                          model: {
-                            value: _vm.data.old_password,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.data, "old_password", $$v)
-                            },
-                            expression: "data.old_password",
-                          },
-                        }),
-                        _vm._v(" "),
                         _c("v-text-field", {
                           attrs: {
                             color: "primary",
