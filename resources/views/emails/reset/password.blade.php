@@ -1,5 +1,5 @@
 @component('mail::message')
-# {{ config('app.name') }}
+# Peakify
 
 Réinitialiser le mot de passe.
 
