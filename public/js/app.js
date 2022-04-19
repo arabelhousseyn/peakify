@@ -41647,6 +41647,8 @@ var render = function () {
                       _c(
                         "form",
                         {
+                          staticClass:
+                            "flex justify-content-center flex-column",
                           attrs: { method: "post" },
                           on: {
                             submit: function ($event) {
@@ -41741,9 +41743,10 @@ var render = function () {
                                           _vm._b(
                                             {
                                               attrs: {
+                                                text: "",
                                                 disabled: _vm.disabled,
                                                 type: "submit",
-                                                color: "primary",
+                                                color: "success",
                                               },
                                             },
                                             "v-btn",
@@ -41754,9 +41757,16 @@ var render = function () {
                                         ),
                                         [
                                           !_vm.loading
-                                            ? _c("v-icon", [
-                                                _vm._v("mdi-login-variant"),
-                                              ])
+                                            ? _c(
+                                                "span",
+                                                [
+                                                  _c("v-icon", [
+                                                    _vm._v("mdi-login-variant"),
+                                                  ]),
+                                                  _vm._v(" Connexion"),
+                                                ],
+                                                1
+                                              )
                                             : _c("v-progress-circular", {
                                                 attrs: {
                                                   indeterminate: "",

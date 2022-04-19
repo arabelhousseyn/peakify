@@ -7,7 +7,7 @@
                         <img style="width: 350px; margin-top: 28px;" :src="$store.state.logo"></img>
                     </div>
                     <v-card-text>
-                        <form @submit.prevent="login" method="post">
+                        <form class="flex justify-content-center flex-column"  @submit.prevent="login" method="post">
                             <v-text-field
                                 v-model="data.value"
                                 color="primary"
@@ -37,8 +37,8 @@
 
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn :disabled="disabled" v-bind="attrs" v-on="on" type="submit" color="primary">
-                                        <v-icon v-if="!loading">mdi-login-variant</v-icon>
+                                    <v-btn text :disabled="disabled" v-bind="attrs" v-on="on" type="submit" color="success">
+                                        <span v-if="!loading"><v-icon>mdi-login-variant</v-icon> Connexion</span>
                                         <v-progress-circular
                                             v-else
                                             indeterminate
