@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DefineHoursOfAccessRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UserChangePasswordRequest;
 use App\Mail\AccountCreated;
 use App\Models\User;
 use Carbon\Carbon;
@@ -152,6 +153,21 @@ class UserController extends Controller
             ]);
 
             return response()->noContent();
+        }
+    }
+
+    public function changePassword(UserChangePasswordRequest $request,$user_id)
+    {
+        try {
+            if($request->validated())
+            {
+                $user = User::findOrFail($user_id);
+                $user->update(['password' => Hash::make($request->new_password)]);
+                return response()->noContent();
+            }
+        }catch (\Exception $exception)
+        {
+            return response(['message' => $exception->getMessage()],404);
         }
     }
 }
