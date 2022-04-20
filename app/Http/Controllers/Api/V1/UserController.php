@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest('created_at')->type('agent')->get();
+        $users = User::withTrashed()->latest('created_at')->type('agent')->get();
         return response(['data' => $users],200);
     }
 
@@ -105,7 +105,32 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $user = User::withTrashed()->findOrFail($id);
+            if(!$user->trashed())
+            {
+                $user->delete();
+            }
+            return response()->noContent();
+        }catch (\Exception $exception)
+        {
+            return response(['message' => $exception->getMessage()],404);
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $user = User::withTrashed()->findOrFail($id);
+            if($user->trashed())
+            {
+                $user->restore();
+            }
+            return response()->noContent();
+        }catch (\Exception $exception)
+        {
+            return response(['message' => $exception->getMessage()],404);
+        }
     }
 
     public function banUser($user_id, $status)

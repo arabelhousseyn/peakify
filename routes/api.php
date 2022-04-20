@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::controller(UserController::class)->prefix('user')->group(function (){
         Route::put('ban/{user_id}/{status}','banUser')->whereAlphaNumeric('user_id');
         Route::put('define-hours/{user_id}','defineHours')->whereAlphaNumeric('user_id');
+        Route::get('restore/{user_id}','restore')->whereAlphaNumeric('user_id');
     });
 
     // resource controllers
