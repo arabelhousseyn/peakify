@@ -19,8 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::withTrashed()->latest('created_at')->type('agent')->get();
-        return response(['data' => $users],200);
+        $users = User::withTrashed()->latest('created_at')->type('agent')->paginate(15);
+        return response($users,200);
     }
 
     /**

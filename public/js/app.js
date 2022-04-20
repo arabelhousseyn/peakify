@@ -5882,6 +5882,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
+    axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.$store.state.user.token);
     this.$store.commit('CHECK_AUTH');
   }
 });
@@ -6360,10 +6361,138 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      search: null,
+      page: 1,
+      itemsPerPage: 15,
+      pageCount: 0,
+      headers: [{
+        text: 'Dessert (100g serving)',
+        align: 'start',
+        sortable: false,
+        value: 'name'
+      }, {
+        text: 'Calories',
+        value: 'calories'
+      }, {
+        text: 'Fat (g)',
+        value: 'fat'
+      }, {
+        text: 'Carbs (g)',
+        value: 'carbs'
+      }, {
+        text: 'Protein (g)',
+        value: 'protein'
+      }, {
+        text: 'Iron (%)',
+        value: 'iron'
+      }],
+      desserts: [{
+        name: 'Frozen Yogurt',
+        calories: 159,
+        fat: 6.0,
+        carbs: 24,
+        protein: 4.0,
+        iron: '1%'
+      }, {
+        name: 'Ice cream sandwich',
+        calories: 237,
+        fat: 9.0,
+        carbs: 37,
+        protein: 4.3,
+        iron: '1%'
+      }, {
+        name: 'Eclair',
+        calories: 262,
+        fat: 16.0,
+        carbs: 23,
+        protein: 6.0,
+        iron: '7%'
+      }, {
+        name: 'Cupcake',
+        calories: 305,
+        fat: 3.7,
+        carbs: 67,
+        protein: 4.3,
+        iron: '8%'
+      }, {
+        name: 'Gingerbread',
+        calories: 356,
+        fat: 16.0,
+        carbs: 49,
+        protein: 3.9,
+        iron: '16%'
+      }, {
+        name: 'Jelly bean',
+        calories: 375,
+        fat: 0.0,
+        carbs: 94,
+        protein: 0.0,
+        iron: '0%'
+      }, {
+        name: 'Lollipop',
+        calories: 392,
+        fat: 0.2,
+        carbs: 98,
+        protein: 0,
+        iron: '2%'
+      }, {
+        name: 'Honeycomb',
+        calories: 408,
+        fat: 3.2,
+        carbs: 87,
+        protein: 6.5,
+        iron: '45%'
+      }, {
+        name: 'Donut',
+        calories: 452,
+        fat: 25.0,
+        carbs: 51,
+        protein: 4.9,
+        iron: '22%'
+      }, {
+        name: 'KitKat',
+        calories: 518,
+        fat: 26.0,
+        carbs: 65,
+        protein: 7,
+        iron: '6%'
+      }],
       items: [{
         text: 'Tableau de bord',
         disabled: false,
@@ -6377,6 +6506,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     BreadCrumbsComponent: _components_BreadCrumbsComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    currentPage: function currentPage() {}
   }
 });
 
@@ -42534,7 +42666,86 @@ var render = function () {
       _c(
         "v-container",
         { attrs: { fluid: "" } },
-        [_c("bread-crumbs-component", { attrs: { items: _vm.items } })],
+        [
+          _c("bread-crumbs-component", { attrs: { items: _vm.items } }),
+          _vm._v(" "),
+          _c(
+            "v-card",
+            { staticClass: "mt-5", attrs: { elevation: "0" } },
+            [
+              _c(
+                "v-card-title",
+                [
+                  _vm._v("\n               Utilisateurs\n               "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "append-icon": "mdi-magnify",
+                      label: "Rechercher",
+                      "single-line": "",
+                      "hide-details": "",
+                    },
+                    model: {
+                      value: _vm.search,
+                      callback: function ($$v) {
+                        _vm.search = $$v
+                      },
+                      expression: "search",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c("v-data-table", {
+                    staticClass: "elevation-1",
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.desserts,
+                      page: _vm.page,
+                      search: _vm.search,
+                      "items-per-page": _vm.itemsPerPage,
+                      "hide-default-footer": "",
+                    },
+                    on: {
+                      "update:page": function ($event) {
+                        _vm.page = $event
+                      },
+                      "page-count": function ($event) {
+                        _vm.pageCount = $event
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "text-center pt-2" },
+                    [
+                      _c("v-pagination", {
+                        attrs: { length: _vm.pageCount },
+                        on: { input: _vm.currentPage },
+                        model: {
+                          value: _vm.page,
+                          callback: function ($$v) {
+                            _vm.page = $$v
+                          },
+                          expression: "page",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
         1
       ),
     ],
