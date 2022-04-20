@@ -59,7 +59,13 @@ const routes = [
             },
             {
                 path : 'users',
-                component : () => import('../pages/User/UserPage')
+                component : () => import('../pages/User/UserPage'),
+                children : [
+                    {
+                        path : '/',
+                        component : () => import('../pages/User/datatableUserPage'),
+                    }
+                ]
             }
         ]
     }

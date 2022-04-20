@@ -1,5 +1,5 @@
 <template>
     <div class="user-page">
-        welcome to user page
+        <router-view />
     </div>
 </template>
