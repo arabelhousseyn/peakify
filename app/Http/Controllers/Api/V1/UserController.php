@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Mail\AccountCreated;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -40,8 +45,20 @@ class UserController extends Controller
     {
         if($request->validated())
         {
-            return $request->validated();
-            $user = User::create($request->validated());
+            $default = [
+                'banned_at' => null,
+                'start_at' => null,
+                'end_at' => null,
+                'type' => 'agent'
+            ];
+            $hash_password = [
+                'password' => Hash::make($request->password)
+            ];
+            $user = User::create(array_merge($request->except('password_confirmation','password'),$hash_password,$default));
+
+            Mail::to($request->email)->send(new AccountCreated($request->username,$request->password,Carbon::now()->locale(App::getLocale())->toDateTimeString()));
+
+            return response(['message' => 'created!'],201);
         }
     }
 

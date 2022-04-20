@@ -24,6 +24,7 @@ return new class extends Migration
             $table->time('start_at')->nullable();
             $table->time('end_at')->nullable();
             $table->enum('type',['admin','agent']);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
