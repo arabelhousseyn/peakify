@@ -7,7 +7,8 @@ use App\Http\Controllers\Api\V1\{
     LoginController,
     RequestResetPassowrdController,
     ResetPasswordController,
-    LogoutController
+    LogoutController,
+    UserController
 };
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -27,7 +28,14 @@ Route::put('reset-password/{token}',ResetPasswordController::class);
 
 
 Route::middleware('auth:sanctum')->group(function (){
+    // admin
     Route::prefix('admin')->group(function (){
         Route::get('logout',LogoutController::class);
     });
+
+    // resource controllers
+
+    Route::resources([
+        'user' => UserController::class
+    ]);
 });
