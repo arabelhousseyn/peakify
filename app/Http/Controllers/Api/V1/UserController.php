@@ -108,10 +108,10 @@ class UserController extends Controller
         //
     }
 
-    public function banUser($user_id)
+    public function banUser($user_id, $status)
     {
         User::where('_id',$user_id)->update([
-            'banned_at' => Carbon::now()->toDateTimeString()
+            'banned_at' => ($status) ? Carbon::now()->toDateTimeString() : null
         ]);
 
         return response()->noContent();

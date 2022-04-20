@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function (){
     // user
 
     Route::controller(UserController::class)->prefix('user')->group(function (){
-        Route::put('ban/{user_id}','banUser')->whereAlphaNumeric('user_id');
+        Route::put('ban/{user_id}/{status}','banUser')->whereAlphaNumeric('user_id');
         Route::put('define-hours/{user_id}','defineHours')->whereAlphaNumeric('user_id');
     });
 
