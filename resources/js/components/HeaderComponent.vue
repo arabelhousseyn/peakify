@@ -42,29 +42,9 @@
                             </v-list-item-content>
                         </template>
 
-                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/admins').catch(err => {})}">
-                            <v-list-item-content>
-                                <v-list-item-title>Administrateurs</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-
                         <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/users').catch(err => {})}">
                             <v-list-item-content>
                                 <v-list-item-title>Utilisateurs</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-
-
-                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/sellers').catch(err => {})}">
-                            <v-list-item-content>
-                                <v-list-item-title>Vendeurs</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-
-
-                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/shippers').catch(err => {})}">
-                            <v-list-item-content>
-                                <v-list-item-title>Livreurs</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-group>

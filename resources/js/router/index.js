@@ -57,6 +57,10 @@ const routes = [
                 path : '/',
                 component : () => import('../components/MainComponent')
             },
+            {
+                path : 'users',
+                component : () => import('../pages/User/UserPage')
+            }
         ]
     }
 
