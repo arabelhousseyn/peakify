@@ -27,6 +27,6 @@ class AccountCreated extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.users.account');
+        return $this->subject('Compte créé.')->markdown('emails.users.account');
     }
 }
