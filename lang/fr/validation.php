@@ -142,15 +142,19 @@ return [
 
     'custom' => [
         'username' => [
+            'required' => 'Nom d\'utilisateur requis.',
             'max' => 'Nom d\'utilisateur maximum de caractères 255.',
+            'unique' => 'Nom d\'utilisateur existe déjà.'
         ],
         'email' => [
             'email' => 'L\'e-mail doit être valide.',
             'required' => 'Email requis.',
-            'exists' => 'Email n\'existse pas.'
+            'exists' => 'Email n\'existse pas.',
+            'unique' => 'Email existe déjà.'
         ],
         'password' => [
             'required' => 'Mot de passe requis.',
+            'confirmed' => 'Mot de passe ne correspond pas.'
         ],
         'has_email' => [
             'required' => 'Erreur dans serveur.',
@@ -159,6 +163,16 @@ return [
         'new_password' => [
             'required' => 'Nouveau mot de passe requis.',
             'confirmed' => 'Mot de passe ne correspond pas.'
+        ],
+        'full_name' => [
+            'required' => 'Nom complet requis.',
+            'max' => 'Nom complet maximum de caractères 255.'
+        ],
+        'phone' => [
+            'digits' => 'Le téléphone doit avoir 10 chiffres.'
+        ],
+        'job' => [
+            'max' => 'Fonction maximum de caractères 255.'
         ]
     ],
 
