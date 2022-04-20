@@ -47,14 +47,14 @@ class UserController extends Controller
         {
             $default = [
                 'banned_at' => null,
-                'start_at' => null,
-                'end_at' => null,
+                'start_at' => ($request->start_at) ? $request->start_at : null,
+                'end_at' => ($request->end_at) ? $request->end_at : null,
                 'type' => 'agent'
             ];
-            $hash_password = [
+            $hashed_password = [
                 'password' => Hash::make($request->password)
             ];
-            $user = User::create(array_merge($request->except('password_confirmation','password'),$hash_password,$default));
+            $user = User::create(array_merge($request->except('password_confirmation','password','start_at','end_at'),$hashed_password,$default));
 
             Mail::to($request->email)->send(new AccountCreated($request->username,$request->password,Carbon::now()->locale(App::getLocale())->toDateTimeString()));
 
@@ -105,5 +105,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function banUser($user_id)
+    {
+        User::where('_id',$user_id)->update([
+            'banned_at' => Carbon::now()->toDateTimeString()
+        ]);
+
+        return response()->noContent();
     }
 }

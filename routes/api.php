@@ -33,6 +33,12 @@ Route::middleware('auth:sanctum')->group(function (){
         Route::get('logout',LogoutController::class);
     });
 
+    // user
+
+    Route::controller(UserController::class)->prefix('user')->group(function (){
+        Route::put('ban/{user_id}','banUser')->whereAlphaNumeric('user_id');
+    });
+
     // resource controllers
 
     Route::resources([
