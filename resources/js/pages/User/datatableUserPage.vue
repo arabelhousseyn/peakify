@@ -4,27 +4,114 @@
            <bread-crumbs-component :items="items" />
            <v-card class="mt-5" elevation="0">
                <v-card-title>
-                   Utilisateurs
+                   <span>Utilisateurs</span>
                    <v-spacer></v-spacer>
-                   <v-text-field
-                       v-model="search"
-                       append-icon="mdi-magnify"
-                       label="Rechercher"
-                       single-line
-                       hide-details
-                   ></v-text-field>
+                   <v-btn @click="$router.push('users/add-user')" color="primary">
+                       <v-icon>mdi-plus</v-icon> Ajouter
+                   </v-btn>
                </v-card-title>
+
                <v-card-text>
+                  <v-row class="mb-3">
+                      <v-col cols="12" lg="10" sm="10">
+
+                      </v-col>
+                      <v-col cols="12" lg="2" sm="2">
+                          <v-text-field
+                              v-model="search"
+                              append-icon="mdi-magnify"
+                              label="Rechercher"
+                              single-line
+                              hide-details
+                          ></v-text-field>
+                      </v-col>
+                  </v-row>
                    <v-data-table
+                       :loading="loading"
+                       loading-text="Chargement... veuillez patienter"
                        :headers="headers"
-                       :items="desserts"
+                       :items="data"
                        :page.sync="page"
                        :search="search"
                        :items-per-page="itemsPerPage"
                        hide-default-footer
                        class="elevation-1"
                        @page-count="pageCount = $event"
-                   ></v-data-table>
+                   >
+                       <template v-slot:item.deleted_at="{ item }">
+                           <div v-if="item.deleted_at">
+                               <v-chip
+                                   v-if="item.deleted_at !== null"
+                                   color="red"
+                                   dark
+                               >
+                                   Supprimer
+                               </v-chip>
+
+                               <v-chip
+                                   v-else
+                                   color="green"
+                                   dark
+                               >
+                                   Active
+                               </v-chip>
+                           </div>
+                           <div v-else>
+                               <v-chip
+                                   color="green"
+                                   dark
+                               >
+                                   Active
+                               </v-chip>
+                           </div>
+                       </template>
+
+                       <template v-slot:item.created_at="{ item }">
+                           <span> {{ formatDate(item.created_at) }} </span>
+                       </template>
+
+                       <template v-slot:item.actions="{ item }">
+                           <v-menu
+                               bottom
+                               min-width="200"
+                           >
+                               <template v-slot:activator="{ on, attrs }">
+                                   <v-btn
+                                       dark
+                                       color="primary"
+                                       fab
+                                       small
+                                       text
+                                       v-bind="attrs"
+                                       v-on="on"
+                                   >
+                                       <v-icon>mdi-dots-vertical</v-icon>
+                                   </v-btn>
+                               </template>
+
+                               <v-list>
+                                   <v-list-item-group>
+                                       <v-list-item link @click="update(item)">
+                                           <v-list-item-icon><v-icon color="primary">mdi-pencil</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                       <v-list-item v-if="item.deleted_at == null" link @click="destroy(item.id)">
+                                           <v-list-item-icon><v-icon color="red">mdi-delete</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Bloqué</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                       <v-list-item v-else link @click="restore(item.id)">
+                                           <v-list-item-icon><v-icon color="green">mdi-restore</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Restaurer</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                       <v-list-item link @click="security(item.id)">
+                                           <v-list-item-icon><v-icon color="primary">mdi-security</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Sécurité</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                   </v-list-item-group>
+                               </v-list>
+                           </v-menu>
+                       </template>
+                   </v-data-table>
                    <div class="text-center pt-2">
                        <v-pagination
                            v-model="page"
@@ -38,108 +125,33 @@
     </div>
 </template>
 <script>
+import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 export default {
     data : ()=>({
         search : null,
         page: 1,
-        itemsPerPage : 15,
+        itemsPerPage : 0,
         pageCount: 0,
+        loading : true,
         headers: [
             {
-                text: 'Dessert (100g serving)',
+                text: 'Nom complet',
                 align: 'start',
                 sortable: false,
-                value: 'name',
+                value: 'full_name',
             },
-            { text: 'Calories', value: 'calories' },
-            { text: 'Fat (g)', value: 'fat' },
-            { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' },
-            { text: 'Iron (%)', value: 'iron' },
+            { text: 'Nom d\'utilisateur', value: 'username' },
+            { text: 'email', value: 'email' },
+            { text: 'Telephone', value: 'phone' },
+            { text: 'Bloquer à', value: 'banned_at' },
+            { text: 'Commencer à', value: 'start_at' },
+            { text: 'Fini à', value: 'end_at' },
+            { text: 'Statu', value: 'deleted_at' },
+            { text: 'Créé à', value: 'created_at' },
+            { text: 'Actions', value: 'actions', sortable: false },
         ],
-        desserts: [
-            {
-                name: 'Frozen Yogurt',
-                calories: 159,
-                fat: 6.0,
-                carbs: 24,
-                protein: 4.0,
-                iron: '1%',
-            },
-            {
-                name: 'Ice cream sandwich',
-                calories: 237,
-                fat: 9.0,
-                carbs: 37,
-                protein: 4.3,
-                iron: '1%',
-            },
-            {
-                name: 'Eclair',
-                calories: 262,
-                fat: 16.0,
-                carbs: 23,
-                protein: 6.0,
-                iron: '7%',
-            },
-            {
-                name: 'Cupcake',
-                calories: 305,
-                fat: 3.7,
-                carbs: 67,
-                protein: 4.3,
-                iron: '8%',
-            },
-            {
-                name: 'Gingerbread',
-                calories: 356,
-                fat: 16.0,
-                carbs: 49,
-                protein: 3.9,
-                iron: '16%',
-            },
-            {
-                name: 'Jelly bean',
-                calories: 375,
-                fat: 0.0,
-                carbs: 94,
-                protein: 0.0,
-                iron: '0%',
-            },
-            {
-                name: 'Lollipop',
-                calories: 392,
-                fat: 0.2,
-                carbs: 98,
-                protein: 0,
-                iron: '2%',
-            },
-            {
-                name: 'Honeycomb',
-                calories: 408,
-                fat: 3.2,
-                carbs: 87,
-                protein: 6.5,
-                iron: '45%',
-            },
-            {
-                name: 'Donut',
-                calories: 452,
-                fat: 25.0,
-                carbs: 51,
-                protein: 4.9,
-                iron: '22%',
-            },
-            {
-                name: 'KitKat',
-                calories: 518,
-                fat: 26.0,
-                carbs: 65,
-                protein: 7,
-                iron: '6%',
-            },
-        ],
+        data: [],
         items : [
             {
                 text: 'Tableau de bord',
@@ -155,10 +167,40 @@ export default {
     }),
     components: {BreadCrumbsComponent},
     methods : {
+        formatDate(date)
+        {
+            return new moment(date).locale('fr').format('MMMM Do YYYY, h:mm:ss a')
+        },
         currentPage()
         {
+            this.loading = true
+            this.data = []
+            this.init()
+        },
+        init()
+        {
+            if(this.searchPageUrl() > 1)
+            {
+                this.page = this.searchPageUrl()
+                this.$router.push(`?page=${this.page}`)
+            }
 
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get(`/api/user?page=${this.page}`).then(e=>{
+                    this.pageCount = e.data.last_page
+                    this.itemsPerPage = e.data.per_page
+                    this.data = e.data.data
+                    this.loading = false
+                })
+            })
+        },
+        searchPageUrl()
+        {
+            return (window.location.search.length == 0) ? 1 : window.location.search.replace('?page=','')
         }
+    },
+    mounted() {
+        this.init()
     }
 }
 </script>
