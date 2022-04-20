@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DefineHoursOfAccessRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Mail\AccountCreated;
 use App\Models\User;
@@ -114,5 +115,18 @@ class UserController extends Controller
         ]);
 
         return response()->noContent();
+    }
+
+    public function defineHours(DefineHoursOfAccessRequest $request,$user_id)
+    {
+        if($request->validated())
+        {
+            User::where('_id',$user_id)->update([
+                'start_at' => $request->start_at,
+                'end_at' => $request->end_at,
+            ]);
+
+            return response()->noContent();
+        }
     }
 }

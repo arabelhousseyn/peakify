@@ -173,6 +173,14 @@ return [
         ],
         'job' => [
             'max' => 'Fonction maximum de caractères 255.'
+        ],
+        'start_at' => [
+            'required' => 'L\'heur du debut requis.',
+            'date_format' => 'Erreur.'
+        ],
+        'end_at' => [
+            'required' => 'L\'heur du fin requis.',
+            'date_format' => 'Erreur.'
         ]
     ],
 
