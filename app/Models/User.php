@@ -54,9 +54,4 @@ class User extends Authenticatable
     {
         return $query->where('type',$type);
     }
-
-    public function getCreatedAtAttribute()
-    {
-        return Carbon::parse($this->attributes['created_at'])->locale(App::getLocale())->toDayDateTimeString();
-    }
 }
