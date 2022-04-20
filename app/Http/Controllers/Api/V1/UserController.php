@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DefineHoursOfAccessRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UserChangePasswordRequest;
+use App\Http\Requests\{DefineHoursOfAccessRequest, StoreUserRequest, UpdateUserRequest, UserChangePasswordRequest};
 use App\Mail\AccountCreated;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\{App,Hash,Mail};
 
 class UserController extends Controller
 {
@@ -93,9 +89,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        try {
+
+            if($request->validated())
+            {
+                $user = User::findOrFail($id);
+                $user->update($request->validated());
+                return response()->noContent();
+            }
+
+        }catch (\Exception $exception)
+        {
+            return response(['message' => $exception->getMessage()],404);
+        }
     }
 
     /**
