@@ -115,7 +115,7 @@
                    <div class="text-center pt-2">
                        <v-pagination
                            v-model="page"
-                           :length="pageCount"
+                           :length="count"
                            @input="currentPage"
                        ></v-pagination>
                    </div>
@@ -132,7 +132,7 @@ export default {
         search : null,
         page: 1,
         itemsPerPage : 0,
-        pageCount: 0,
+        count: 0,
         loading : true,
         headers: [
             {
@@ -175,19 +175,14 @@ export default {
         {
             this.loading = true
             this.data = []
+            this.$router.push(`?page=${this.page}`).catch(err => {})
             this.init()
         },
         init()
         {
-            if(this.searchPageUrl() > 1)
-            {
-                this.page = this.searchPageUrl()
-                this.$router.push(`?page=${this.page}`)
-            }
-
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.get(`/api/user?page=${this.page}`).then(e=>{
-                    this.pageCount = e.data.last_page
+                    this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
                     this.loading = false
@@ -196,10 +191,15 @@ export default {
         },
         searchPageUrl()
         {
-            return (window.location.search.length == 0) ? 1 : window.location.search.replace('?page=','')
+            return (window.location.search.length == 0) ? 1 : parseInt(window.location.search.replace('?page=',''))
         }
     },
     mounted() {
+        if(this.searchPageUrl() > 1)
+        {
+            this.page = this.searchPageUrl()
+            this.$router.push(`?page=${this.page}`).catch(err => {})
+        }
         this.init()
     }
 }
