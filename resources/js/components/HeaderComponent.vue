@@ -73,40 +73,6 @@ export default {
             }else if(path.includes('home/users'))
             {
                 this.selectedItem = 1;
-            }else if(path.includes('home/sellers'))
-            {
-                this.selectedItem = 1;
-            }else if(path.includes('home/shippers'))
-            {
-                this.selectedItem = 1;
-            }
-            else if(path.includes('home/provinces'))
-            {
-                this.selectedItem = 2;
-            }
-            else if(path.includes('home/signs'))
-            {
-                this.selectedItem = 3;
-            }
-            else if(path.includes('home/types'))
-            {
-                this.selectedItem = 4;
-            }
-            else if(path.includes('home/orders'))
-            {
-                this.selectedItem = 5;
-            }
-            else if(path.includes('home/notifications'))
-            {
-                this.selectedItem = 6;
-            }
-            else if(path.includes('home/statistics'))
-            {
-                this.selectedItem = 7;
-            }
-            else if(path.includes('home/ads'))
-            {
-                this.selectedItem = 8;
             }
             else{
                 this.selectedItem = null

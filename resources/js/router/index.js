@@ -65,6 +65,10 @@ const routes = [
                         path : '/',
                         component : () => import('../pages/User/datatableUserPage'),
                     },
+                    {
+                        path : 'add-user',
+                        component : () => import('../pages/User/AddUserPage')
+                    }
                 ]
             }
         ]
