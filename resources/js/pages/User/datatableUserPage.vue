@@ -91,7 +91,7 @@
 
                                <v-list>
                                    <v-list-item-group>
-                                       <v-list-item link @click="update(item)">
+                                       <v-list-item link @click="update(item._id)">
                                            <v-list-item-icon><v-icon color="primary">mdi-pencil</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                        </v-list-item>
@@ -103,7 +103,11 @@
                                            <v-list-item-icon><v-icon color="green">mdi-lock-open-outline</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Débloquer</v-list-item-title></v-list-item-content>
                                        </v-list-item>
-                                       <v-list-item link @click="security(item.id)">
+                                       <v-list-item  link @click="hours(item._id)">
+                                           <v-list-item-icon><v-icon color="green">mdi-clock</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Horaires</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                       <v-list-item link @click="security(item._id)">
                                            <v-list-item-icon><v-icon color="primary">mdi-security</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Sécurité</v-list-item-title></v-list-item-content>
                                        </v-list-item>
@@ -124,6 +128,7 @@
        </v-container>
         <lock-user-dialog @close="close" :dialog="dialog1" :user_id="user_id" />
         <unlock-user-dialog @close="close1" :dialog="dialog2" :user_id="user_id" />
+        <access-hours-dialog @close="close2" :dialog="dialog3" :user_id="user_id" />
     </div>
 </template>
 <script>
@@ -131,6 +136,7 @@ import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 import LockUserDialog from "../../components/dialog/User/LockUserDialog";
 import UnlockUserDialog from "../../components/dialog/User/UnlockUserDialog";
+import AccessHoursDialog from "../../components/dialog/User/AccessHoursDialog";
 export default {
     data : ()=>({
         search : null,
@@ -170,9 +176,10 @@ export default {
         ],
         dialog1 : false,
         dialog2 : false,
+        dialog3 : false,
         user_id : null,
     }),
-    components: {UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
+    components: {AccessHoursDialog, UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
     methods : {
         formatDate(date)
         {
@@ -210,6 +217,11 @@ export default {
             this.user_id = id
             this.dialog2 = true
         },
+        hours(id)
+        {
+            this.user_id = id
+            this.dialog3 = true
+        },
         close()
         {
             this.user_id = null
@@ -219,6 +231,11 @@ export default {
         {
             this.user_id = null
             this.dialog2 = false
+        },
+        close2()
+        {
+            this.user_id = null
+            this.dialog3 = false
         }
     },
     mounted() {

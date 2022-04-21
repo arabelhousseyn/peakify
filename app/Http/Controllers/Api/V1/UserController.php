@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::withTrashed()->latest('created_at')->type('agent')->paginate(2);
+        $users = User::withTrashed()->latest('created_at')->type('agent')->paginate(15);
         return response($users,200);
     }
 
