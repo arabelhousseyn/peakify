@@ -47,7 +47,8 @@ class UserController extends Controller
                 'banned_at' => null,
                 'start_at' => ($request->start_at) ? $request->start_at : null,
                 'end_at' => ($request->end_at) ? $request->end_at : null,
-                'type' => 'agent'
+                'type' => 'agent',
+                'deleted_at' => null
             ];
             $hashed_password = [
                 'password' => Hash::make($request->password)
