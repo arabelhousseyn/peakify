@@ -95,13 +95,13 @@
                                            <v-list-item-icon><v-icon color="primary">mdi-pencil</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                        </v-list-item>
-                                       <v-list-item v-if="item.deleted_at == null" link @click="destroy(item.id)">
-                                           <v-list-item-icon><v-icon color="red">mdi-delete</v-icon></v-list-item-icon>
-                                           <v-list-item-content><v-list-item-title>Bloqué</v-list-item-title></v-list-item-content>
+                                       <v-list-item v-if="item.banned_at == null" link @click="lock(item._id)">
+                                           <v-list-item-icon><v-icon color="red">mdi-lock</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Bloquer</v-list-item-title></v-list-item-content>
                                        </v-list-item>
-                                       <v-list-item v-else link @click="restore(item.id)">
-                                           <v-list-item-icon><v-icon color="green">mdi-restore</v-icon></v-list-item-icon>
-                                           <v-list-item-content><v-list-item-title>Restaurer</v-list-item-title></v-list-item-content>
+                                       <v-list-item v-else link @click="unlock(item._id)">
+                                           <v-list-item-icon><v-icon color="green">mdi-lock-open-outline</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Débloquer</v-list-item-title></v-list-item-content>
                                        </v-list-item>
                                        <v-list-item link @click="security(item.id)">
                                            <v-list-item-icon><v-icon color="primary">mdi-security</v-icon></v-list-item-icon>
@@ -122,11 +122,15 @@
                </v-card-text>
            </v-card>
        </v-container>
+        <lock-user-dialog @close="close" :dialog="dialog1" :user_id="user_id" />
+        <unlock-user-dialog @close="close1" :dialog="dialog2" :user_id="user_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
+import LockUserDialog from "../../components/dialog/User/LockUserDialog";
+import UnlockUserDialog from "../../components/dialog/User/UnlockUserDialog";
 export default {
     data : ()=>({
         search : null,
@@ -163,9 +167,12 @@ export default {
                 disabled: false,
                 href: '/home/users',
             },
-        ]
+        ],
+        dialog1 : false,
+        dialog2 : false,
+        user_id : null,
     }),
-    components: {BreadCrumbsComponent},
+    components: {UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
     methods : {
         formatDate(date)
         {
@@ -192,6 +199,26 @@ export default {
         searchPageUrl()
         {
             return (window.location.search.length == 0) ? 1 : parseInt(window.location.search.replace('?page=',''))
+        },
+        lock(id)
+        {
+            this.user_id = id
+            this.dialog1 = true
+        },
+        unlock(id)
+        {
+            this.user_id = id
+            this.dialog2 = true
+        },
+        close()
+        {
+            this.user_id = null
+            this.dialog1 = false
+        },
+        close1()
+        {
+            this.user_id = null
+            this.dialog2 = false
         }
     },
     mounted() {
