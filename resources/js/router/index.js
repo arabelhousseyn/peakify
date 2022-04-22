@@ -68,6 +68,10 @@ const routes = [
                     {
                         path : 'add-user',
                         component : () => import('../pages/User/AddUserPage')
+                    },
+                    {
+                        path : 'change-password-user/:id',
+                        component : () => import('../pages/User/ChangePasswordUserPage')
                     }
                 ]
             }

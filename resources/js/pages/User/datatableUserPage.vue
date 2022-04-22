@@ -107,7 +107,7 @@
                                            <v-list-item-icon><v-icon color="green">mdi-clock</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Horaires</v-list-item-title></v-list-item-content>
                                        </v-list-item>
-                                       <v-list-item link @click="security(item._id)">
+                                       <v-list-item link @click="$router.push(`/home/users/change-password-user/${item._id}`)">
                                            <v-list-item-icon><v-icon color="primary">mdi-security</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Sécurité</v-list-item-title></v-list-item-content>
                                        </v-list-item>
