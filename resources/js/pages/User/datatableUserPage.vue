@@ -103,7 +103,7 @@
                                            <v-list-item-icon><v-icon color="green">mdi-lock-open-outline</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Débloquer</v-list-item-title></v-list-item-content>
                                        </v-list-item>
-                                       <v-list-item  link @click="hours(item._id)">
+                                       <v-list-item  link @click="hours(item._id,item.start_at,item.end_at)">
                                            <v-list-item-icon><v-icon color="green">mdi-clock</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Horaires</v-list-item-title></v-list-item-content>
                                        </v-list-item>
@@ -128,7 +128,7 @@
        </v-container>
         <lock-user-dialog @close="close" :dialog="dialog1" :user_id="user_id" />
         <unlock-user-dialog @close="close1" :dialog="dialog2" :user_id="user_id" />
-        <access-hours-dialog @close="close2" :dialog="dialog3" :user_id="user_id" />
+        <access-hours-dialog @close="close2" :dialog="dialog3" :user_id="user_id" :start_at="start_at" :end_at="end_at" />
     </div>
 </template>
 <script>
@@ -178,6 +178,8 @@ export default {
         dialog2 : false,
         dialog3 : false,
         user_id : null,
+        start_at : null,
+        end_at : null
     }),
     components: {AccessHoursDialog, UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
     methods : {
@@ -217,9 +219,11 @@ export default {
             this.user_id = id
             this.dialog2 = true
         },
-        hours(id)
+        hours(id,start_at,end_at)
         {
             this.user_id = id
+            this.start_at = start_at
+            this.end_at = end_at
             this.dialog3 = true
         },
         close()
@@ -235,6 +239,8 @@ export default {
         close2()
         {
             this.user_id = null
+            this.start_at = null
+            this.end_at = null
             this.dialog3 = false
         }
     },

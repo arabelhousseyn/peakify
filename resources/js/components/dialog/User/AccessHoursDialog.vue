@@ -15,13 +15,13 @@
                         <v-col cols="12" lg="6" sm="6">
                             <h2>Commencer à : </h2>
                             <v-time-picker
-                                v-model="data.start_at"
+                                v-model="start_at"
                             ></v-time-picker>
                         </v-col>
                         <v-col cols="12" lg="6" sm="6">
                             <h2>Fini à : </h2>
                             <v-time-picker
-                                v-model="data.end_at"
+                                v-model="end_at"
                             ></v-time-picker>
                         </v-col>
                     </v-row>
@@ -55,7 +55,7 @@
 
 <script>
 export default {
-    props : ['dialog','user_id'],
+    props : ['dialog','user_id','start_at','end_at'],
     data : ()=>({
         data : {
             start_at : null,
@@ -67,6 +67,8 @@ export default {
         handle()
         {
             this.loading = true
+            this.data.start_at = this.start_at
+            this.data.end_at = this.end_at
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.put(`/api/user/define-hours/${this.user_id}`,this.data).then(e => {
                     if(e.status == 204)
