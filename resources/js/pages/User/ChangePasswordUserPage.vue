@@ -13,7 +13,7 @@
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
                                     @keydown="check"
-                                    v-model="data.password"
+                                    v-model="data.new_password"
                                     hint="Au moins 8 caractères"
                                     counter
                                     @click:append="show1 = !show1"
@@ -28,7 +28,7 @@
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
                                     @keydown="check"
-                                    v-model="data.password_confirmation"
+                                    v-model="data.new_password_confirmation"
                                     hint="Au moins 8 caractères"
                                     counter
                                     @click:append="show2 = !show2"
@@ -40,10 +40,6 @@
                                 ></v-text-field>
                             </v-col>
 
-
-
-
-
                             <v-alert v-if="hasError" border="right" colored-border type="error" elevation="2">
                                 <ul>
                                     <li v-for="(error,index) in errors" :key="index"><span>{{error}}</span></li>
@@ -51,7 +47,7 @@
                             </v-alert>
 
                             <v-btn :disabled="disabled" text type="submit" color="success">
-                                <span v-if="!loading"><v-icon>mdi-user-pencil</v-icon> Modifier</span>
+                                <span v-if="!loading"><v-icon>mdi-account-key</v-icon> Modifier</span>
                                 <v-progress-circular
                                     v-else
                                     indeterminate
@@ -69,9 +65,10 @@
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 export default {
     data : ()=>({
+        id : window.location.href.split('/').pop(),
         data : {
-            password : null,
-            password_confirmation : null,
+            new_password : null,
+            new_password_confirmation : null,
         },
         items : [
             {
@@ -95,10 +92,7 @@ export default {
         disabled : true,
         loading : false,
         hasError : false,
-        errors : [],
-        menu2: false,
-        menu3: false,
-        time: null,
+        errors : []
 
     }),
     components: {BreadCrumbsComponent},
@@ -108,7 +102,7 @@ export default {
             this.loading = true
             this.disabled = true
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.post('/api/user',this.data).then(e=>{
+                axios.put(`/api/user/change-password/${this.id}`,this.data).then(e=>{
                     this.$toast.open({
                         message : "Opération effectué",
                         type : 'success'
@@ -127,6 +121,15 @@ export default {
                         this.hasError = true
                         this.loading = false
                     }
+
+                    if(err.response.status == 404)
+                    {
+                        this.$toast.open({
+                            message : "L'utilisateur n'existe pas",
+                            type : 'error'
+                        })
+                        this.$router.push('/home/users')
+                    }
                 })
             })
         },
@@ -137,21 +140,12 @@ export default {
                 this.hasError = false
                 this.errors = []
             }
-            this.disabled = (this.data.full_name == null || this.data.email == null || this.data.username == null
-                || this.data.password == null || this.data.password_confirmation == null) ? true : false
+            this.disabled = (this.data.new_password == null || this.data.new_password_confirmation == null) ? true : false
         },
         empty()
         {
-            this.data.password_confirmation = null
-            this.data.password = null
-            this.data.email = null
-            this.data.username = null
-            this.data.full_name = null
-            delete this.data.phone
-            delete this.data.job
-            delete this.data.start_at
-            delete this.data.end_at
-
+            this.data.new_password_confirmation = null
+            this.data.new_password = null
         }
     }
 }
