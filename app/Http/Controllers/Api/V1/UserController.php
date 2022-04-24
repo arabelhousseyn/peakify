@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Http\Requests\{DefineHoursOfAccessRequest, StoreUserRequest, UpdateUserRequest, UserChangePasswordRequest};
 use App\Mail\AccountCreated;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{App,Hash,Mail};
 
@@ -178,4 +180,15 @@ class UserController extends Controller
             return response(['message' => $exception->getMessage()],404);
         }
     }
+
+    public function userDetails($user_id)
+    {
+        try {
+            return new UserResource(User::findOrFail($user_id));
+        }catch (ModelNotFoundException $exception)
+        {
+             throw new ModelNotFoundException($exception->getMessage());
+        }
+    }
+
 }
