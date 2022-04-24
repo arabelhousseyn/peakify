@@ -72,6 +72,12 @@ const routes = [
                     {
                         path : 'change-password-user/:id',
                         component : () => import('../pages/User/ChangePasswordUserPage')
+                    },
+                    {
+                        path: 'update-user/:id',
+                        name : 'updateUser',
+                        props : true,
+                        component : () => import('../pages/User/UpdateUserPage')
                     }
                 ]
             }

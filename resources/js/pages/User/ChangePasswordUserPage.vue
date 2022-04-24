@@ -84,7 +84,7 @@ export default {
             {
                 text: 'Changer mot de passe',
                 disabled: true,
-                href: '/home/users/change-password-user',
+                href: '',
             },
         ],
         show1 : false,
