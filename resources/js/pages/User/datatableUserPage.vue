@@ -39,13 +39,13 @@
                        @page-count="pageCount = $event"
                    >
                        <template v-slot:item.deleted_at="{ item }">
-                           <div v-if="item.deleted_at">
+                           <div v-if="item.banned_at">
                                <v-chip
-                                   v-if="item.deleted_at !== null"
+                                   v-if="item.banned_at !== null"
                                    color="red"
                                    dark
                                >
-                                   Supprimer
+                                   Bloquer
                                </v-chip>
 
                                <v-chip
@@ -170,7 +170,7 @@ export default {
             { text: 'Nom d\'utilisateur', value: 'username' },
             { text: 'email', value: 'email' },
             { text: 'Telephone', value: 'phone' },
-            { text: 'Fonction', value: 'job' },
+            { text: 'Fonction ', value: 'job' },
             { text: 'Bloquer à', value: 'banned_at' },
             { text: 'Commencer à', value: 'start_at' },
             { text: 'Fini à', value: 'end_at' },
