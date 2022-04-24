@@ -91,9 +91,13 @@
 
                                <v-list>
                                    <v-list-item-group>
-                                       <v-list-item link @click="update(item._id)">
-                                           <v-list-item-icon><v-icon color="primary">mdi-pencil</v-icon></v-list-item-icon>
+                                       <v-list-item link>
+                                           <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                       <v-list-item link>
+                                           <v-list-item-icon><v-icon color="primary">mdi-account-lock</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Permissions</v-list-item-title></v-list-item-content>
                                        </v-list-item>
                                        <v-list-item v-if="item.banned_at == null" link @click="lock(item._id)">
                                            <v-list-item-icon><v-icon color="red">mdi-lock</v-icon></v-list-item-icon>
@@ -110,6 +114,14 @@
                                        <v-list-item link @click="$router.push(`/home/users/change-password-user/${item._id}`)">
                                            <v-list-item-icon><v-icon color="primary">mdi-security</v-icon></v-list-item-icon>
                                            <v-list-item-content><v-list-item-title>Sécurité</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                       <v-list-item v-if="item.deleted_at == null" link @click="destroy(item._id)">
+                                           <v-list-item-icon><v-icon color="red">mdi-trash-can</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Supprimer</v-list-item-title></v-list-item-content>
+                                       </v-list-item>
+                                       <v-list-item v-else link @click="restore(item._id)">
+                                           <v-list-item-icon><v-icon color="green">mdi-restore</v-icon></v-list-item-icon>
+                                           <v-list-item-content><v-list-item-title>Restorer</v-list-item-title></v-list-item-content>
                                        </v-list-item>
                                    </v-list-item-group>
                                </v-list>
@@ -129,6 +141,8 @@
         <lock-user-dialog @close="close" :dialog="dialog1" :user_id="user_id" />
         <unlock-user-dialog @close="close1" :dialog="dialog2" :user_id="user_id" />
         <access-hours-dialog @close="close2" :dialog="dialog3" :user_id="user_id" :start_at="start_at" :end_at="end_at" />
+        <delete-user-dialog @close="close3" :dialog="dialog4" :user_id="user_id" />
+        <restore-user-dialog @close="close4" :dialog="dialog5" :user_id="user_id" />
     </div>
 </template>
 <script>
@@ -137,6 +151,8 @@ import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 import LockUserDialog from "../../components/dialog/User/LockUserDialog";
 import UnlockUserDialog from "../../components/dialog/User/UnlockUserDialog";
 import AccessHoursDialog from "../../components/dialog/User/AccessHoursDialog";
+import DeleteUserDialog from "../../components/dialog/User/DeleteUserDialog";
+import RestoreUserDialog from "../../components/dialog/User/RestoreUserDialog";
 export default {
     data : ()=>({
         search : null,
@@ -177,11 +193,15 @@ export default {
         dialog1 : false,
         dialog2 : false,
         dialog3 : false,
+        dialog4 : false,
+        dialog5 : false,
         user_id : null,
         start_at : null,
         end_at : null
     }),
-    components: {AccessHoursDialog, UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
+    components: {
+        RestoreUserDialog,
+        DeleteUserDialog, AccessHoursDialog, UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
     methods : {
         formatDate(date)
         {
@@ -226,6 +246,16 @@ export default {
             this.end_at = end_at
             this.dialog3 = true
         },
+        destroy(id)
+        {
+            this.user_id = id
+            this.dialog4 = true
+        },
+        restore(id)
+        {
+            this.user_id = id
+            this.dialog5 = true
+        },
         close()
         {
             this.user_id = null
@@ -242,6 +272,16 @@ export default {
             this.start_at = null
             this.end_at = null
             this.dialog3 = false
+        },
+        close3()
+        {
+            this.user_id = null
+            this.dialog4 = false
+        },
+        close4()
+        {
+            this.user_id = null
+            this.dialog5 = false
         }
     },
     mounted() {
