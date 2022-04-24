@@ -93,6 +93,7 @@ export default {
                 href: '',
             },
         ],
+        data2 : {},
         disabled : true,
         loading : false,
         hasError : false,
@@ -106,11 +107,21 @@ export default {
         },
         init()
         {
-
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get(`/api/user/user-details/${this.user_id}`).then(e=>{
+                    this.data2 = e.data.data
+                    console.log(this.data2)
+                }).catch(err => {
+                    console.log(err)
+                })
+            })
         }
     },
     mounted() {
-
+        if(this.data == undefined)
+        {
+            this.init()
+        }
     }
 }
 </script>
