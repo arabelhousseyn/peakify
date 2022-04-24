@@ -223,6 +223,16 @@ export default {
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
                     this.loading = false
+                }).catch(err=>{
+                    if(err.response.status == 401)
+                    {
+                        this.$toast.open({
+                            message : err.response.data.message,
+                            type : 'error'
+                        })
+                        this.$store.commit('SET_OUT')
+                        this.$router.push('/')
+                    }
                 })
             })
         },

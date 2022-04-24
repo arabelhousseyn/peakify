@@ -27,7 +27,7 @@ Route::post('request-reset-password',RequestResetPassowrdController::class);
 Route::put('reset-password/{token}',ResetPasswordController::class);
 
 
-Route::middleware('auth:sanctum')->group(function (){
+Route::middleware(['auth:sanctum','check.hours'])->group(function (){
     // admin
     Route::prefix('admin')->group(function (){
         Route::get('logout',LogoutController::class);
