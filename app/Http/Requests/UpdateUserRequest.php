@@ -27,7 +27,6 @@ class UpdateUserRequest extends FormRequest
             'full_name' => 'max:255',
             'email' => 'email:rfc,dns,filter',
             'username' => 'max:255',
-            'phone' => 'digits:10',
             'job' => 'max:255',
         ];
     }

@@ -170,6 +170,7 @@ export default {
             { text: 'Nom d\'utilisateur', value: 'username' },
             { text: 'email', value: 'email' },
             { text: 'Telephone', value: 'phone' },
+            { text: 'Fonction', value: 'job' },
             { text: 'Bloquer à', value: 'banned_at' },
             { text: 'Commencer à', value: 'start_at' },
             { text: 'Fini à', value: 'end_at' },
