@@ -187,7 +187,7 @@ class UserController extends Controller
             return new UserResource(User::findOrFail($user_id));
         }catch (ModelNotFoundException $exception)
         {
-             throw new ModelNotFoundException($exception->getMessage());
+             throw new ModelNotFoundException('user not found');
         }
     }
 
