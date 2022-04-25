@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::withTrashed()->latest('created_at')->type('agent')->paginate(15);
+        $users = User::withoutTrashed()->whereNull('banned_at')->latest('created_at')->type('agent')->paginate(15);
         return response($users,200);
     }
 
@@ -119,7 +119,7 @@ class UserController extends Controller
             $user = User::withTrashed()->findOrFail($id);
             if(!$user->trashed())
             {
-                $user->forceDelete();
+                $user->delete();
             }
             return response()->noContent();
         }catch (\Exception $exception)

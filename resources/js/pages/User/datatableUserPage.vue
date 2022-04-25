@@ -13,8 +13,16 @@
 
                <v-card-text>
                   <v-row class="mb-3">
-                      <v-col cols="12" lg="10" sm="10">
-
+                      <v-col class="d-flex flex-row" cols="12" lg="10" sm="10">
+                          <v-combobox
+                              v-model="status"
+                              :items="selections"
+                              hide-selected
+                              label="Filtrage"
+                              persistent-hint
+                              small-chips
+                              @change="filter"
+                          />
                       </v-col>
                       <v-col cols="12" lg="2" sm="2">
                           <v-text-field
@@ -38,7 +46,7 @@
                        class="elevation-1"
                        @page-count="pageCount = $event"
                    >
-                       <template v-slot:item.deleted_at="{ item }">
+                       <template v-slot:item.banned_at="{ item }">
                            <div v-if="item.banned_at">
                                <v-chip
                                    v-if="item.banned_at !== null"
@@ -46,6 +54,34 @@
                                    dark
                                >
                                    Bloquer
+                               </v-chip>
+
+                               <v-chip
+                                   v-else
+                                   color="green"
+                                   dark
+                               >
+                                   Active
+                               </v-chip>
+                           </div>
+                           <div v-else>
+                               <v-chip
+                                   color="green"
+                                   dark
+                               >
+                                   Active
+                               </v-chip>
+                           </div>
+                       </template>
+
+                       <template v-slot:item.deleted_at="{ item }">
+                           <div v-if="item.deleted_at">
+                               <v-chip
+                                   v-if="item.deleted_at !== null"
+                                   color="red"
+                                   dark
+                               >
+                                   Supprimer
                                </v-chip>
 
                                <v-chip
@@ -171,10 +207,10 @@ export default {
             { text: 'email', value: 'email' },
             { text: 'Telephone', value: 'phone' },
             { text: 'Fonction ', value: 'job' },
-            { text: 'Bloquer à', value: 'banned_at' },
             { text: 'Commencer à', value: 'start_at' },
             { text: 'Fini à', value: 'end_at' },
-            { text: 'Statu', value: 'deleted_at' },
+            { text: 'Statu', value: 'banned_at' },
+            { text: 'état', value: 'deleted_at' },
             { text: 'Créé à', value: 'created_at' },
             { text: 'Actions', value: 'actions', sortable: false },
         ],
@@ -191,6 +227,8 @@ export default {
                 href: '/home/users',
             },
         ],
+        selections: ['Tous les utilisateurs', 'Utilisateurs Active', 'Utilisateurs bloquer','Utilisateurs supprimer'],
+
         dialog1 : false,
         dialog2 : false,
         dialog3 : false,
@@ -198,12 +236,17 @@ export default {
         dialog5 : false,
         user_id : null,
         start_at : null,
-        end_at : null
+        end_at : null,
+        hint : 'Utilisateurs Active'
     }),
     components: {
         RestoreUserDialog,
         DeleteUserDialog, AccessHoursDialog, UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
     methods : {
+        filter()
+        {
+          console.log(this.status)
+        },
         formatDate(date)
         {
             return new moment(date).locale('fr').format('MMMM Do YYYY, h:mm:ss a')
