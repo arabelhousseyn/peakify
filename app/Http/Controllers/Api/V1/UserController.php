@@ -119,7 +119,7 @@ class UserController extends Controller
             $user = User::withTrashed()->findOrFail($id);
             if(!$user->trashed())
             {
-                $user->delete();
+                $user->forceDelete();
             }
             return response()->noContent();
         }catch (\Exception $exception)
