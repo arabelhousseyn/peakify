@@ -15,7 +15,7 @@
                   <v-row class="mb-3">
                       <v-col class="d-flex flex-row" cols="12" lg="10" sm="10">
                           <v-combobox
-                              v-model="status"
+                              v-model="hint"
                               :items="selections"
                               hide-selected
                               label="Filtrage"
