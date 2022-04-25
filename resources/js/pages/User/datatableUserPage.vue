@@ -13,7 +13,7 @@
 
                <v-card-text>
                   <v-row class="mb-3">
-                      <v-col class="d-flex flex-row" cols="12" lg="10" sm="10">
+                      <v-col cols="12" lg="10" sm="10">
                           <v-combobox
                               v-model="hint"
                               :items="selections"
@@ -245,7 +245,7 @@ export default {
     methods : {
         filter()
         {
-          console.log(this.status)
+          console.log(this.hint)
         },
         formatDate(date)
         {
