@@ -47,6 +47,11 @@
                                 <v-list-item-title>Utilisateurs</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
+                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/clients').catch(err => {})}">
+                            <v-list-item-content>
+                                <v-list-item-title>Clients</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
                     </v-list-group>
                 </v-list-item-group>
             </v-list>
@@ -73,6 +78,10 @@ export default {
             }else if(path.includes('home/users'))
             {
                 this.selectedItem = 1;
+            }
+            else if(path.includes('home/clients'))
+            {
+                this.selectedItem = 2;
             }
             else{
                 this.selectedItem = null

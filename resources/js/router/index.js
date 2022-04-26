@@ -80,6 +80,16 @@ const routes = [
                         component : () => import('../pages/User/UpdateUserPage')
                     }
                 ]
+            },
+            {
+                path : 'clients',
+                component : () => import('../pages/Client/ClientPage'),
+                children: [
+                    {
+                        path : '/',
+                        component : () => import('../pages/Client/DatatableClientPage')
+                    }
+                ]
             }
         ]
     }
