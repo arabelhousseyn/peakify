@@ -190,4 +190,23 @@ class UserController extends Controller
         }
     }
 
+    public function filterUsers($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $users = User::withTrashed()->latest('created_at')->type('agent')->paginate(15);
+                return response($users,200);
+                break;
+            case 1 :
+                $users = User::withoutTrashed()->whereNotNull('banned_at')->latest('created_at')->type('agent')->paginate(15);
+                return response($users,200);
+                break;
+            case 2 :
+                $users = User::onlyTrashed()->latest('created_at')->type('agent')->paginate(15);
+                return response($users,200);
+                break;
+        }
+    }
+
 }

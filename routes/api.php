@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::get('restore/{user_id}','restore')->whereAlphaNumeric('user_id');
         Route::put('change-password/{user_id}','changePassword')->whereAlphaNumeric('user_id');
         Route::get('user-details/{user_id}','userDetails')->whereAlphaNumeric('user_id');
+        Route::get('filter/{filter}','filterUsers')->whereNumber('filter');
     });
 
     // resource controllers
