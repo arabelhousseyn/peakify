@@ -245,7 +245,40 @@ export default {
     methods : {
         filter()
         {
-          console.log(this.hint)
+            if(this.hint == 'Utilisateurs Active')
+            {
+                this.init()
+            }else if(this.hint == 'Tous les utilisateurs')
+            {
+                this.callApi(0)
+            }else if(this.hint == 'Utilisateurs bloquer')
+            {
+                this.callApi(1)
+            }else if (this.hint == 'Utilisateurs supprimer')
+            {
+                this.callApi(2)
+            }
+        },
+        callApi(filter)
+        {
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get(`/api/user/filter/${filter}?page=${this.page}`).then(e=>{
+                    this.count = e.data.last_page
+                    this.itemsPerPage = e.data.per_page
+                    this.data = e.data.data
+                    this.loading = false
+                }).catch(err=>{
+                    if(err.response.status == 401)
+                    {
+                        this.$toast.open({
+                            message : err.response.data.message,
+                            type : 'error'
+                        })
+                        this.$store.commit('SET_OUT')
+                        this.$router.push('/')
+                    }
+                })
+            })
         },
         formatDate(date)
         {
@@ -256,7 +289,12 @@ export default {
             this.loading = true
             this.data = []
             this.$router.push(`?page=${this.page}`).catch(err => {})
-            this.init()
+            if(this.hint == 'Utilisateurs Active')
+            {
+                this.init()
+            }else{
+                this.filter()
+            }
         },
         init()
         {
