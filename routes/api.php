@@ -8,7 +8,8 @@ use App\Http\Controllers\Api\V1\{
     RequestResetPassowrdController,
     ResetPasswordController,
     LogoutController,
-    UserController
+    UserController,
+    ClientController
 };
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -47,6 +48,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
     // resource controllers
 
     Route::resources([
-        'user' => UserController::class
+        'user' => UserController::class,
+        'client' => ClientController::class
     ]);
 });
