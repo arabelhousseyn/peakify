@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\V1\{
     ResetPasswordController,
     LogoutController,
     UserController,
-    ClientController
+    ClientController,
+    CategoryController
 };
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -53,10 +54,17 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::get('filter/{filter}','filter')->whereNumber('filter');
     });
 
+    // category
+
+    Route::controller(CategoryController::class)->prefix('category')->group(function (){
+
+    });
+
     // resource controllers
 
     Route::resources([
         'user' => UserController::class,
-        'client' => ClientController::class
+        'client' => ClientController::class,
+        'category' => CategoryController::class
     ]);
 });
