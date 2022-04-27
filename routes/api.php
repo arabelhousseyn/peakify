@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
     Route::controller(UserController::class)->prefix('user')->group(function (){
         Route::put('ban/{user_id}/{status}','banUser')->whereAlphaNumeric('user_id');
         Route::put('define-hours/{user_id}','defineHours')->whereAlphaNumeric('user_id');
-        Route::get('restore/{user_id}','restore')->whereAlphaNumeric('user_id');
+        Route::put('restore/{user_id}','restore')->whereAlphaNumeric('user_id');
         Route::put('change-password/{user_id}','changePassword')->whereAlphaNumeric('user_id');
         Route::get('user-details/{user_id}','userDetails')->whereAlphaNumeric('user_id');
         Route::get('filter/{filter}','filterUsers')->whereNumber('filter');

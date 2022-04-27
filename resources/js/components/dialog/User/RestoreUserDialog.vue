@@ -46,7 +46,7 @@ export default {
         {
             this.loading = true
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/user/restore/${this.user_id}`).then(e => {
+                axios.put(`/api/user/restore/${this.user_id}`).then(e => {
                     if(e.status == 204)
                     {
                         this.$toast.open({
