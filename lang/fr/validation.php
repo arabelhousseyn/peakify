@@ -169,6 +169,7 @@ return [
             'max' => 'Nom complet maximum de caractères 255.'
         ],
         'phone' => [
+            'required' =>'Téléphone requis.',
             'digits' => 'Le téléphone doit avoir 10 chiffres.'
         ],
         'job' => [
@@ -181,6 +182,9 @@ return [
         'end_at' => [
             'required' => 'L\'heur du fin requis.',
             'date_format' => 'Erreur.'
+        ],
+        'address' => [
+            'max' => 'Addresse maximum de caractères 255 .'
         ]
     ],
 

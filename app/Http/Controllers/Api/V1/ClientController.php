@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Client;
+use App\Http\Requests\StoreClientRequest;
+use App\Models\{Client};
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -15,7 +16,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+         $clients = Client::withoutTrashed()->latest('created_at')->paginate(15);
+         return response($clients,200);
     }
 
     /**
@@ -34,9 +36,12 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-        //
+        if($request->validated())
+        {
+
+        }
     }
 
     /**
