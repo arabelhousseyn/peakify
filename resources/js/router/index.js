@@ -92,6 +92,12 @@ const routes = [
                     {
                         path: 'add-client',
                         component : () => import('../pages/Client/AddClientPage')
+                    },
+                    {
+                        path: 'update-client/:id',
+                        name : 'updateClient',
+                        props: true,
+                        component : () => import('../pages/Client/UpdateClientPage')
                     }
                 ]
             }

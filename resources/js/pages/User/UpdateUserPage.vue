@@ -149,7 +149,7 @@ export default {
                     this.infos = e.data.data
                     this.disable = false
                 }).catch(err => {
-                    console.log(err)
+                    window.location.href = '/home/users'
                 })
             })
         }

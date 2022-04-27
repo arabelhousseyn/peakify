@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Resources\ClientResource;
 use App\Models\{Client};
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -109,6 +110,16 @@ class ClientController extends Controller
                 $client->restore();
                 return response()->noContent();
             }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('client not found');
+        }
+    }
+
+    public function clientDetails($client_id)
+    {
+        try {
+            return new ClientResource(Client::findOrFail($client_id));
         }catch (ModelNotFoundException $exception)
         {
             throw new ModelNotFoundException('client not found');

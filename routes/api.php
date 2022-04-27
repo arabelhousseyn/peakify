@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
 
     Route::controller(ClientController::class)->prefix('client')->group(function (){
         Route::put('restore/{client_id}','restore')->whereAlphaNumeric('client_id');
+        Route::get('client-details/{client_id}','clientDetails')->whereAlphaNumeric('client_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');
     });
 
