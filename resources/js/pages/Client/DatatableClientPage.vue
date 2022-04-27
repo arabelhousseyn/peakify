@@ -167,6 +167,7 @@ export default {
                 href: '/home/clients',
             },
         ],
+        selections: ['Tous les clients','Clients Active','Clients supprimer'],
 
         dialog1 : false,
         dialog2 : false,
