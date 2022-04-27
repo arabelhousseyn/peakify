@@ -46,33 +46,6 @@
                         class="elevation-1"
                         @page-count="pageCount = $event"
                     >
-                        <template v-slot:item.banned_at="{ item }">
-                            <div v-if="item.banned_at">
-                                <v-chip
-                                    v-if="item.banned_at !== null"
-                                    color="red"
-                                    dark
-                                >
-                                    Bloquer
-                                </v-chip>
-
-                                <v-chip
-                                    v-else
-                                    color="green"
-                                    dark
-                                >
-                                    Active
-                                </v-chip>
-                            </div>
-                            <div v-else>
-                                <v-chip
-                                    color="green"
-                                    dark
-                                >
-                                    Active
-                                </v-chip>
-                            </div>
-                        </template>
 
                         <template v-slot:item.deleted_at="{ item }">
                             <div v-if="item.deleted_at">
@@ -131,26 +104,6 @@
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
-                                        <v-list-item link>
-                                            <v-list-item-icon><v-icon color="primary">mdi-account-lock</v-icon></v-list-item-icon>
-                                            <v-list-item-content><v-list-item-title>Permissions</v-list-item-title></v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item v-if="item.banned_at == null" link @click="lock(item._id)">
-                                            <v-list-item-icon><v-icon color="red">mdi-lock</v-icon></v-list-item-icon>
-                                            <v-list-item-content><v-list-item-title>Bloquer</v-list-item-title></v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item v-else link @click="unlock(item._id)">
-                                            <v-list-item-icon><v-icon color="green">mdi-lock-open-outline</v-icon></v-list-item-icon>
-                                            <v-list-item-content><v-list-item-title>Débloquer</v-list-item-title></v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item  link @click="hours(item._id,item.start_at,item.end_at)">
-                                            <v-list-item-icon><v-icon color="green">mdi-clock</v-icon></v-list-item-icon>
-                                            <v-list-item-content><v-list-item-title>Horaires</v-list-item-title></v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item link @click="$router.push(`/home/users/change-password-user/${item._id}`)">
-                                            <v-list-item-icon><v-icon color="primary">mdi-security</v-icon></v-list-item-icon>
-                                            <v-list-item-content><v-list-item-title>Sécurité</v-list-item-title></v-list-item-content>
-                                        </v-list-item>
                                         <v-list-item v-if="item.deleted_at == null" link @click="destroy(item._id)">
                                             <v-list-item-icon><v-icon color="red">mdi-trash-can</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Supprimer</v-list-item-title></v-list-item-content>
@@ -174,21 +127,11 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <lock-user-dialog @close="close" :dialog="dialog1" :user_id="user_id" />
-        <unlock-user-dialog @close="close1" :dialog="dialog2" :user_id="user_id" />
-        <access-hours-dialog @close="close2" :dialog="dialog3" :user_id="user_id" :start_at="start_at" :end_at="end_at" />
-        <delete-user-dialog @close="close3" :dialog="dialog4" :user_id="user_id" />
-        <restore-user-dialog @close="close4" :dialog="dialog5" :user_id="user_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
-import LockUserDialog from "../../components/dialog/User/LockUserDialog";
-import UnlockUserDialog from "../../components/dialog/User/UnlockUserDialog";
-import AccessHoursDialog from "../../components/dialog/User/AccessHoursDialog";
-import DeleteUserDialog from "../../components/dialog/User/DeleteUserDialog";
-import RestoreUserDialog from "../../components/dialog/User/RestoreUserDialog";
 export default {
     data : ()=>({
         search : null,
@@ -203,13 +146,10 @@ export default {
                 sortable: false,
                 value: 'full_name',
             },
-            { text: 'Nom d\'utilisateur', value: 'username' },
             { text: 'email', value: 'email' },
             { text: 'Telephone', value: 'phone' },
-            { text: 'Fonction ', value: 'job' },
-            { text: 'Commencer à', value: 'start_at' },
-            { text: 'Fini à', value: 'end_at' },
-            { text: 'Statu', value: 'banned_at' },
+            { text: 'Ville', value: 'city' },
+            { text: 'Adresse', value: 'address' },
             { text: 'état', value: 'deleted_at' },
             { text: 'Créé à', value: 'created_at' },
             { text: 'Actions', value: 'actions', sortable: false },
@@ -222,12 +162,12 @@ export default {
                 href: '/',
             },
             {
-                text: 'Utilisateurs',
+                text: 'Clients',
                 disabled: false,
-                href: '/home/users',
+                href: '/home/clients',
             },
         ],
-        selections: ['Tous les utilisateurs', 'Utilisateurs Active', 'Utilisateurs bloquer','Utilisateurs supprimer'],
+        selections: ['Tous les clients','Clients supprimer'],
 
         dialog1 : false,
         dialog2 : false,
@@ -237,32 +177,27 @@ export default {
         user_id : null,
         start_at : null,
         end_at : null,
-        hint : 'Utilisateurs Active'
+        hint : 'Clients Active'
     }),
-    components: {
-        RestoreUserDialog,
-        DeleteUserDialog, AccessHoursDialog, UnlockUserDialog, LockUserDialog, BreadCrumbsComponent},
+    components: {BreadCrumbsComponent},
     methods : {
         filter()
         {
-            if(this.hint == 'Utilisateurs Active')
+            if(this.hint == 'Clients Active')
             {
                 this.init()
-            }else if(this.hint == 'Tous les utilisateurs')
+            }else if(this.hint == 'Tous les clients')
             {
                 this.callApi(0)
-            }else if(this.hint == 'Utilisateurs bloquer')
+            }else if (this.hint == 'Clients supprimer')
             {
                 this.callApi(1)
-            }else if (this.hint == 'Utilisateurs supprimer')
-            {
-                this.callApi(2)
             }
         },
         callApi(filter)
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/user/filter/${filter}?page=${this.page}`).then(e=>{
+                axios.get(`/api/client/filter/${filter}?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
@@ -289,7 +224,7 @@ export default {
             this.loading = true
             this.data = []
             this.$router.push(`?page=${this.page}`).catch(err => {})
-            if(this.hint == 'Utilisateurs Active')
+            if(this.hint == 'Clients Active')
             {
                 this.init()
             }else{
@@ -299,7 +234,7 @@ export default {
         init()
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/user?page=${this.page}`).then(e=>{
+                axios.get(`/api/client?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
