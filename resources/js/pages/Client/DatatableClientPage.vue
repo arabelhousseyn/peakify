@@ -100,7 +100,7 @@
 
                                 <v-list>
                                     <v-list-item-group>
-                                        <v-list-item link @click="$router.push({name : 'updateUser',params : {id : item._id,data : item}})">
+                                        <v-list-item link @click="$router.push({name : 'updateClient',params : {id : item._id,data : item}})">
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
@@ -127,11 +127,13 @@
                 </v-card-text>
             </v-card>
         </v-container>
+        <delete-client-dialog @close="close" :dialog="dialog1" :client_id="client_id"  />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
+import DeleteClientDialog from "../../components/dialog/Client/DeleteClientDialog";
 export default {
     data : ()=>({
         search : null,
@@ -171,15 +173,10 @@ export default {
 
         dialog1 : false,
         dialog2 : false,
-        dialog3 : false,
-        dialog4 : false,
-        dialog5 : false,
-        user_id : null,
-        start_at : null,
-        end_at : null,
+        client_id : null,
         hint : 'Clients Active'
     }),
-    components: {BreadCrumbsComponent},
+    components: {DeleteClientDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
@@ -256,59 +253,25 @@ export default {
         {
             return (window.location.search.length == 0) ? 1 : parseInt(window.location.search.replace('?page=',''))
         },
-        lock(id)
-        {
-            this.user_id = id
-            this.dialog1 = true
-        },
-        unlock(id)
-        {
-            this.user_id = id
-            this.dialog2 = true
-        },
-        hours(id,start_at,end_at)
-        {
-            this.user_id = id
-            this.start_at = start_at
-            this.end_at = end_at
-            this.dialog3 = true
-        },
         destroy(id)
         {
-            this.user_id = id
-            this.dialog4 = true
+            this.client_id = id
+            this.dialog1 = true
         },
         restore(id)
         {
-            this.user_id = id
-            this.dialog5 = true
+            this.client_id = id
+            this.dialog2 = true
         },
         close()
         {
-            this.user_id = null
+            this.client_id = null
             this.dialog1 = false
         },
         close1()
         {
-            this.user_id = null
+            this.client_id = null
             this.dialog2 = false
-        },
-        close2()
-        {
-            this.user_id = null
-            this.start_at = null
-            this.end_at = null
-            this.dialog3 = false
-        },
-        close3()
-        {
-            this.user_id = null
-            this.dialog4 = false
-        },
-        close4()
-        {
-            this.user_id = null
-            this.dialog5 = false
         }
     },
     mounted() {
