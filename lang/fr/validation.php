@@ -189,6 +189,10 @@ return [
         ],
         'city' => [
             'max' => 'Ville maximum de caractères 255 .'
+        ],
+        'name' => [
+            'required' => 'Nom categorie requis.',
+            'max' => 'Nom categorie maximum de caractères 255 .'
         ]
     ],
 

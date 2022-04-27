@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
+use App\Models\{Category};
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,7 +19,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::withoutTrashed()->latest('created_at')->paginate(15);
+        return response($categories,200);
     }
 
     /**
@@ -34,9 +39,13 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        if($request->validated())
+        {
+            Category::create($request->validated());
+            return response(['message' => 'created!'],201);
+        }
     }
 
     /**
@@ -68,9 +77,13 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        if($request->validated())
+        {
+            $category->update($request->validated());
+            return response()->noContent();
+        }
     }
 
     /**
@@ -81,6 +94,50 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if(!$category->trashed())
+        {
+            $category->delete();
+            return response()->noContent();
+        }
+    }
+
+    public function restore($category_id)
+    {
+        try {
+            $category = Category::withTrashed()->findOrFail($category_id);
+            if($category->trashed())
+            {
+                $category->restore();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('category not found');
+        }
+    }
+
+    public function categoryDetails($category_id)
+    {
+        try {
+            return new CategoryResource(Category::findOrFail($category_id));
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('category not found');
+        }
+    }
+
+    public function filter($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $categories = Category::withTrashed()->latest('created_at')->paginate(15);
+                return response($categories,200);
+                break;
+            case 1 :
+                $categories = Category::onlyTrashed()->latest('created_at')->paginate(15);
+                return response($categories,200);
+                break;
+        }
     }
 }
