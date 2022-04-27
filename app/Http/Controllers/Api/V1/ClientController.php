@@ -114,4 +114,19 @@ class ClientController extends Controller
             throw new ModelNotFoundException('client not found');
         }
     }
+
+    public function filter($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $clients = Client::withTrashed()->latest('created_at')->paginate(15);
+                return response($clients,200);
+                break;
+            case 1 :
+                $clients = Client::onlyTrashed()->latest('created_at')->paginate(15);
+                return response($clients,200);
+                break;
+        }
+    }
 }
