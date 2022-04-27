@@ -88,6 +88,10 @@ const routes = [
                     {
                         path : '/',
                         component : () => import('../pages/Client/DatatableClientPage')
+                    },
+                    {
+                        path: 'add-client',
+                        component : () => import('../pages/Client/AddClientPage')
                     }
                 ]
             }

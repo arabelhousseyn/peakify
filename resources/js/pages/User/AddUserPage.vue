@@ -44,6 +44,7 @@
 
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
+                                    @keydown="check"
                                     v-model="data.phone"
                                     solo
                                     label="Téléphone"
@@ -83,6 +84,7 @@
 
                             <v-col cols="12">
                                 <v-text-field
+                                    @keydown="check"
                                     v-model="data.job"
                                     solo
                                     label="Fonction"

@@ -186,6 +186,9 @@ return [
         ],
         'address' => [
             'max' => 'Addresse maximum de caractères 255 .'
+        ],
+        'city' => [
+            'max' => 'Ville maximum de caractères 255 .'
         ]
     ],
 

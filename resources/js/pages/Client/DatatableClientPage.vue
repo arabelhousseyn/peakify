@@ -6,7 +6,7 @@
                 <v-card-title>
                     <span>Clients</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('users/add-user')" color="primary">
+                    <v-btn @click="$router.push('clients/add-client')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>
@@ -167,7 +167,6 @@ export default {
                 href: '/home/clients',
             },
         ],
-        selections: ['Tous les clients','Clients supprimer'],
 
         dialog1 : false,
         dialog2 : false,
