@@ -100,10 +100,10 @@ class ClientController extends Controller
         }
     }
 
-    public function restore($user_id)
+    public function restore($client_id)
     {
         try {
-            $client = Client::withTrashed()->findOrFail($user_id);
+            $client = Client::withTrashed()->findOrFail($client_id);
             if($client->trashed())
             {
                 $client->restore();

@@ -128,12 +128,14 @@
             </v-card>
         </v-container>
         <delete-client-dialog @close="close" :dialog="dialog1" :client_id="client_id"  />
+        <restore-client-dialog @close="close1" :dialog="dialog2" :client_id="client_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 import DeleteClientDialog from "../../components/dialog/Client/DeleteClientDialog";
+import RestoreClientDialog from "../../components/dialog/Client/RestoreClientDialog";
 export default {
     data : ()=>({
         search : null,
@@ -176,7 +178,7 @@ export default {
         client_id : null,
         hint : 'Clients Active'
     }),
-    components: {DeleteClientDialog, BreadCrumbsComponent},
+    components: {RestoreClientDialog, DeleteClientDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
