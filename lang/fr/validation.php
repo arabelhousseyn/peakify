@@ -170,6 +170,7 @@ return [
         ],
         'phone' => [
             'required' =>'Téléphone requis.',
+            'unique' => 'Téléphone existe déjà.',
             'digits' => 'Le téléphone doit avoir 10 chiffres.'
         ],
         'job' => [

@@ -25,7 +25,7 @@ class StoreClientRequest extends FormRequest
     {
         return [
             'full_name' => 'required|max:255',
-            'phone' => 'required|digits:10',
+            'phone' => 'required|digits:10|unique:clients,phone',
             'email' => 'email:rfc,dns,filter|unique:clients,email',
             'address' => 'max:255'
         ];

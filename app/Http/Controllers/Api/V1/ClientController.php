@@ -40,7 +40,8 @@ class ClientController extends Controller
     {
         if($request->validated())
         {
-
+            $client = Client::create($request->validated());
+            return response(['message' => 'created !'],201);
         }
     }
 
