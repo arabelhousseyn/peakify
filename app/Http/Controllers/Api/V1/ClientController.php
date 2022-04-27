@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\{Client};
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -92,6 +93,25 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        if(!$client->trashed())
+        {
+            $client->delete();
+            return response()->noContent();
+        }
+    }
+
+    public function restore($user_id)
+    {
+        try {
+            $client = Client::withTrashed()->findOrFail($user_id);
+            if($client->trashed())
+            {
+                $client->restore();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('client not found');
+        }
     }
 }
