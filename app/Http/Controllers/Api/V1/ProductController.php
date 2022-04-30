@@ -97,6 +97,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        if(!$product->trashed())
+        {
+            $product->delete();
+            return response()->noContent();
+        }
     }
 }
