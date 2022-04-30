@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\{Product};
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::withoutTrashed()->with(['category:_id,name','createdBy:_id,full_name,type'])->latest('created_at')->paginate(15);
+        return response($products,200);
     }
 
     /**

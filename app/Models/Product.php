@@ -19,6 +19,8 @@ class Product extends Model
         'created_by'
     ];
 
+    protected $hidden = ['category_id'];
+
     public function category()
     {
         return $this->belongsTo(Category::class)->withDefault(['name' => __('messages.category_deleted')]);
@@ -26,6 +28,7 @@ class Product extends Model
 
     public function createdBy()
     {
-        return $this->belongsTo(User::class,'_id','created_by');
+        return $this->belongsTo(User::class,'created_by')
+            ->withDefault(['full_name' => __('messages.user_deleted')]);
     }
 }
