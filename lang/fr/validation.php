@@ -193,7 +193,26 @@ return [
         'name' => [
             'required' => 'Nom categorie requis.',
             'max' => 'Nom categorie maximum de caractères 255 .'
-        ]
+        ],
+        'category_id' => [
+            'required' => 'Catégorie requis.',
+            'exists' => 'Catégorie n\'existse pas.',
+        ],
+        'product_code' => [
+            'required' => 'Code produit requis.',
+            'max' => 'code produit maximum de caractères 255.',
+        ],
+        'product_name' => [
+            'required' => 'Nom produit requis.',
+            'max' => 'Nom produit maximum de caractères 255.',
+        ],
+        'description' => [
+            'max' => 'description produit maximum de caractères 500.',
+        ],
+        'price' => [
+            'required' => 'Prix requis.',
+            'numeric' => 'Prix doit être numerique.',
+        ],
     ],
 
     /*

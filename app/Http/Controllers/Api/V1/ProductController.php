@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\{Product};
 use Illuminate\Http\Request;
 
@@ -35,9 +37,17 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        if($request->validated())
+        {
+            $creator = [
+                'created_by' => Auth::id()
+            ];
+            Product::create(array_merge($request->validated(),$creator));
+
+            return response(['message' => 'created!'],201);
+        }
     }
 
     /**
