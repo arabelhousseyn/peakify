@@ -167,7 +167,7 @@ export default {
 
         dialog1 : false,
         dialog2 : false,
-        client_id : null,
+        category_id : null,
         hint : 'Catégories Active'
     }),
     components: { BreadCrumbsComponent},
@@ -249,22 +249,22 @@ export default {
         },
         destroy(id)
         {
-            this.client_id = id
+            this.category_id = id
             this.dialog1 = true
         },
         restore(id)
         {
-            this.client_id = id
+            this.category_id = id
             this.dialog2 = true
         },
         close()
         {
-            this.client_id = null
+            this.category_id = null
             this.dialog1 = false
         },
         close1()
         {
-            this.client_id = null
+            this.category_id = null
             this.dialog2 = false
         }
     },
