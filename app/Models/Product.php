@@ -15,11 +15,17 @@ class Product extends Model
         'product_code',
         'product_name',
         'description',
-        'price'
+        'price',
+        'created_by'
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class)->withDefault(['name' => __('messages.category_deleted')]);
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class,'_id','created_by');
     }
 }

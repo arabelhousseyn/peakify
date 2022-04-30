@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('product_name')->index();
             $table->longText('description')->nullable();
             $table->double('price');
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });
     }
