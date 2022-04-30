@@ -63,6 +63,12 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::get('filter/{filter}','filter')->whereNumber('filter');
     });
 
+    // product
+
+    Route::controller(ProductController::class)->prefix('product')->group(function (){
+        Route::put('restore/{product_id}','restore')->whereAlphaNumeric('product_id');
+    });
+
     // resource controllers
 
     Route::resources([

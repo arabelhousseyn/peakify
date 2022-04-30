@@ -103,4 +103,19 @@ class ProductController extends Controller
             return response()->noContent();
         }
     }
+
+    public function restore($product_id)
+    {
+        try {
+            $product = Product::withTrashed()->findOrFail($product_id);
+            if($product->trashed())
+            {
+                $product->restore();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('product not found');
+        }
+    }
 }
