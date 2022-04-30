@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         User::factory(1)->create();
         Client::factory(20)->create();
         Category::factory(6)->create();
-        Product::factory(30)->create();
+        Product::factory(10000)->create();
     }
 }
