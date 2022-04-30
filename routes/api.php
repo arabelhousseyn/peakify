@@ -10,7 +10,8 @@ use App\Http\Controllers\Api\V1\{
     LogoutController,
     UserController,
     ClientController,
-    CategoryController
+    CategoryController,
+    ProductController
 };
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -67,6 +68,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
     Route::resources([
         'user' => UserController::class,
         'client' => ClientController::class,
-        'category' => CategoryController::class
+        'category' => CategoryController::class,
+        'product' => ProductController::class
     ]);
 });
