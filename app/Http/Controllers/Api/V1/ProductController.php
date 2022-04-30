@@ -118,4 +118,19 @@ class ProductController extends Controller
             throw new ModelNotFoundException('product not found');
         }
     }
+
+    public function filter($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $products = Product::withTrashed()->latest('created_at')->paginate(15);
+                return response($products,200);
+                break;
+            case 1 :
+                $products = Product::onlyTrashed()->latest('created_at')->paginate(15);
+                return response($products,200);
+                break;
+        }
+    }
 }
