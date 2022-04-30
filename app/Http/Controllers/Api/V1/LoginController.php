@@ -66,7 +66,7 @@ class LoginController extends Controller
             }
             $errors = [
                 'errors' => [
-                    'account' => ['Une de vos informations est incorrecte ou bien le Compte est supprimer']
+                    'account' => [__('messages.account')]
                 ]
             ];
             return response($errors,422);
