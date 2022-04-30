@@ -128,12 +128,14 @@
             </v-card>
         </v-container>
         <delete-category-dialog @close="close" :dialog="dialog1" :category_id="category_id" />
+        <restore-category-dialog @close="close1" :dialog="dialog2" :category_id="category_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 import DeleteCategoryDialog from "../../components/dialog/Category/DeleteCategoryDialog";
+import RestoreCategoryDialog from "../../components/dialog/Category/RestoreCategoryDialog";
 export default {
     data : ()=>({
         search : null,
@@ -172,7 +174,7 @@ export default {
         category_id : null,
         hint : 'Catégories Active'
     }),
-    components: {DeleteCategoryDialog, BreadCrumbsComponent},
+    components: {RestoreCategoryDialog, DeleteCategoryDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
