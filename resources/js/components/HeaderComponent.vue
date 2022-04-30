@@ -53,6 +53,24 @@
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-group>
+
+                    <v-list-group
+                        color="white"
+                        prepend-icon="mdi-tshirt-v"
+                        no-action
+                    >
+                        <template v-slot:activator>
+                            <v-list-item-content>
+                                <v-list-item-title>Gestion des <br> produits</v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+
+                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/categories').catch(err => {})}">
+                            <v-list-item-content>
+                                <v-list-item-title>Catégories</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list-group>
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>
@@ -82,6 +100,10 @@ export default {
             else if(path.includes('home/clients'))
             {
                 this.selectedItem = 2;
+            }
+            else if(path.includes('home/categories'))
+            {
+                this.selectedItem = 3;
             }
             else{
                 this.selectedItem = null

@@ -64,7 +64,7 @@
                             </v-col>
 
                             <v-col cols="12">
-                                <p><span class="font-weight-bold">Note : </span> <span class="grey--text">* indique les champs requis.</span> </p>
+                                <small><span class="font-weight-bold">Note : </span> <span class="grey--text">* indique les champs requis.</span> </small>
                             </v-col>
 
                             <v-alert v-if="hasError" border="right" colored-border type="error" elevation="2">
