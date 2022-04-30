@@ -104,6 +104,12 @@ const routes = [
             {
                 path: 'categories',
                 component : () => import('../pages/Category/CategoryPage'),
+                children: [
+                    {
+                        path: '/',
+                        component : () => import('../pages/Category/DatatableCategoryPage')
+                    }
+                ]
             }
         ]
     }

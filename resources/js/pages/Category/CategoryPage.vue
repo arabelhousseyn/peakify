@@ -1,5 +1,5 @@
 <template>
     <div class="category-page">
-        welcome to category page
+        <router-view/>
     </div>
 </template>
