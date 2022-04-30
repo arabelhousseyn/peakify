@@ -100,6 +100,10 @@ const routes = [
                         component : () => import('../pages/Client/UpdateClientPage')
                     }
                 ]
+            },
+            {
+                path: 'categories',
+                component : () => import('../pages/Category/CategoryPage'),
             }
         ]
     }
