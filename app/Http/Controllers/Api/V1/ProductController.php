@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Product};
 use Illuminate\Http\Request;
@@ -113,6 +114,16 @@ class ProductController extends Controller
                 $product->restore();
                 return response()->noContent();
             }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('product not found');
+        }
+    }
+
+    public function productDetails($product_id)
+    {
+        try {
+            return new ProductResource(Product::findOrFail($product_id));
         }catch (ModelNotFoundException $exception)
         {
             throw new ModelNotFoundException('product not found');
