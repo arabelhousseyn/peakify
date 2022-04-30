@@ -112,6 +112,12 @@ const routes = [
                     {
                         path: 'add-category',
                         component : () => import('../pages/Category/AddCategoryPage')
+                    },
+                    {
+                        path: 'update-category/:id',
+                        props: true,
+                        name : 'updateCategory',
+                        component : () => import('../pages/Category/UpdateCategoryPage')
                     }
                 ]
             }

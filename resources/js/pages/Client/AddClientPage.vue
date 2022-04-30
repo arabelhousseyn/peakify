@@ -110,7 +110,7 @@ export default {
             {
                 text: 'Ajouter un client',
                 disabled: false,
-                href: '/home/users/add-client',
+                href: '/home/clients/add-client',
             },
         ],
         disabled : true,

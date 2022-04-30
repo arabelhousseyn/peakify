@@ -60,14 +60,14 @@ export default {
                 href: '/',
             },
             {
-                text: 'Clients',
+                text: 'catégories',
                 disabled: false,
-                href: '/home/clients',
+                href: '/home/categories',
             },
             {
                 text: 'Ajouter une catégories',
                 disabled: false,
-                href: '/home/users/add-category',
+                href: '/home/categories/add-category',
             },
         ],
         disabled : true,
