@@ -108,6 +108,10 @@ const routes = [
                     {
                         path: '/',
                         component : () => import('../pages/Category/DatatableCategoryPage')
+                    },
+                    {
+                        path: 'add-category',
+                        component : () => import('../pages/Category/AddCategoryPage')
                     }
                 ]
             }
