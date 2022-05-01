@@ -128,6 +128,10 @@ const routes = [
                     {
                         path: '/',
                         component : () => import('../pages/Product/DatatableProductPage')
+                    },
+                    {
+                        path: 'add-product',
+                        component : () => import('../pages/Product/AddProductPage')
                     }
                 ]
             }

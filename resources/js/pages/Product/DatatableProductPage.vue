@@ -6,7 +6,7 @@
                 <v-card-title>
                     <span>Clients</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('categories/add-product')" color="primary">
+                    <v-btn @click="$router.push('products/add-product')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>
