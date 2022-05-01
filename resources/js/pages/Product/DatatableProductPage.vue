@@ -159,11 +159,12 @@ export default {
         loading : true,
         headers: [
             {
-                text: 'Code produit',
+                text: 'Catégorie',
                 align: 'start',
                 sortable: false,
-                value: 'product_code',
+                value: 'category.name',
             },
+            { text: 'Code produit', value: 'product_code' },
             { text: 'Nom produit', value: 'product_name' },
             { text: 'Description', value: 'description' },
             { text: 'Prix', value: 'price' },
