@@ -10,14 +10,47 @@
                 <v-card-text>
                     <form class="flex justify-content-center mb-3" @submit.prevent="store">
                         <v-row>
+                            <v-col cols="12">
+                                <v-select
+                                    :items="categories"
+                                    label="Choisir catégorie*"
+                                    dense
+                                    solo
+                                ></v-select>
+                            </v-col>
+
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
-                                    @keydown="check"
-                                    v-model="data.name"
                                     solo
                                     required
-                                    label="Nom catégories*"
-                                    prepend-inner-icon="mdi-square"
+                                    label="Code produit*"
+                                    prepend-inner-icon="mdi-code-array"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" lg="6" sm="6">
+                                <v-text-field
+                                    solo
+                                    required
+                                    label="Nom produit*"
+                                    prepend-inner-icon="mdi-tshirt-crew-outline"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12">
+                                <v-textarea
+                                    solo
+                                    label="Description"
+                                    prepend-inner-icon="mdi-format-text-variant-outline"
+                                ></v-textarea>
+                            </v-col>
+
+                            <v-col cols="12" lg="6" sm="6">
+                                <v-text-field
+                                    solo
+                                    required
+                                    label="Prix*"
+                                    prepend-inner-icon="mdi-currency-usd"
                                 ></v-text-field>
                             </v-col>
 
@@ -53,6 +86,7 @@ export default {
         data : {
             name : null,
         },
+        categories: [],
         items : [
             {
                 text: 'Tableau de bord',
