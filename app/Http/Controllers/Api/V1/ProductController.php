@@ -135,11 +135,11 @@ class ProductController extends Controller
         switch ($filter)
         {
             case 0 :
-                $products = Product::withTrashed()->latest('created_at')->paginate(15);
+                $products = Product::withTrashed()->with(['category:_id,name','createdBy:_id,full_name,type'])->latest('created_at')->paginate(15);
                 return response($products,200);
                 break;
             case 1 :
-                $products = Product::onlyTrashed()->latest('created_at')->paginate(15);
+                $products = Product::onlyTrashed()->with(['category:_id,name','createdBy:_id,full_name,type'])->latest('created_at')->paginate(15);
                 return response($products,200);
                 break;
         }

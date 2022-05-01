@@ -141,11 +141,15 @@
                 </v-card-text>
             </v-card>
         </v-container>
+        <delete-product-dialog @close="close" :dialog="dialog1" :product_id="product_id" />
+        <restore-product-dialog @close="close1" :dialog="dialog2" :product_id="product_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
+import DeleteProductDialog from "../../components/dialog/Product/DeleteProductDialog";
+import RestoreProductDialog from "../../components/dialog/Product/RestoreProductDialog";
 export default {
     data : ()=>({
         search : null,
@@ -189,7 +193,7 @@ export default {
         product_id : null,
         hint : 'Produits Active'
     }),
-    components: { BreadCrumbsComponent},
+    components: {RestoreProductDialog, DeleteProductDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
