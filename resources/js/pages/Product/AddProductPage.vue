@@ -108,6 +108,7 @@ export default {
         loading : false,
         hasError : false,
         errors : [],
+        fruits : []
 
     }),
     components: {BreadCrumbsComponent},
@@ -152,7 +153,14 @@ export default {
         empty()
         {
             this.data.name = null
+        },
+        init()
+        {
+
         }
+    },
+    mounted() {
+        this.init()
     }
 }
 </script>
