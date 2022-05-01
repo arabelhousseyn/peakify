@@ -120,6 +120,16 @@ const routes = [
                         component : () => import('../pages/Category/UpdateCategoryPage')
                     }
                 ]
+            },
+            {
+                path: 'products',
+                component : () => import('../pages/Product/ProductPage'),
+                children: [
+                    {
+                        path: '/',
+                        component : () => import('../pages/Product/DatatableProductPage')
+                    }
+                ]
             }
         ]
     }

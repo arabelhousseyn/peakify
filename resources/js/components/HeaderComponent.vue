@@ -70,6 +70,12 @@
                                 <v-list-item-title>Catégories</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
+
+                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/products').catch(err => {})}">
+                            <v-list-item-content>
+                                <v-list-item-title>Produits</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
                     </v-list-group>
                 </v-list-item-group>
             </v-list>
