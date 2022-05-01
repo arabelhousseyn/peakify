@@ -196,4 +196,12 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    /*
+     * default system currency
+     *
+     *
+     */
+
+    'currency' => env('APP_CURRENCY','MAD')
+
 ];
