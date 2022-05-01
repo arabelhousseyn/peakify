@@ -75,6 +75,20 @@
                             </div>
                         </template>
 
+
+
+                        <template v-slot:item.created_by="{ item }">
+                            <div class="created-by">
+                                <span>{{item.created_by.full_name}}</span>
+                                <v-chip v-if="item.created_by.type == 'admin'" dark color="green">
+                                    {{item.created_by.type}}
+                                </v-chip>
+                                <v-chip v-if="item.created_by.type == 'agent'" dark color="yellow">
+                                    {{item.created_by.type}}
+                                </v-chip>
+                            </div>
+                        </template>
+
                         <template v-slot:item.created_at="{ item }">
                             <span> {{ formatDate(item.created_at) }} </span>
                         </template>
