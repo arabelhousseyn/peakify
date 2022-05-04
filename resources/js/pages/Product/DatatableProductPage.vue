@@ -4,7 +4,7 @@
             <bread-crumbs-component :items="items" />
             <v-card class="mt-5" elevation="0">
                 <v-card-title>
-                    <span>Clients</span>
+                    <span>Produits</span>
                     <v-spacer></v-spacer>
                     <v-btn @click="$router.push('products/add-product')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
