@@ -26,7 +26,7 @@ class StoreOptionRequest extends FormRequest
         return [
             'name' => 'required',
             'values' => 'array',
-            'values.*.name' => 'required'
+            'values.*.value' => 'required'
         ];
     }
 }
