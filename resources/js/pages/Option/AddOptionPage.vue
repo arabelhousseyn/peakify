@@ -36,16 +36,16 @@
                                             </template>
                                         </v-expansion-panel-header>
                                         <v-expansion-panel-content>
-                                            <v-text-field
-                                                v-for="(input,index) in inputs"
-                                                @input="mutateValue"
-                                                :key="index"
-                                                solo
-                                                required
-                                                label="valeur"
-                                                prepend-inner-icon="mdi-square"
-                                            ></v-text-field>
+                                                        <v-text-field
+                                                            v-for="(input,index) in inputs" :key="index"
+                                                            @change="mutateValue"
+                                                            solo
+                                                            required
+                                                            label="valeur"
+                                                            prepend-inner-icon="mdi-square"
+                                                        ></v-text-field>
                                             <v-btn color="success" @click="incrementInputs" rounded text><v-icon>mdi-plus</v-icon></v-btn>
+                                            <v-btn color="error" @click="decrementInput" rounded text><v-icon>mdi-minus</v-icon></v-btn>
                                         </v-expansion-panel-content>
                                     </v-expansion-panel>
                                 </v-expansion-panels>
@@ -106,7 +106,6 @@ export default {
         hasError : false,
         errors : [],
         inputs : 1,
-        value : null,
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -123,7 +122,6 @@ export default {
                     })
                     this.data.values = []
                     this.inputs = 1
-                    this.value = null
                     this.loading = false
                     this.empty()
                 }).catch(err => {
@@ -152,12 +150,19 @@ export default {
         },
         incrementInputs()
         {
-            this.data.values.push({value : this.value})
           this.inputs++
         },
         mutateValue(value)
         {
-            this.value = value
+            this.data.values.push({value : value})
+        },
+        decrementInput()
+        {
+            if(this.inputs > 1)
+            {
+                this.data.values.pop()
+                this.inputs--
+            }
         },
         empty()
         {
