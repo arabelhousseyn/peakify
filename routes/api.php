@@ -64,12 +64,20 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::get('filter/{filter}','filter')->whereNumber('filter');
     });
 
+    // option
+    Route::controller(OptionController::class)->prefix('option')->group(function (){
+        Route::put('restore/{option_id}','restore')->whereAlphaNumeric('option_id');
+        Route::get('option-details/{option_id}','optionDetails')->whereAlphaNumeric('option_id');
+        Route::get('filter/{filter}','filter')->whereNumber('filter');
+    });
+
     // product
 
     Route::controller(ProductController::class)->prefix('product')->group(function (){
         Route::put('restore/{product_id}','restore')->whereAlphaNumeric('product_id');
         Route::get('product-details/{product_id}','productDetails')->whereAlphaNumeric('product_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');
+        Route::post('store-values','storeValues');
     });
 
     // resource controllers

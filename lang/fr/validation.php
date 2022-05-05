@@ -220,6 +220,9 @@ return [
         'values' => [
             'array' => 'Erreur veuillez vérifier vos informations',
             '*' => 'Erreur veuillez vérifier vos informations.'
+        ],
+        'option_id' => [
+            'required' => 'Option requis.'
         ]
     ],
 

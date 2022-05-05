@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOptionRequest;
+use App\Http\Requests\StoreOptionValuesRequest;
+use App\Http\Resources\OptionResource;
 use App\Models\Option;
 use Illuminate\Http\Request;
 
@@ -49,7 +51,7 @@ class OptionController extends Controller
                 });
             }
 
-            return response(['message' => 'created !'],200);
+            return response(['message' => 'created !'],201);
         }
     }
 
@@ -84,7 +86,8 @@ class OptionController extends Controller
      */
     public function update(Request $request, Option $option)
     {
-        //
+        $option->update($request->all());
+        return response()->noContent();
     }
 
     /**
@@ -95,16 +98,64 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        //
+        if(!$option->trashed())
+        {
+            $option->delete();
+            return response()->noContent();
+        }
     }
 
     public function restore($option_id)
     {
+        try {
+            $option = Option::withTrashed()->findOrFail($option_id);
+            if($option->trashed())
+            {
+                $option->restore();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option not found');
+        }
+    }
 
+    public function optionDetails($option_id)
+    {
+        try {
+            return new OptionResource(Option::findOrFail($option_id));
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option not found');
+        }
     }
 
     public function filter($filter)
     {
+        switch ($filter)
+        {
+            case 0 :
+                $options = Option::withTrashed()->latest('created_at')->paginate(15);
+                return response($options,200);
+                break;
+            case 1 :
+                $options = Option::onlyTrashed()->latest('created_at')->paginate(15);
+                return response($options,200);
+                break;
+        }
+    }
 
+    public function storeValues(StoreOptionValuesRequest $request)
+    {
+        if($request->validated())
+        {
+            $option = Option::find($request->option_id);
+
+            collect($request->values)->map(function ($value) use ($option){
+                $option->values()->create($value);
+            });
+
+            return response(['message' => 'created !'],201);
+        }
     }
 }
