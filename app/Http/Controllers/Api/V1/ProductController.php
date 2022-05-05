@@ -40,17 +40,20 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        return $request->offers;
+        collect($request->offers)->map(function ($value){
+        });
         if($request->validated())
         {
             $creator = [
                 'created_by' => Auth::id()
             ];
-            Product::create(array_merge($request->validated(),$creator));
+            $product = Product::create(array_merge($request->validated(),$creator));
 
             if($request->has('offers'))
             {
-
+                collect($request->offers)->map(function ($offer) use ($product){
+                    $product->offers()->create($offer);
+                });
             }
 
             return response(['message' => 'created!'],201);
