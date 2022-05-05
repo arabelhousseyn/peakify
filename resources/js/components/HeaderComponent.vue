@@ -65,6 +65,12 @@
                             </v-list-item-content>
                         </template>
 
+                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/options').catch(err => {})}">
+                            <v-list-item-content>
+                                <v-list-item-title>Options</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+
                         <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/categories').catch(err => {})}">
                             <v-list-item-content>
                                 <v-list-item-title>Catégories</v-list-item-title>

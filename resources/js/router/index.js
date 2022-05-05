@@ -122,6 +122,16 @@ const routes = [
                 ]
             },
             {
+              path: 'options',
+              component : () => import('../pages/Option/OptionPage'),
+              children: [
+                  {
+                      path: '/',
+                      component : () => import('../pages/Option/OptionDatatablePage')
+                  }
+              ]
+            },
+            {
                 path: 'products',
                 component : () => import('../pages/Product/ProductPage'),
                 children: [
