@@ -29,6 +29,11 @@ class Product extends Model
         return $this->belongsTo(Category::class)->withDefault(['name' => __('messages.category_deleted')]);
     }
 
+    public function offers()
+    {
+        return $this->hasMany(ProductOffer::class);
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class,'created_by')

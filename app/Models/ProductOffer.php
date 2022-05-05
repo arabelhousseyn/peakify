@@ -16,4 +16,9 @@ class ProductOffer extends Model
         'discount',
         'is_static'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class,'product_id');
+    }
 }
