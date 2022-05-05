@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::withoutTrashed()->with(['category:_id,name','createdBy:_id,full_name,type'])->latest('created_at')->paginate(15);
+        $products = Product::withoutTrashed()->with(['category:_id,name','createdBy:_id,full_name,type','offers'])->latest('created_at')->paginate(15);
         return response($products,200);
     }
 
