@@ -134,6 +134,10 @@ const routes = [
                       name: 'updateOption',
                       props: true,
                       component : () => import('../pages/Option/UpdateOptionPage')
+                  },
+                  {
+                      path: 'add-option',
+                      component : () => import('../pages/Option/AddOptionPage')
                   }
               ]
             },

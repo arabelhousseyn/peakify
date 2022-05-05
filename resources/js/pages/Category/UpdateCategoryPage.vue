@@ -4,7 +4,7 @@
             <bread-crumbs-component :items="items" />
             <v-btn class="mt-3" @click="$router.push('/home/categories')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
             <v-card width="650" class="mt-5" elevation="0">
-                <v-card-title>Modifier un client</v-card-title>
+                <v-card-title>Modifier une catégories</v-card-title>
                 <v-card-text>
                     <form class="flex justify-content-center mb-3" @submit.prevent="update">
                         <v-row>
@@ -52,9 +52,9 @@ export default {
                 href: '/',
             },
             {
-                text: 'Utilisateurs',
+                text: 'Catégories',
                 disabled: false,
-                href: '/home/users',
+                href: '/home/categories',
             },
             {
                 text: 'Modifier une catégories',

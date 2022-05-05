@@ -1,24 +1,54 @@
 <template>
-    <div class="add-client-page">
+    <div class="add-option-page">
         <v-container fluid>
             <bread-crumbs-component :items="items" />
 
-            <v-btn class="mt-3" @click="$router.push('/home/categories')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
+            <v-btn class="mt-3" @click="$router.push('/home/options')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
 
             <v-card width="650" class="mt-5" elevation="0">
-                <v-card-title>Ajouter une catégories</v-card-title>
+                <v-card-title>Ajouter une option</v-card-title>
                 <v-card-text>
                     <form class="flex justify-content-center mb-3" @submit.prevent="store">
                         <v-row>
-                            <v-col cols="12" lg="6" sm="6">
+                            <v-col cols="12">
                                 <v-text-field
                                     @keydown="check"
                                     v-model="data.name"
                                     solo
                                     required
-                                    label="Nom catégories*"
+                                    label="Nom option*"
                                     prepend-inner-icon="mdi-square"
                                 ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12">
+                                <v-expansion-panels flat>
+                                    <v-expansion-panel elevation="1">
+                                        <v-expansion-panel-header disable-icon-rotate>
+                                            <strong>Valeurs</strong>
+                                            <template v-slot:actions>
+                                                <p>
+                                                    <small>Ajouter les valeurs</small>
+                                                    <v-icon color="primary">
+                                                        mdi-plus
+                                                    </v-icon>
+                                                </p>
+                                            </template>
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <v-text-field
+                                                v-for="(input,index) in inputs"
+                                                @input="mutateValue"
+                                                :key="index"
+                                                solo
+                                                required
+                                                label="valeur"
+                                                prepend-inner-icon="mdi-square"
+                                            ></v-text-field>
+                                            <v-btn color="success" @click="incrementInputs" rounded text><v-icon>mdi-plus</v-icon></v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
                             </v-col>
 
                             <v-col cols="12">
@@ -52,6 +82,7 @@ export default {
     data : ()=>({
         data : {
             name : null,
+            values : []
         },
         items : [
             {
@@ -60,21 +91,22 @@ export default {
                 href: '/',
             },
             {
-                text: 'catégories',
+                text: 'options',
                 disabled: false,
-                href: '/home/categories',
+                href: '/home/options',
             },
             {
-                text: 'Ajouter une catégories',
+                text: 'Ajouter une option',
                 disabled: false,
-                href: '/home/categories/add-category',
+                href: '/home/options/add-option',
             },
         ],
         disabled : true,
         loading : false,
         hasError : false,
         errors : [],
-
+        inputs : 1,
+        value : null,
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -84,11 +116,14 @@ export default {
             this.disabled = true
 
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.post('/api/category',this.data).then(e=>{
+                axios.post('/api/option',this.data).then(e=>{
                     this.$toast.open({
                         message : "Opération effectué",
                         type : 'success'
                     })
+                    this.data.values = []
+                    this.inputs = 1
+                    this.value = null
                     this.loading = false
                     this.empty()
                 }).catch(err => {
@@ -114,6 +149,15 @@ export default {
                 this.errors = []
             }
             this.disabled = (this.data.name == null) ? true : false
+        },
+        incrementInputs()
+        {
+            this.data.values.push({value : this.value})
+          this.inputs++
+        },
+        mutateValue(value)
+        {
+            this.value = value
         },
         empty()
         {
