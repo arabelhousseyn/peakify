@@ -11,6 +11,7 @@ class ProductOffer extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'product_id',
         'quantity',
         'discount',
         'is_static'

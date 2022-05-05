@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('product_offers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('quantity');
             $table->string('discount');
             $table->boolean('is_static');
