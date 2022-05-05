@@ -11,7 +11,8 @@ use App\Http\Controllers\Api\V1\{
     UserController,
     ClientController,
     CategoryController,
-    ProductController
+    ProductController,
+    OptionController
 };
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -77,6 +78,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         'user' => UserController::class,
         'client' => ClientController::class,
         'category' => CategoryController::class,
-        'product' => ProductController::class
+        'product' => ProductController::class,
+        'option' => OptionController::class
     ]);
 });
