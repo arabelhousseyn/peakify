@@ -69,6 +69,11 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::put('restore/{option_id}','restore')->whereAlphaNumeric('option_id');
         Route::get('option-details/{option_id}','optionDetails')->whereAlphaNumeric('option_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');
+        Route::get('values-by-option/{option_id}','valuesByOption')->whereAlphaNumeric('option_id');
+        Route::post('store-values','storeValues');
+        Route::put('update-option-value/{option_id}','updateValue')->whereAlphaNumeric('option_id');
+        Route::delete('destory-option-value/{option_id}','destroyValue')->whereAlphaNumeric('option_id');
+        Route::put('restore-option-value/{option_id}','restoreValue')->whereAlphaNumeric('option_id');
     });
 
     // product
@@ -77,7 +82,6 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::put('restore/{product_id}','restore')->whereAlphaNumeric('product_id');
         Route::get('product-details/{product_id}','productDetails')->whereAlphaNumeric('product_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');
-        Route::post('store-values','storeValues');
     });
 
     // resource controllers

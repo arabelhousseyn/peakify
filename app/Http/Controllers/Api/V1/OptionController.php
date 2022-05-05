@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\StoreOptionValuesRequest;
 use App\Http\Resources\OptionResource;
-use App\Models\Option;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\{Option,OptionValue};
 use Illuminate\Http\Request;
 
 class OptionController extends Controller
@@ -145,6 +146,17 @@ class OptionController extends Controller
         }
     }
 
+    public function valuesByOption($option_id)
+    {
+        try {
+            $option = Option::with('values')->findOrFail($option_id);
+            return response(['data' => $option->values],200);
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option not found');
+        }
+    }
+
     public function storeValues(StoreOptionValuesRequest $request)
     {
         if($request->validated())
@@ -156,6 +168,42 @@ class OptionController extends Controller
             });
 
             return response(['message' => 'created !'],201);
+        }
+    }
+
+    public function updateValue(Request $request, $option_value_id)
+    {
+        try {
+            $option_value = OptionValue::findOrFail($option_value_id);
+            $option_value->update($request->all());
+            return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option value not found');
+        }
+    }
+
+    public function destroyValue($option_value_id)
+    {
+        try {
+            $option_value = OptionValue::findOrFail($option_value_id);
+            $option_value->delete();
+            return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option value not found');
+        }
+    }
+
+    public function restoreValue($option_value_id)
+    {
+        try {
+            $option_value = OptionValue::withTrashed()->findOrFail($option_value_id);
+            $option_value->restore();
+            return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option value not found');
         }
     }
 }
