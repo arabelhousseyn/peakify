@@ -25,8 +25,8 @@ class StoreOptionValuesRequest extends FormRequest
     {
         return [
             'option_id' =>'required|exists:options,_id',
-            'values' => 'array',
-            'values.*.value' => 'required'
+            'value' => 'array',
+            'value.*.value' => 'required'
         ];
     }
 }

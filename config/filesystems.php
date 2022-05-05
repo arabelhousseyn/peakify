@@ -22,7 +22,7 @@ return [
     |
     | Here you may configure as many filesystem "disks" as you wish, and you
     | may even configure multiple disks of the same driver. Defaults have
-    | been set up for each driver as an example of the required values.
+    | been set up for each driver as an example of the required value.
     |
     | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
@@ -65,7 +65,7 @@ return [
     |
     | Here you may configure the symbolic links that will be created when the
     | `storage:link` Artisan command is executed. The array keys should be
-    | the locations of the links and the values should be their targets.
+    | the locations of the links and the value should be their targets.
     |
     */
 

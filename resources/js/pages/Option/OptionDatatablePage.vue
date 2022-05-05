@@ -104,7 +104,7 @@
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
-                                        <v-list-item link @click="">
+                                        <v-list-item link @click="$router.push(`options/values/${item._id}`)">
                                             <v-list-item-icon><v-icon color="green">mdi-information</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Valeurs</v-list-item-title></v-list-item-content>
                                         </v-list-item>

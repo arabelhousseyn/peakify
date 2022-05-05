@@ -138,6 +138,16 @@ const routes = [
                   {
                       path: 'add-option',
                       component : () => import('../pages/Option/AddOptionPage')
+                  },
+                  {
+                      path: 'values/:id',
+                      component : () => import('../pages/Option/value/OptionValuePage'),
+                      children : [
+                          {
+                              path : '/',
+                              component : () => import('../pages/Option/value/OptionValueDatatablePage')
+                          }
+                      ]
                   }
               ]
             },
