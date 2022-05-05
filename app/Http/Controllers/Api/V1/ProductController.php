@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Product};
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -41,12 +40,18 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        return $request->offers;
         if($request->validated())
         {
             $creator = [
                 'created_by' => Auth::id()
             ];
             Product::create(array_merge($request->validated(),$creator));
+
+            if($request->has('offers'))
+            {
+
+            }
 
             return response(['message' => 'created!'],201);
         }

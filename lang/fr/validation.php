@@ -213,6 +213,10 @@ return [
             'required' => 'Prix requis.',
             'numeric' => 'Prix doit être numerique.',
         ],
+        'offers' => [
+            'array' => 'Erreur veuillez vérifier vos informations',
+            '*' => 'Erreur veuillez vérifier vos informations.'
+        ]
     ],
 
     /*
