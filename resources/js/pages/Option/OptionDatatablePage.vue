@@ -4,9 +4,9 @@
             <bread-crumbs-component :items="items" />
             <v-card class="mt-5" elevation="0">
                 <v-card-title>
-                    <span>Catégories</span>
+                    <span>Options</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('categories/add-category')" color="primary">
+                    <v-btn @click="$router.push('options/add-option')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>
@@ -100,9 +100,13 @@
 
                                 <v-list>
                                     <v-list-item-group>
-                                        <v-list-item link @click="$router.push({name : 'updateCategory',params : {id : item._id,data : item}})">
+                                        <v-list-item link @click="$router.push({name : 'updateOption',params : {id : item._id,data : item}})">
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
+                                        </v-list-item>
+                                        <v-list-item link @click="">
+                                            <v-list-item-icon><v-icon color="green">mdi-information</v-icon></v-list-item-icon>
+                                            <v-list-item-content><v-list-item-title>Valeurs</v-list-item-title></v-list-item-content>
                                         </v-list-item>
                                         <v-list-item v-if="item.deleted_at == null" link @click="destroy(item._id)">
                                             <v-list-item-icon><v-icon color="red">mdi-trash-can</v-icon></v-list-item-icon>
@@ -127,15 +131,13 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <delete-category-dialog @close="close" :dialog="dialog1" :category_id="category_id" />
-        <restore-category-dialog @close="close1" :dialog="dialog2" :category_id="category_id" />
+        <delete-option-dialog @close="close" :dialog="dialog1" :option_id="option_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
-import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
-import DeleteCategoryDialog from "../../components/dialog/Category/DeleteCategoryDialog";
-import RestoreCategoryDialog from "../../components/dialog/Category/RestoreCategoryDialog";
+import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
+import DeleteOptionDialog from "../../components/dialog/Option/DeleteOptionDialog";
 export default {
     data : ()=>({
         search : null,
@@ -167,24 +169,24 @@ export default {
                 href: '/home/categories',
             },
         ],
-        selections: ['Tous les catégories','Catégories Active','Catégories supprimer'],
+        selections: ['Tous les options','options Active','options supprimer'],
 
         dialog1 : false,
         dialog2 : false,
-        category_id : null,
-        hint : 'Catégories Active'
+        option_id : null,
+        hint : 'options Active'
     }),
-    components: {RestoreCategoryDialog, DeleteCategoryDialog, BreadCrumbsComponent},
+    components: {DeleteOptionDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
-            if(this.hint == 'Catégories Active')
+            if(this.hint == 'options Active')
             {
                 this.init()
-            }else if(this.hint == 'Tous les catégories')
+            }else if(this.hint == 'Tous les options')
             {
                 this.callApi(0)
-            }else if (this.hint == 'Catégories supprimer')
+            }else if (this.hint == 'options supprimer')
             {
                 this.callApi(1)
             }
@@ -192,7 +194,7 @@ export default {
         callApi(filter)
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/category/filter/${filter}?page=${this.page}`).then(e=>{
+                axios.get(`/api/option/filter/${filter}?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
@@ -219,7 +221,7 @@ export default {
             this.loading = true
             this.data = []
             this.$router.push(`?page=${this.page}`).catch(err => {})
-            if(this.hint == 'Catégories Active')
+            if(this.hint == 'options Active')
             {
                 this.init()
             }else{
@@ -229,7 +231,7 @@ export default {
         init()
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/category?page=${this.page}`).then(e=>{
+                axios.get(`/api/option?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
@@ -253,22 +255,22 @@ export default {
         },
         destroy(id)
         {
-            this.category_id = id
+            this.option_id = id
             this.dialog1 = true
         },
         restore(id)
         {
-            this.category_id = id
+            this.option_id = id
             this.dialog2 = true
         },
         close()
         {
-            this.category_id = null
+            this.option_id = null
             this.dialog1 = false
         },
         close1()
         {
-            this.category_id = null
+            this.option_id = null
             this.dialog2 = false
         }
     },
