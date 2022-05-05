@@ -166,9 +166,9 @@ export default {
                 href: '/',
             },
             {
-                text: 'catégories',
+                text: 'options',
                 disabled: false,
-                href: '/home/categories',
+                href: '/home/options',
             },
         ],
         selections: ['Tous les options','options Active','options supprimer'],

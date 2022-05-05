@@ -128,6 +128,12 @@ const routes = [
                   {
                       path: '/',
                       component : () => import('../pages/Option/OptionDatatablePage')
+                  },
+                  {
+                      path: 'update-option/:id',
+                      name: 'updateOption',
+                      props: true,
+                      component : () => import('../pages/Option/UpdateOptionPage')
                   }
               ]
             },
