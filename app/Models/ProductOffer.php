@@ -21,4 +21,8 @@ class ProductOffer extends Model
     {
         return $this->belongsTo(Product::class,'product_id');
     }
+
+    protected $hidden = [
+        'product_id'
+    ];
 }
