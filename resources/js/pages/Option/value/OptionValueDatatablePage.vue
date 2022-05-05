@@ -177,7 +177,7 @@ export default {
             }else if(this.hint == 'Tous les valeurs')
             {
                 this.callApi(0)
-            }else if (this.hint == 'options valeurs')
+            }else if (this.hint == 'valeurs supprimer')
             {
                 this.callApi(1)
             }
@@ -185,9 +185,7 @@ export default {
         callApi(filter)
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/option/values/filter/${filter}`).then(e=>{
-                    this.count = e.data.last_page
-                    this.itemsPerPage = e.data.per_page
+                axios.get(`/api/option/values/filter/${filter}/${this.option_id}`).then(e=>{
                     this.data = e.data.data
                     this.loading = false
                 }).catch(err=>{

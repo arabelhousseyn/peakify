@@ -206,4 +206,19 @@ class OptionController extends Controller
             throw new ModelNotFoundException('option value not found');
         }
     }
+
+    public function filterValues($filter,$option_id)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $values = OptionValue::where('option_id',$option_id)->withTrashed()->latest('created_at')->get();
+                return response(['data' => $values],200);
+                break;
+            case 1 :
+                $values = OptionValue::where('option_id',$option_id)->onlyTrashed()->latest('created_at')->get();
+                return response(['data' => $values],200);
+                break;
+        }
+    }
 }
