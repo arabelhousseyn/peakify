@@ -216,6 +216,10 @@ return [
         'offers' => [
             'array' => 'Erreur veuillez vérifier vos informations',
             '*' => 'Erreur veuillez vérifier vos informations.'
+        ],
+        'values' => [
+            'array' => 'Erreur veuillez vérifier vos informations',
+            '*' => 'Erreur veuillez vérifier vos informations.'
         ]
     ],
 
