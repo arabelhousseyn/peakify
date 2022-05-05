@@ -5,7 +5,7 @@
             <v-btn class="mt-3" @click="$router.push('/home/options')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
             <v-card class="mt-5" elevation="0">
                 <v-card-title>
-                    <span>Options</span>
+                    <span>Valeurs</span>
                     <v-spacer></v-spacer>
                     <v-btn @click="$router.push('options/add-option')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
