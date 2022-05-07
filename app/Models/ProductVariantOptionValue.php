@@ -14,4 +14,14 @@ class ProductVariantOptionValue extends Model
         'product_variant_id',
         'option_value_id'
     ];
+
+    public function value()
+    {
+        return $this->hasOne(OptionValue::class);
+    }
+
+    public function variant()
+    {
+        return $this->belongsTo(ProductVariant::class);
+    }
 }

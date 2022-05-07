@@ -22,4 +22,10 @@ class ProductVariant extends Model
         $format = new Money($this->attributes['price'],new Currency(config('app.currency')));
         return $format->getAmount() . ' ' . $format->getCurrency();
     }
+
+    public function options()
+    {
+        return $this->hasMany(ProductVariantOptionValue::class);
+    }
+
 }
