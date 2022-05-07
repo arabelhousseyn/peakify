@@ -40,8 +40,6 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        collect($request->offers)->map(function ($value){
-        });
         if($request->validated())
         {
             $creator = [
