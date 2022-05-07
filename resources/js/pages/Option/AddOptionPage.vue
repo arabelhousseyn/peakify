@@ -38,7 +38,7 @@
                                         <v-expansion-panel-content>
                                                         <v-text-field
                                                             v-for="(input,index) in inputs" :key="index"
-                                                            @change="mutateValue"
+                                                            @change="mutateValue($event,index)"
                                                             solo
                                                             required
                                                             label="valeur"
@@ -113,31 +113,31 @@ export default {
         {
             this.loading = true
             this.disabled = true
-
-            axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.post('/api/option',this.data).then(e=>{
-                    this.$toast.open({
-                        message : "Opération effectué",
-                        type : 'success'
-                    })
-                    this.data.values = []
-                    this.inputs = 1
-                    this.loading = false
-                    this.empty()
-                }).catch(err => {
-                    if(err.response.status == 422)
-                    {
-                        let errors = err.response.data.errors
-                        let values = Object.values(errors)
-                        for (let i = 0;i<values.length;i++)
-                        {
-                            this.errors.push(values[i][0])
-                        }
-                        this.hasError = true
-                        this.loading = false
-                    }
-                })
-            })
+            console.log(this.data.values)
+            // axios.get('/sanctum/csrf-cookie').then(res => {
+            //     axios.post('/api/option',this.data).then(e=>{
+            //         this.$toast.open({
+            //             message : "Opération effectué",
+            //             type : 'success'
+            //         })
+            //         this.data.values = []
+            //         this.inputs = 1
+            //         this.loading = false
+            //         this.empty()
+            //     }).catch(err => {
+            //         if(err.response.status == 422)
+            //         {
+            //             let errors = err.response.data.errors
+            //             let values = Object.values(errors)
+            //             for (let i = 0;i<values.length;i++)
+            //             {
+            //                 this.errors.push(values[i][0])
+            //             }
+            //             this.hasError = true
+            //             this.loading = false
+            //         }
+            //     })
+            // })
         },
         check()
         {
@@ -152,9 +152,14 @@ export default {
         {
           this.inputs++
         },
-        mutateValue(value)
+        mutateValue(value,index)
         {
-            this.data.values.push({value : value})
+            if(this.data.values[index] !== undefined)
+            {
+                this.data.values[index] = {value : value}
+            }else{
+                this.data.values.push({value : value})
+            }
         },
         decrementInput()
         {
