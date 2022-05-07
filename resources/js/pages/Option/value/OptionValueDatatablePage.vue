@@ -156,8 +156,8 @@ export default {
             },
             {
                 text: 'Valeurs',
-                disabled: false,
-                href: '/home/options/values',
+                disabled: true,
+                href: '',
             },
         ],
         selections: ['Tous les valeurs','valeurs Active','valeurs supprimer'],
