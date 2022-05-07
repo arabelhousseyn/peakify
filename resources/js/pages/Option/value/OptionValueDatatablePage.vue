@@ -118,12 +118,14 @@
             </v-card>
         </v-container>
         <delete-option-value-dialog @close="close" :dialog="dialog1" :option_value_id="option_value_id" />
+        <restore-option-value-dialog @close="close1" :dialog="dialog2" :option_value_id="option_value_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent"
 import DeleteOptionValueDialog from "../../../components/dialog/Option/OptionValue/DeleteOptionValueDialog";
+import RestoreOptionValueDialog from "../../../components/dialog/Option/OptionValue/RestoreOptionValueDialog";
 export default {
     data : ()=>({
         option_id : window.location.href.split('/').pop(),
@@ -165,7 +167,7 @@ export default {
         option_value_id : null,
         hint : 'valeurs Active'
     }),
-    components: {DeleteOptionValueDialog, BreadCrumbsComponent},
+    components: {RestoreOptionValueDialog, DeleteOptionValueDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
