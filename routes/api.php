@@ -75,6 +75,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::delete('destory-option-value/{option_id}','destroyValue')->whereAlphaNumeric('option_id');
         Route::put('restore-option-value/{option_id}','restoreValue')->whereAlphaNumeric('option_id');
         Route::get('values/filter/{filter}/{option_id}','filterValues')->whereNumber('filter','option_id');
+        Route::get('option-value-details/{option_value_id}','optionValueDetails')->whereAlphaNumeric('option_value_id');
     });
 
     // product

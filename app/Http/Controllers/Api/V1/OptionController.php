@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\StoreOptionValuesRequest;
-use App\Http\Resources\OptionResource;
+use App\Http\Resources\{OptionResource,OptionValueResource};
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\{Option,OptionValue};
 use Illuminate\Http\Request;
@@ -201,6 +201,16 @@ class OptionController extends Controller
             $option_value = OptionValue::withTrashed()->findOrFail($option_value_id);
             $option_value->restore();
             return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option value not found');
+        }
+    }
+
+    public function optionValueDetails($option_value_id)
+    {
+        try {
+            return new OptionValueResource(OptionValue::findOrFail($option_value_id));
         }catch (ModelNotFoundException $exception)
         {
             throw new ModelNotFoundException('option value not found');
