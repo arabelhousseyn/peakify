@@ -7,7 +7,7 @@
                 <v-card-title>
                     <span>Valeurs</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('options/add-option')" color="primary">
+                    <v-btn @click="forward" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>
@@ -97,7 +97,7 @@
 
                                 <v-list>
                                     <v-list-item-group>
-                                        <v-list-item link @click="$router.push({name : 'updateOptionValue',params : {id : item._id,data : item}})">
+                                        <v-list-item link @click="$router.push({name : 'updateOptionValue',params : {idd : item._id,data : item}})">
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
@@ -169,6 +169,10 @@ export default {
     }),
     components: {RestoreOptionValueDialog, DeleteOptionValueDialog, BreadCrumbsComponent},
     methods : {
+        forward()
+        {
+            this.$router.push(`/home/options/values/${this.option_id}/add-option-value`)
+        },
         filter()
         {
             if(this.hint == 'valeurs Active')

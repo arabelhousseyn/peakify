@@ -70,7 +70,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::get('option-details/{option_id}','optionDetails')->whereAlphaNumeric('option_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');
         Route::get('values-by-option/{option_id}','valuesByOption')->whereAlphaNumeric('option_id');
-        Route::post('store-value','storeValues');
+        Route::post('store-values','storeValues');
         Route::put('update-option-value/{option_id}','updateValue')->whereAlphaNumeric('option_id');
         Route::delete('destory-option-value/{option_id}','destroyValue')->whereAlphaNumeric('option_id');
         Route::put('restore-option-value/{option_id}','restoreValue')->whereAlphaNumeric('option_id');
