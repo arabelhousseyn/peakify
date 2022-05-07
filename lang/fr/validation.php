@@ -224,7 +224,11 @@ return [
         'option_id' => [
             'required' => 'Option requis.',
             'exists' => 'erreur veuillez réessayer.'
-        ]
+        ],
+        'variants' => [
+            'array' => 'Erreur veuillez vérifier vos informations',
+            '*' => 'Erreur veuillez vérifier vos informations.'
+        ],
     ],
 
     /*

@@ -58,7 +58,6 @@ class ProductController extends Controller
 
             if($request->has('variants'))
             {
-
                   collect($request->variants)->map(function ($variant) use ($product){
                    $data = $product->variants()->create($variant);
 
