@@ -101,10 +101,6 @@
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
-                                        <v-list-item link @click="$router.push(`values/${item._id}`)">
-                                            <v-list-item-icon><v-icon color="green">mdi-information</v-icon></v-list-item-icon>
-                                            <v-list-item-content><v-list-item-title>Valeurs</v-list-item-title></v-list-item-content>
-                                        </v-list-item>
                                         <v-list-item v-if="item.deleted_at == null" link @click="destroy(item._id)">
                                             <v-list-item-icon><v-icon color="red">mdi-trash-can</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Supprimer</v-list-item-title></v-list-item-content>
@@ -121,11 +117,13 @@
                 </v-card-text>
             </v-card>
         </v-container>
+        <delete-option-value-dialog @close="close" :dialog="dialog1" :option_value_id="option_value_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent"
+import DeleteOptionValueDialog from "../../../components/dialog/Option/OptionValue/DeleteOptionValueDialog";
 export default {
     data : ()=>({
         option_id : window.location.href.split('/').pop(),
@@ -167,7 +165,7 @@ export default {
         option_value_id : null,
         hint : 'valeurs Active'
     }),
-    components: {BreadCrumbsComponent},
+    components: {DeleteOptionValueDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
