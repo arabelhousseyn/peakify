@@ -12,7 +12,9 @@
                         <v-row>
                             <v-col cols="12">
                                 <v-select
+                                    @keydown="check"
                                     :items="categories"
+                                    v-model="data.category"
                                     label="Choisir catégorie*"
                                     dense
                                     solo
@@ -21,17 +23,21 @@
 
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
+                                    @keydown="check"
                                     solo
                                     required
                                     label="Code produit*"
+                                    v-model="data.product_code"
                                     prepend-inner-icon="mdi-code-array"
                                 ></v-text-field>
                             </v-col>
 
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
+                                    @keydown="check"
                                     solo
                                     required
+                                    v-model="data.product_name"
                                     label="Nom produit*"
                                     prepend-inner-icon="mdi-tshirt-crew-outline"
                                 ></v-text-field>
@@ -40,6 +46,7 @@
                             <v-col cols="12">
                                 <v-textarea
                                     solo
+                                    v-model="data.description"
                                     label="Description"
                                     prepend-inner-icon="mdi-format-text-variant-outline"
                                 ></v-textarea>
@@ -47,8 +54,10 @@
 
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
+                                    @keydown="check"
                                     solo
                                     required
+                                    v-model="data.price"
                                     label="Prix*"
                                     prepend-inner-icon="mdi-currency-usd"
                                 ></v-text-field>
@@ -84,7 +93,11 @@ import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 export default {
     data : ()=>({
         data : {
-            name : null,
+            category : null,
+            category_id : null,
+            product_code : null,
+            product_name : null,
+            price : null,
         },
         categories: [],
         items : [
@@ -118,6 +131,13 @@ export default {
             this.loading = true
             this.disabled = true
 
+           let filter = this.fruits.filter(function (fruit){
+               return fruit.name == this
+           },this.data.category)[0]
+
+            this.data.category_id = filter._id
+
+
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.post('/api/product',this.data).then(e=>{
                     this.$toast.open({
@@ -148,7 +168,8 @@ export default {
                 this.hasError = false
                 this.errors = []
             }
-            this.disabled = (this.data.name == null) ? true : false
+            this.disabled = (this.data.category == null || this.data.price == null || this.data.product_name == null
+            || this.data.product_code == null) ? true : false
         },
         empty()
         {
