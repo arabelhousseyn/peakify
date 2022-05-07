@@ -56,6 +56,18 @@ class ProductController extends Controller
                 });
             }
 
+            if($request->has('variants'))
+            {
+
+                  collect($request->variants)->map(function ($variant) use ($product){
+                   $data = $product->variants()->create($variant);
+
+                   collect($variant['options'])->map(function ($option) use ($data){
+                       $data->options()->create($option);
+                   });
+                });
+            }
+
             return response(['message' => 'created!'],201);
         }
     }
