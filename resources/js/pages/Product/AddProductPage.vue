@@ -64,6 +64,60 @@
                             </v-col>
 
                             <v-col cols="12">
+                                <v-expansion-panels flat>
+                                    <v-expansion-panel elevation="1">
+                                        <v-expansion-panel-header disable-icon-rotate>
+                                            <strong>Offres</strong>
+                                            <template v-slot:actions>
+                                                <p>
+                                                    <small>Ajouter les offres</small>
+                                                    <v-icon color="primary">
+                                                        mdi-plus
+                                                    </v-icon>
+                                                </p>
+                                            </template>
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <v-row v-for="(input,index) in inputs" :key="index">
+                                                <v-col cols="12" lg="4" md="4">
+                                                    <v-text-field
+                                                        @change="mutateValue($event,'Q',index)"
+                                                        solo
+                                                        required
+                                                        type="number"
+                                                        min="1"
+                                                        label="Quantité*"
+                                                        prepend-inner-icon="mdi-square"
+                                                    ></v-text-field>
+                                                </v-col>
+
+                                                <v-col cols="12" lg="4" md="4">
+                                                    <v-text-field
+                                                        @change="mutateValue($event,'D',index)"
+                                                        solo
+                                                        required
+                                                        type="number"
+                                                        min="1"
+                                                        label="Réduction*"
+                                                        prepend-inner-icon="mdi-percent-outline"
+                                                    ></v-text-field>
+                                                </v-col>
+
+                                                <v-col cols="12" lg="4" md="4">
+                                                    <v-checkbox
+                                                        @change="mutateValue($event,'T',index)"
+                                                        label="Statique"
+                                                    ></v-checkbox>
+                                                </v-col>
+                                            </v-row>
+                                            <v-btn color="success" @click="incrementInputs" rounded text><v-icon>mdi-plus</v-icon></v-btn>
+                                            <v-btn color="error" @click="decrementInput" rounded text><v-icon>mdi-minus</v-icon></v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-col>
+
+                            <v-col cols="12">
                                 <small><span class="font-weight-bold">Note : </span> <span class="grey--text">* indique les champs requis.</span> </small>
                             </v-col>
 
@@ -98,6 +152,7 @@ export default {
             product_code : null,
             product_name : null,
             price : null,
+            offers : []
         },
         categories: [],
         items : [
@@ -121,8 +176,11 @@ export default {
         loading : false,
         hasError : false,
         errors : [],
-        fruits : []
-
+        fruits : [],
+        inputs : 1,
+        quantity : null,
+        discount : null,
+        is_static : false,
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -173,7 +231,12 @@ export default {
         },
         empty()
         {
-            this.data.name = null
+            this.data.category = null
+            this.data.category_id = null
+            this.data.offers = []
+            this.data.price = null
+            this.data.product_name = null
+            this.data.product_code = null
         },
         init()
         {
@@ -185,6 +248,51 @@ export default {
                     })
                 })
             })
+        },
+        incrementInputs()
+        {
+            this.resetParamsOffers()
+            this.inputs++
+        },
+        mutateValue(value,attribute,index)
+        {
+            switch (attribute)
+            {
+                case 'Q' : this.quantity = value; break;
+                case 'D' : this.discount = value; break;
+                case 'T' : this.is_static = value; break;
+            }
+
+            if(this.data.offers[index] !== undefined)
+            {
+                this.data.offers[index].quantity = this.quantity
+                this.data.offers[index].discount = this.discount
+                this.data.offers[index].is_static = this.is_static
+            }else{
+                if(this.quantity !== null && this.discount !== null)
+                {
+                    let data = {
+                        quantity : this.quantity,
+                        discount : this.discount,
+                        is_static : this.is_static,
+                    }
+                    this.data.offers.push(data)
+                }
+            }
+        },
+        decrementInput()
+        {
+            if(this.inputs > 1)
+            {
+                this.data.offers.pop()
+                this.inputs--
+            }
+        },
+        resetParamsOffers()
+        {
+            this.discount = null
+            this.quantity = null
+            this.is_static = false
         }
     },
     mounted() {
