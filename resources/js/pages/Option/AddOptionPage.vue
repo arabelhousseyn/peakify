@@ -114,30 +114,30 @@ export default {
             this.loading = true
             this.disabled = true
             console.log(this.data.values)
-            // axios.get('/sanctum/csrf-cookie').then(res => {
-            //     axios.post('/api/option',this.data).then(e=>{
-            //         this.$toast.open({
-            //             message : "Opération effectué",
-            //             type : 'success'
-            //         })
-            //         this.data.values = []
-            //         this.inputs = 1
-            //         this.loading = false
-            //         this.empty()
-            //     }).catch(err => {
-            //         if(err.response.status == 422)
-            //         {
-            //             let errors = err.response.data.errors
-            //             let values = Object.values(errors)
-            //             for (let i = 0;i<values.length;i++)
-            //             {
-            //                 this.errors.push(values[i][0])
-            //             }
-            //             this.hasError = true
-            //             this.loading = false
-            //         }
-            //     })
-            // })
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.post('/api/option',this.data).then(e=>{
+                    this.$toast.open({
+                        message : "Opération effectué",
+                        type : 'success'
+                    })
+                    this.data.values = []
+                    this.inputs = 1
+                    this.loading = false
+                    this.empty()
+                }).catch(err => {
+                    if(err.response.status == 422)
+                    {
+                        let errors = err.response.data.errors
+                        let values = Object.values(errors)
+                        for (let i = 0;i<values.length;i++)
+                        {
+                            this.errors.push(values[i][0])
+                        }
+                        this.hasError = true
+                        this.loading = false
+                    }
+                })
+            })
         },
         check()
         {
