@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('product_name')->index();
             $table->longText('description')->nullable();
             $table->double('price');
+            $table->boolean('has_variants')->default(false);
+            $table->boolean('has_offers')->default(false);
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });

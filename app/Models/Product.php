@@ -19,6 +19,8 @@ class Product extends Model
         'product_name',
         'description',
         'price',
+        'has_variants',
+        'has_offers',
         'created_by'
     ];
 
@@ -32,6 +34,11 @@ class Product extends Model
     public function offers()
     {
         return $this->hasMany(ProductOffer::class);
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
     }
 
     public function createdBy()
