@@ -140,4 +140,10 @@ class CategoryController extends Controller
                 break;
         }
     }
+
+    public function getAllCategories()
+    {
+        $categories = Category::all();
+        return response(['data' => $categories],200);
+    }
 }

@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
     // category
 
     Route::controller(CategoryController::class)->prefix('category')->group(function (){
+        Route::get('all','getAllCategories');
         Route::put('restore/{category_id}','restore')->whereAlphaNumeric('category_id');
         Route::get('category-details/{category_id}','categoryDetails')->whereAlphaNumeric('category_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');

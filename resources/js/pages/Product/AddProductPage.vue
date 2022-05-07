@@ -156,7 +156,14 @@ export default {
         },
         init()
         {
-
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get('/api/category/all',this.data).then(e=>{
+                    this.fruits = e.data.data
+                    this.categories = this.fruits.map(function(fruit){
+                        return fruit.name
+                    })
+                })
+            })
         }
     },
     mounted() {
