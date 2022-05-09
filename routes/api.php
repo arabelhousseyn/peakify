@@ -67,6 +67,8 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
 
     // option
     Route::controller(OptionController::class)->prefix('option')->group(function (){
+        Route::get('all','getAll');
+        Route::get('values/{option_id}','getValuesByOption')->whereAlphaNumeric('option_id');
         Route::put('restore/{option_id}','restore')->whereAlphaNumeric('option_id');
         Route::get('option-details/{option_id}','optionDetails')->whereAlphaNumeric('option_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');

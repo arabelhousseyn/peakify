@@ -83,7 +83,6 @@
                                                     <v-text-field
                                                         @change="mutateValue($event,'Q',index)"
                                                         solo
-                                                        required
                                                         type="number"
                                                         min="1"
                                                         label="Quantité*"
@@ -95,7 +94,6 @@
                                                     <v-text-field
                                                         @change="mutateValue($event,'D',index)"
                                                         solo
-                                                        required
                                                         type="number"
                                                         min="1"
                                                         max="100"
@@ -140,7 +138,6 @@
                                                     <v-text-field
                                                         @change="mutateValue1($event,'C',index)"
                                                         solo
-                                                        required
                                                         label="Code variante*"
                                                         prepend-inner-icon="mdi-square"
                                                     ></v-text-field>
@@ -150,56 +147,13 @@
                                                     <v-text-field
                                                         @change="mutateValue1($event,'P',index)"
                                                         solo
-                                                        required
                                                         label="Prix*"
                                                         prepend-inner-icon="mdi-currency-usd"
                                                     ></v-text-field>
                                                 </v-col>
-
-                                                <v-col cols="12">
-                                                    <v-expansion-panels flat>
-                                                        <v-expansion-panel elevation="1">
-                                                            <v-expansion-panel-header disable-icon-rotate>
-                                                                <strong>Options</strong>
-                                                                <template v-slot:actions>
-                                                                    <p>
-                                                                        <small>Ajouter les options</small>
-                                                                        <v-icon color="primary">
-                                                                            mdi-plus
-                                                                        </v-icon>
-                                                                    </p>
-                                                                </template>
-                                                            </v-expansion-panel-header>
-                                                            <v-expansion-panel-content>
-                                                                <v-row v-for="(input,index) in inputs2" :key="index">
-                                                                    <v-col cols="12" lg="6" md="6">
-                                                                        <v-select
-                                                                            :items="categories"
-                                                                            label="Option*"
-                                                                            dense
-                                                                            solo
-                                                                        ></v-select>
-                                                                    </v-col>
-
-                                                                    <v-col cols="12" lg="6" md="6">
-                                                                        <v-select
-                                                                            @change="mutateValue1($event,'V',index)"
-                                                                            :items="categories"
-                                                                            label="Valeur*"
-                                                                            dense
-                                                                            solo
-                                                                        ></v-select>
-                                                                    </v-col>
-                                                                </v-row>
-                                                                <v-btn color="success" @click="incrementInputs2" rounded text><v-icon>mdi-plus</v-icon></v-btn>
-                                                                <v-btn color="error" @click="decrementInput2" rounded text><v-icon>mdi-minus</v-icon></v-btn>
-                                                            </v-expansion-panel-content>
-                                                        </v-expansion-panel>
-                                                    </v-expansion-panels>
-                                                </v-col>
                                             </v-row>
-                                            <v-btn color="success" :disabled="disabled1" @click="incrementInputs1" rounded text><v-icon>mdi-plus</v-icon></v-btn>
-                                            <v-btn color="error" :disabled="disabled1" @click="decrementInput1" rounded text><v-icon>mdi-minus</v-icon></v-btn>
+                                            <v-btn color="success" @click="incrementInputs1" rounded text><v-icon>mdi-plus</v-icon></v-btn>
+                                            <v-btn color="error" @click="decrementInput1" rounded text><v-icon>mdi-minus</v-icon></v-btn>
                                         </v-expansion-panel-content>
                                     </v-expansion-panel>
                                 </v-expansion-panels>
@@ -262,20 +216,17 @@ export default {
             },
         ],
         disabled : true,
-        disabled1 : true,
         loading : false,
         hasError : false,
         errors : [],
         fruits : [],
         inputs : 1,
         inputs1 : 1,
-        inputs2 : 1,
         quantity : null,
         discount : null,
         is_static : false,
         code : null,
         price : null,
-        option_value_id : null,
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -289,7 +240,6 @@ export default {
            },this.data.category)[0]
 
             this.data.category_id = filter._id
-
 
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.post('/api/product',this.data).then(e=>{
@@ -329,14 +279,17 @@ export default {
             this.data.category = null
             this.data.category_id = null
             this.data.offers = []
+            this.data.variants = []
             this.data.price = null
             this.data.product_name = null
             this.data.product_code = null
+            this.inputs = 1
+            this.inputs1 = 1
         },
         init()
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get('/api/category/all',this.data).then(e=>{
+                axios.get('/api/category/all').then(e=>{
                     this.fruits = e.data.data
                     this.categories = this.fruits.map(function(fruit){
                         return fruit.name
@@ -383,11 +336,6 @@ export default {
                 this.inputs--
             }
         },
-        incrementInputs1()
-        {
-            this.resetParamsVariants()
-            this.inputs1++
-        },
         mutateValue1(value,attribute,index)
         {
             switch (attribute)
@@ -396,10 +344,10 @@ export default {
                 case 'P' : this.price = value; break;
             }
 
-            if(this.data.offers[index] !== undefined)
+            if(this.data.variants[index] !== undefined)
             {
-                this.data.offers[index].code = this.quantity
-                this.data.offers[index].price = this.discount
+                this.data.variants[index].code = this.code
+                this.data.variants[index].price = this.price
             }else{
                 if(this.code !== null && this.price !== null)
                 {
@@ -411,25 +359,17 @@ export default {
                 }
             }
         },
+        incrementInputs1()
+        {
+            this.resetParamsVariants()
+            this.inputs1++
+        },
         decrementInput1()
         {
             if(this.inputs1 > 1)
             {
                 this.data.variants.pop()
                 this.inputs1--
-            }
-        },
-        incrementInputs2()
-        {
-            this.resetParamsVariants()
-            this.inputs2++
-        },
-        decrementInput2()
-        {
-            if(this.inputs2 > 1)
-            {
-                this.data.variants.pop()
-                this.inputs2--
             }
         },
         resetParamsOffers()
@@ -442,7 +382,9 @@ export default {
         {
             this.price = null
             this.code = null
-        }
+            this.option_name = null
+            this.option_value = null
+        },
     },
     mounted() {
         this.init()

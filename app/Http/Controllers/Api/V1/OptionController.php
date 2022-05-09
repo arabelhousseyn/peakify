@@ -231,4 +231,23 @@ class OptionController extends Controller
                 break;
         }
     }
+
+    public function getAll()
+    {
+        $options = Option::all();
+        return response(['data' => $options],200);
+    }
+
+    public function getValuesByOption($option_id)
+    {
+        try {
+            $option = Option::with('values')->findOrFail($option_id);
+
+            return response(['data' => $option->values],200);
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option not found');
+        }
+    }
+
 }
