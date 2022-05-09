@@ -332,8 +332,13 @@ export default {
             this.data.price = null
             this.data.product_name = null
             this.data.product_code = null
-            this.inputs = 1
-            this.inputs1 = [{nbr : 1}]
+            this.inputs = 0
+            this.inputs1 = 0
+
+            setTimeout(()=>{
+                this.inputs = 1
+                this.inputs1 = [{nbr : 1}]
+            },2000)
         },
         init()
         {
@@ -430,7 +435,7 @@ export default {
         },
         decrementInput1()
         {
-            if(this.inputs1 > 1)
+            if(this.inputs1.length > 1)
             {
                 this.data.variants.pop()
                 this.inputs1.pop()
@@ -438,7 +443,6 @@ export default {
         },
         incrementInputs2(index)
         {
-            this.resetParamsVariants()
             this.inputs1[index].nbr++
         },
         decrementInput2(index)
@@ -471,17 +475,13 @@ export default {
                 return fruit.value == this
             },value)[0]
 
-            if(this.data.variants[index_variant].options.length == 0)
-            {
-                this.data.variants[index_variant].options.push({option_value_id : filter._id})
-            }else{
+
                 if(this.data.variants[index_variant].options[index_value] == undefined)
                 {
                     this.data.variants[index_variant].options.push({option_value_id : filter._id})
                 }else{
                     this.data.variants[index_variant].options[index_value].option_value_id = filter._id
                 }
-            }
         },
         resetParamsOffers()
         {
@@ -493,8 +493,6 @@ export default {
         {
             this.price = null
             this.code = null
-            this.option_name = null
-            this.option_value = null
         },
     },
     mounted() {
