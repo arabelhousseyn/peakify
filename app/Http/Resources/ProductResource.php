@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +20,8 @@ class ProductResource extends JsonResource
             'product_code' => $this->product_code,
             'product_name' => $this->product_name,
             'description' => $this->description,
-            'price' => $this->price
+            'priceValue' => $this->priceValue,
+            'category' => new CategoryResource(Category::FindOrFail($this->category_id))
         ];
     }
 }

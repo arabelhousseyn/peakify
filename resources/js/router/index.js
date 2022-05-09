@@ -173,6 +173,12 @@ const routes = [
                     {
                         path: 'add-product',
                         component : () => import('../pages/Product/AddProductPage')
+                    },
+                    {
+                        path : 'update-product/:id',
+                        name : 'updateProduct',
+                        props: true,
+                        component : () => import('../pages/Product/UpdateProductPage')
                     }
                 ]
             }

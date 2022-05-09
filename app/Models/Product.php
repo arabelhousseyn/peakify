@@ -26,6 +26,8 @@ class Product extends Model
 
     protected $hidden = ['category_id'];
 
+    protected $appends = ['priceValue'];
+
     public function category()
     {
         return $this->belongsTo(Category::class)->withDefault(['name' => __('messages.category_deleted')]);
@@ -51,5 +53,10 @@ class Product extends Model
     {
         $format = new Money($this->attributes['price'],new Currency(config('app.currency')));
         return $format->getAmount() . ' ' . $format->getCurrency();
+    }
+
+    public function getPriceValueAttribute()
+    {
+        return $this->attributes['price'];
     }
 }
