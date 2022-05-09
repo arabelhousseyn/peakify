@@ -156,10 +156,10 @@
                                                         <v-expansion-panels :disabled="disabled_panel" flat>
                                                             <v-expansion-panel elevation="1">
                                                                 <v-expansion-panel-header disable-icon-rotate>
-                                                                    <strong>Valeurs</strong>
+                                                                    <strong>Options</strong>
                                                                     <template v-slot:actions>
                                                                         <p>
-                                                                            <small>Ajouter les valeurs</small>
+                                                                            <small>Ajouter les options</small>
                                                                             <v-icon color="primary">
                                                                                 mdi-plus
                                                                             </v-icon>
@@ -183,7 +183,7 @@
                                                                             <v-combobox
                                                                                 @change="mutateValue2($event,index,ind)"
                                                                                 :items="values"
-                                                                                label="Options*"
+                                                                                label="Valeur*"
                                                                                 dense
                                                                                 solo
                                                                             ></v-combobox>
