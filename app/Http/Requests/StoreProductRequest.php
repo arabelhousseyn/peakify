@@ -35,7 +35,9 @@ class StoreProductRequest extends FormRequest
             'offers.*.is_static' => 'required',
             'variants' => 'array',
             'variants.*.code' => 'required',
-            'variants.*.price' => 'required|numeric'
+            'variants.*.price' => 'required|numeric',
+            'variants.*.options' => 'required|array',
+            'variants.*.options.*.option_value_id' => 'required'
         ];
     }
 }
