@@ -151,6 +151,50 @@
                                                         prepend-inner-icon="mdi-currency-usd"
                                                     ></v-text-field>
                                                 </v-col>
+
+                                                <v-col cols="12">
+                                                        <v-expansion-panels :disabled="disabled_panel" flat>
+                                                            <v-expansion-panel elevation="1">
+                                                                <v-expansion-panel-header disable-icon-rotate>
+                                                                    <strong>Valeurs</strong>
+                                                                    <template v-slot:actions>
+                                                                        <p>
+                                                                            <small>Ajouter les valeurs</small>
+                                                                            <v-icon color="primary">
+                                                                                mdi-plus
+                                                                            </v-icon>
+                                                                        </p>
+                                                                    </template>
+                                                                </v-expansion-panel-header>
+                                                                <v-expansion-panel-content>
+                                                                    <v-row v-for="(inp,ind) in input.nbr" :key="ind">
+
+                                                                        <v-col cols="12" lg="6" md="6">
+                                                                            <v-combobox
+                                                                                @change="fetchValues"
+                                                                                :items="options"
+                                                                                label="Options*"
+                                                                                dense
+                                                                                solo
+                                                                            ></v-combobox>
+                                                                        </v-col>
+
+                                                                        <v-col cols="12" lg="6" md="6">
+                                                                            <v-combobox
+                                                                                @change="mutateValue2($event,index,ind)"
+                                                                                :items="values"
+                                                                                label="Options*"
+                                                                                dense
+                                                                                solo
+                                                                            ></v-combobox>
+                                                                        </v-col>
+                                                                    </v-row>
+                                                                    <v-btn color="success" @click="incrementInputs2(index)" rounded text><v-icon>mdi-plus</v-icon></v-btn>
+                                                                    <v-btn color="error" @click="decrementInput2(index)" rounded text><v-icon>mdi-minus</v-icon></v-btn>
+                                                                </v-expansion-panel-content>
+                                                            </v-expansion-panel>
+                                                        </v-expansion-panels>
+                                                </v-col>
                                             </v-row>
                                             <v-btn color="success" @click="incrementInputs1" rounded text><v-icon>mdi-plus</v-icon></v-btn>
                                             <v-btn color="error" @click="decrementInput1" rounded text><v-icon>mdi-minus</v-icon></v-btn>
@@ -220,13 +264,18 @@ export default {
         hasError : false,
         errors : [],
         fruits : [],
+        fruits1 : [],
+        fruits2 : [],
         inputs : 1,
-        inputs1 : 1,
+        inputs1 : [{nbr : 1}],
         quantity : null,
         discount : null,
         is_static : false,
         code : null,
         price : null,
+        options : [],
+        values : [],
+        disabled_panel : true,
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -284,7 +333,7 @@ export default {
             this.data.product_name = null
             this.data.product_code = null
             this.inputs = 1
-            this.inputs1 = 1
+            this.inputs1 = [{nbr : 1}]
         },
         init()
         {
@@ -292,6 +341,15 @@ export default {
                 axios.get('/api/category/all').then(e=>{
                     this.fruits = e.data.data
                     this.categories = this.fruits.map(function(fruit){
+                        return fruit.name
+                    })
+                })
+            })
+
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get('/api/option/all').then(e=>{
+                    this.fruits1 = e.data.data
+                    this.options = this.fruits1.map(function(fruit){
                         return fruit.name
                     })
                 })
@@ -353,23 +411,76 @@ export default {
                 {
                     let data = {
                         code : this.code,
-                        price : this.price
+                        price : this.price,
+                        options : []
                     }
+                    this.disabled_panel = false
                     this.data.variants.push(data)
+                }else{
+                    this.disabled_panel = true
                 }
             }
         },
         incrementInputs1()
         {
             this.resetParamsVariants()
-            this.inputs1++
+            this.inputs1.push({
+                nbr : 1
+            })
         },
         decrementInput1()
         {
             if(this.inputs1 > 1)
             {
                 this.data.variants.pop()
-                this.inputs1--
+                this.inputs1.pop()
+            }
+        },
+        incrementInputs2(index)
+        {
+            this.resetParamsVariants()
+            this.inputs1[index].nbr++
+        },
+        decrementInput2(index)
+        {
+            if(this.inputs1[index].nbr > 1)
+            {
+                this.data.variants[index].options.pop()
+                this.inputs1[index].nbr--
+            }
+        },
+        fetchValues(option_name)
+        {
+            let filter = this.fruits1.filter(function (fruit){
+                return fruit.name == this
+            },option_name)[0]
+
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get(`/api/option/values/${filter._id}`).then(e=>{
+                    this.fruits2 = e.data.data
+                    this.values = this.fruits2.map(function(fruit){
+                        return fruit.value
+                    })
+                })
+            })
+        },
+        mutateValue2(value,index_variant,index_value)
+        {
+
+            let filter = this.fruits2.filter(function (fruit){
+                return fruit.value == this
+            },value)[0]
+
+            if(this.data.variants[index_variant].options.length == 0)
+            {
+                this.data.variants[index_variant].options.push({option_value_id : filter._id})
+            }else{
+                if(this.data.variants[index_variant].options[index_value] == undefined)
+                {
+                    this.data.variants[index_variant].options.push({option_value_id : filter._id})
+                }else{
+                    this.data.variants[index_variant].options[index_value].option_value_id = filter._id
+                }
             }
         },
         resetParamsOffers()
