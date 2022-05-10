@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductOffersRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
@@ -187,6 +188,17 @@ class ProductController extends Controller
                 $values = ProductOffer::where('product_id',$product_id)->onlyTrashed()->latest('created_at')->get();
                 return response(['data' => $values],200);
                 break;
+        }
+    }
+
+    public function storeOffers(StoreProductOffersRequest $request)
+    {
+        if($request->validated())
+        {
+            $product = Product::find($request->product_id);
+            collect($request->offers)->map(function ($offer) use ($product){
+                $product->offers()->create($offer);
+            });
         }
     }
 }
