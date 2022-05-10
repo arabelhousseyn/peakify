@@ -17,6 +17,8 @@ class ProductVariant extends Model
         'price'
     ];
 
+    protected $appends = ['PriceValue'];
+
     public function getPriceAttribute()
     {
         $format = new Money($this->attributes['price'],new Currency(config('app.currency')));
@@ -26,6 +28,11 @@ class ProductVariant extends Model
     public function options()
     {
         return $this->hasMany(ProductVariantOptionValue::class);
+    }
+
+    public function getPriceValueAttribute()
+    {
+        return $this->attributes['price'];
     }
 
 }

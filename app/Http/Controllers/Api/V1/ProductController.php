@@ -260,4 +260,93 @@ class ProductController extends Controller
     // variants
 
 
+    public function variants($product_id)
+    {
+        try {
+            $product = Product::with('variants')->findOrFail($product_id);
+            return response(['data' => array_reverse($product->variants->toArray())],200);
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('product not found');
+        }
+    }
+
+//    public function filterOffers($filter,$product_id)
+//    {
+//        switch ($filter)
+//        {
+//            case 0 :
+//                $values = ProductOffer::where('product_id',$product_id)->withTrashed()->latest('created_at')->get();
+//                return response(['data' => $values],200);
+//                break;
+//            case 1 :
+//                $values = ProductOffer::where('product_id',$product_id)->onlyTrashed()->latest('created_at')->get();
+//                return response(['data' => $values],200);
+//                break;
+//        }
+//    }
+//
+//    public function storeOffers(StoreProductOffersRequest $request)
+//    {
+//        if($request->validated())
+//        {
+//            $product = Product::find($request->product_id);
+//            collect($request->offers)->map(function ($offer) use ($product){
+//                $product->offers()->create($offer);
+//            });
+//            return response(['message' => 'created !'],201);
+//        }
+//    }
+//
+//    public function updateOffers(UpdateProductOfferRequest $request,$product_offer_id)
+//    {
+//        try {
+//            $product_offer = ProductOffer::findOrFail($product_offer_id);
+//            $product_offer->update($request->validated());
+//            return response()->noContent();
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('offer not found');
+//        }
+//    }
+//
+//    public function destroyOffer($product_offer_id)
+//    {
+//        try {
+//            $product_offer = ProductOffer::findOrFail($product_offer_id);
+//            if(!$product_offer->trashed())
+//            {
+//                $product_offer->delete();
+//                return response()->noContent();
+//            }
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('option not found');
+//        }
+//    }
+//
+//    public function restoreOffer($product_offer_id)
+//    {
+//        try {
+//            $product_offer = ProductOffer::withTrashed()->findOrFail($product_offer_id);
+//            if($product_offer->trashed())
+//            {
+//                $product_offer->restore();
+//                return response()->noContent();
+//            }
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('option not found');
+//        }
+//    }
+//
+//    public function OfferDetails($product_offer_id)
+//    {
+//        try {
+//            return new ProductOfferResource(ProductOffer::findOrFail($product_offer_id));
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('offer not found');
+//        }
+//    }
 }
