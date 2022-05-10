@@ -15,7 +15,7 @@ use App\Http\Requests\{StoreProductRequest,
 use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use App\Models\{Product, ProductOffer, ProductVariant};
+use App\Models\{Product, ProductOffer, ProductVariant, ProductVariantOptionValue};
 
 class ProductController extends Controller
 {
@@ -372,20 +372,20 @@ class ProductController extends Controller
         }
     }
 
-//    public function filterVariants($filter,$product_id)
-//    {
-//        switch ($filter)
-//        {
-//            case 0 :
-//                $values = ProductVariant::where('product_id',$product_id)->withTrashed()->latest('created_at')->get();
-//                return response(['data' => $values],200);
-//                break;
-//            case 1 :
-//                $values = ProductVariant::where('product_id',$product_id)->onlyTrashed()->latest('created_at')->get();
-//                return response(['data' => $values],200);
-//                break;
-//        }
-//    }
+    public function filterOptions($filter,$product_variant_id)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $values = ProductVariantOptionValue::with('value.option')->where('product_variant_id',$product_variant_id)->withTrashed()->latest('created_at')->get();
+                return response(['data' => $values],200);
+                break;
+            case 1 :
+                $values = ProductVariantOptionValue::with('value.option')->where('product_variant_id',$product_variant_id)->onlyTrashed()->latest('created_at')->get();
+                return response(['data' => $values],200);
+                break;
+        }
+    }
 
     public function storeOptions(StoreProductVariantOptionsRequest $request)
     {
