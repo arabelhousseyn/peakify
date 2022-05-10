@@ -104,7 +104,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::prefix('variants')->group(function (){
             Route::get('{product_id}','variants')->whereAlphaNumeric('product_id');
             Route::post('store','storeVariants');
-//            Route::get('details/{product_offer_id}','OfferDetails')->whereAlphaNumeric('product_offer_id');
+            Route::get('details/{product_variant_id}','variantDetails')->whereAlphaNumeric('product_variant_id');
             Route::delete('destroy/{product_variant_id}','destroyVariant')->whereAlphaNumeric('product_variant_id');
             Route::put('restore/{product_variant_id}','restoreVariant')->whereAlphaNumeric('product_variant_id');
             Route::put('update/{product_variant_id}','updateVariant')->whereAlphaNumeric('product_variant_id');

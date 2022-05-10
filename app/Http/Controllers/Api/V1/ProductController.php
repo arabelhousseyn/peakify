@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductOffersRequest;
 use App\Http\Resources\ProductOfferResource;
+use App\Http\Resources\ProductVariantResource;
 use App\Http\Requests\{StoreProductRequest,
     StoreProductVariantsRequest,
     UpdateProductRequest,
@@ -347,14 +348,14 @@ class ProductController extends Controller
             throw new ModelNotFoundException('variant not found');
         }
     }
-//
-//    public function OfferDetails($product_offer_id)
-//    {
-//        try {
-//            return new ProductOfferResource(ProductOffer::findOrFail($product_offer_id));
-//        }catch (ModelNotFoundException $exception)
-//        {
-//            throw new ModelNotFoundException('offer not found');
-//        }
-//    }
+
+    public function variantDetails($product_variant_id)
+    {
+        try {
+            return new ProductVariantResource(ProductVariant::findOrFail($product_variant_id));
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('variant not found');
+        }
+    }
 }
