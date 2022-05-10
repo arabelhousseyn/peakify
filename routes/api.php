@@ -91,6 +91,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::prefix('offers')->group(function (){
             Route::get('{product_id}','offers')->whereAlphaNumeric('product_id');
             Route::post('store','storeOffers');
+            Route::get('details/{product_offer_id}','OfferDetails')->whereAlphaNumeric('product_offer_id');
             Route::put('update/{product_offer_id}','updateOffers')->whereAlphaNumeric('product_offer_id');
             Route::get('filter/{filter}/{product_id}','filterOffers')->whereNumber('filter','product_id');
         });
