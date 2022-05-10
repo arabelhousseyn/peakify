@@ -72,6 +72,13 @@
                             </div>
                         </template>
 
+                        <template v-slot:item.is_static="{ item }">
+                            <v-chip small dark color="green">
+                            <span v-if="!item.is_static"><v-icon>mdi-percent-outline</v-icon></span>
+                                <span class="font-weight-bold" v-else>Statique</span>
+                            </v-chip>
+                        </template>
+
                         <template v-slot:item.created_at="{ item }">
                             <span> {{ formatDate(item.created_at) }} </span>
                         </template>
