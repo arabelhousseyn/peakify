@@ -108,7 +108,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
 //            Route::delete('destroy/{product_offer_id}','destroyOffer')->whereAlphaNumeric('product_offer_id');
 //            Route::put('restore/{product_offer_id}','restoreOffer')->whereAlphaNumeric('product_offer_id');
 //            Route::put('update/{product_offer_id}','updateOffers')->whereAlphaNumeric('product_offer_id');
-//            Route::get('filter/{filter}/{product_id}','filterOffers')->whereNumber('filter','product_id');
+            Route::get('filter/{filter}/{product_id}','filterVariants')->whereNumber('filter','product_id');
         });
     });
 
