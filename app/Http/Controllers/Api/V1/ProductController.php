@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductOffersRequest;
 use App\Http\Resources\ProductOfferResource;
-use App\Http\Requests\{StoreProductRequest,UpdateProductRequest,UpdateProductOfferRequest};
+use App\Http\Requests\{StoreProductRequest,
+    StoreProductVariantsRequest,
+    UpdateProductRequest,
+    UpdateProductOfferRequest};
 use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -285,18 +288,22 @@ class ProductController extends Controller
                 break;
         }
     }
-//
-//    public function storeOffers(StoreProductOffersRequest $request)
-//    {
-//        if($request->validated())
-//        {
-//            $product = Product::find($request->product_id);
-//            collect($request->offers)->map(function ($offer) use ($product){
-//                $product->offers()->create($offer);
-//            });
-//            return response(['message' => 'created !'],201);
-//        }
-//    }
+
+    public function storeVariants(StoreProductVariantsRequest $request)
+    {
+        if($request->validated())
+        {
+            $product = Product::find($request->product_id);
+            collect($request->variants)->map(function ($variant) use ($product){
+                $data = $product->variants()->create($variant);
+
+                collect($variant['options'])->map(function ($option) use ($data){
+                    $data->options()->create($option);
+                });
+            });
+            return response(['message' => 'created !'],201);
+        }
+    }
 //
 //    public function updateOffers(UpdateProductOfferRequest $request,$product_offer_id)
 //    {

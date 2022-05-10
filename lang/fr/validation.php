@@ -214,6 +214,7 @@ return [
             'numeric' => 'Prix doit être numerique.',
         ],
         'offers' => [
+            'required' =>'Offres requis.',
             'array' => 'Erreur veuillez vérifier vos informations',
             '*' => 'Erreur veuillez vérifier vos informations.'
         ],
@@ -226,6 +227,7 @@ return [
             'exists' => 'erreur veuillez réessayer.'
         ],
         'variants' => [
+            'required' => 'Variants requis.',
             'array' => 'Erreur veuillez vérifier vos informations',
             '*' => 'Erreur veuillez vérifier vos informations.'
         ],
