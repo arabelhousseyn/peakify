@@ -199,6 +199,8 @@ class ProductController extends Controller
             collect($request->offers)->map(function ($offer) use ($product){
                 $product->offers()->create($offer);
             });
+
+            return response(['message' => 'created !'],201);
         }
     }
 }

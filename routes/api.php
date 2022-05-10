@@ -90,7 +90,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
 
         Route::prefix('offers')->group(function (){
             Route::get('{product_id}','offers')->whereAlphaNumeric('product_id');
-            Route::post('store','storeOffers');
+            Route::post('store/{product_id}','storeOffers')->whereAlphaNumeric('product_id');
             Route::get('filter/{filter}/{product_id}','filterOffers')->whereNumber('filter','product_id');
         });
     });
