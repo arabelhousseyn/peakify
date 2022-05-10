@@ -229,6 +229,10 @@ return [
             'array' => 'Erreur veuillez vérifier vos informations',
             '*' => 'Erreur veuillez vérifier vos informations.'
         ],
+        'product_id' => [
+            'required' => 'erreur veuillez réessayer.',
+            'exists' => 'erreur veuillez réessayer.'
+        ]
     ],
 
     /*
