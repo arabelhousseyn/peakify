@@ -22,6 +22,6 @@ class ProductVariantOptionValue extends Model
 
     public function variant()
     {
-        return $this->belongsTo(ProductVariant::class)->withDefault([]);
+        return $this->belongsTo(ProductVariant::class,'product_variant_id')->withDefault([]);
     }
 }
