@@ -191,7 +191,13 @@ const routes = [
                             {
                                 path: 'add-offers',
                                 component : () =>  import('../pages/Product/Offer/AddProductOfferPage')
-                            }
+                            },
+                            {
+                                path: 'update-offer/:idd',
+                                name : 'UpdateOffer',
+                                props : true,
+                                component : () => import('../pages/Product/Offer/UpdateOfferPage')
+                            },
                         ]
                     }
                 ]

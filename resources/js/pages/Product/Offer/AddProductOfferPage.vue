@@ -1,5 +1,5 @@
 <template>
-    <div class="add-option-page">
+    <div class="add-offers-page">
         <v-container fluid>
             <bread-crumbs-component :items="items" />
 
