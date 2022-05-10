@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductOffersRequest;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\{StoreProductRequest,UpdateProductRequest,UpdateProductOfferRequest};
 use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -199,8 +198,18 @@ class ProductController extends Controller
             collect($request->offers)->map(function ($offer) use ($product){
                 $product->offers()->create($offer);
             });
-
             return response(['message' => 'created !'],201);
+        }
+    }
+
+    public function UpdateOffers(UpdateProductOfferRequest $request,$product_offer_id)
+    {
+        try {
+            $product_offer = ProductOffer::findOrFail($product_offer_id);
+            $product_offer->update($request->validated());
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('product not found');
         }
     }
 }
