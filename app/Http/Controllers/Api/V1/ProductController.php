@@ -215,6 +215,36 @@ class ProductController extends Controller
         }
     }
 
+    public function destroyOffer($product_offer_id)
+    {
+        try {
+            $product_offer = ProductOffer::findOrFail($product_offer_id);
+            if(!$product_offer->trashed())
+            {
+                $product_offer->delete();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option not found');
+        }
+    }
+
+    public function restoreOffer($product_offer_id)
+    {
+        try {
+            $product_offer = ProductOffer::withTrashed()->findOrFail($product_offer_id);
+            if($product_offer->trashed())
+            {
+                $product_offer->restore();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option not found');
+        }
+    }
+
     public function OfferDetails($product_offer_id)
     {
         try {
