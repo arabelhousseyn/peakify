@@ -187,6 +187,10 @@ const routes = [
                             {
                                 path: '/',
                                 component : () => import('../pages/Product/Offer/ProductOfferDatatable')
+                            },
+                            {
+                                path: 'add-offers',
+                                component : () =>  import('../pages/Product/Offer/AddProductOfferPage')
                             }
                         ]
                     }

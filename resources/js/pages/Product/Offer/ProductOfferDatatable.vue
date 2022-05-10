@@ -173,7 +173,7 @@ export default {
     methods : {
         forward()
         {
-            this.$router.push(`/home/options/values/${this.option_id}/add-option-value`)
+            this.$router.push(`/home/products/offers/${this.product_id}/add-offers`)
         },
         filter()
         {

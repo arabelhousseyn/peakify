@@ -89,8 +89,8 @@ export default {
             },
             {
                 text: 'Ajouter une valeur',
-                disabled: false,
-                href: '/home/options/valeurs/add-option-value',
+                disabled: true,
+                href: '',
             },
         ],
         disabled : true,
