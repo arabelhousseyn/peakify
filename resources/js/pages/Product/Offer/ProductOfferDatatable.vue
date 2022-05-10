@@ -1,12 +1,13 @@
 <template>
-    <div class="data-table-product-offer-page">
+    <div class="data-table-product-offers-page">
         <v-container fluid>
             <bread-crumbs-component :items="items" />
+            <v-btn class="mt-3" @click="$router.push('/home/products')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
             <v-card class="mt-5" elevation="0">
                 <v-card-title>
-                    <span>Produits</span>
+                    <span>Offres</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('products/add-product')" color="primary">
+                    <v-btn @click="forward" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>
@@ -39,12 +40,8 @@
                         loading-text="Chargement... veuillez patienter"
                         :headers="headers"
                         :items="data"
-                        :page.sync="page"
                         :search="search"
-                        :items-per-page="itemsPerPage"
-                        hide-default-footer
                         class="elevation-1"
-                        @page-count="pageCount = $event"
                     >
 
                         <template v-slot:item.deleted_at="{ item }">
@@ -75,20 +72,6 @@
                             </div>
                         </template>
 
-
-
-                        <template v-slot:item.created_by="{ item }">
-                            <div class="created-by">
-                                <span>{{item.created_by.full_name}}</span>
-                                <v-chip v-if="item.created_by.type == 'admin'" dark color="green">
-                                    {{item.created_by.type}}
-                                </v-chip>
-                                <v-chip v-if="item.created_by.type == 'agent'" dark color="yellow">
-                                    {{item.created_by.type}}
-                                </v-chip>
-                            </div>
-                        </template>
-
                         <template v-slot:item.created_at="{ item }">
                             <span> {{ formatDate(item.created_at) }} </span>
                         </template>
@@ -114,11 +97,7 @@
 
                                 <v-list>
                                     <v-list-item-group>
-                                        <v-list-item link @click="$router.push({name : 'updateProduct',params : {id : item._id,data : item}})">
-                                            <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
-                                            <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
-                                        </v-list-item>
-                                        <v-list-item link @click="$router.push({name : 'ProductOffer',params : {id : item._id}})">
+                                        <v-list-item link @click="$router.push({name : 'updateOptionValue',params : {idd : item._id,data : item}})">
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
@@ -135,13 +114,6 @@
                             </v-menu>
                         </template>
                     </v-data-table>
-                    <div class="text-center pt-2">
-                        <v-pagination
-                            v-model="page"
-                            :length="count"
-                            @input="currentPage"
-                        ></v-pagination>
-                    </div>
                 </v-card-text>
             </v-card>
         </v-container>
@@ -152,25 +124,20 @@ import moment from 'moment'
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent"
 export default {
     data : ()=>({
+        product_id : window.location.href.split('/').pop(),
         search : null,
-        page: 1,
-        itemsPerPage : 0,
-        count: 0,
         loading : true,
         headers: [
             {
-                text: 'Catégorie',
+                text: 'QT',
                 align: 'start',
                 sortable: false,
-                value: 'category.name',
+                value: 'quantity',
             },
-            { text: 'Code produit', value: 'product_code' },
-            { text: 'Nom produit', value: 'product_name' },
-            { text: 'Description', value: 'description' },
-            { text: 'Prix', value: 'price' },
-            { text: 'Créé par', value: 'created_by' },
-            { text: 'état', value: 'deleted_at' },
+            { text: 'Remise', value: 'discount' },
+            { text: 'Type', value: 'is_static' },
             { text: 'Créé à', value: 'created_at' },
+            { text: 'état', value: 'deleted_at' },
             { text: 'Actions', value: 'actions', sortable: false },
         ],
         data: [],
@@ -185,25 +152,34 @@ export default {
                 disabled: false,
                 href: '/home/products',
             },
+            {
+                text: 'Offres',
+                disabled: true,
+                href: '',
+            },
         ],
-        selections: ['Tous les produits','Produits Active','Produits supprimer'],
+        selections: ['Tous les offres','offres Active','offres supprimer'],
 
         dialog1 : false,
         dialog2 : false,
-        product_id : null,
-        hint : 'Produits Active'
+        option_value_id : null,
+        hint : 'offres Active'
     }),
-    components: { BreadCrumbsComponent},
+    components: {BreadCrumbsComponent},
     methods : {
+        forward()
+        {
+            this.$router.push(`/home/options/values/${this.option_id}/add-option-value`)
+        },
         filter()
         {
-            if(this.hint == 'Produits Active')
+            if(this.hint == 'offres Active')
             {
                 this.init()
-            }else if(this.hint == 'Tous les produits')
+            }else if(this.hint == 'Tous les offres')
             {
                 this.callApi(0)
-            }else if (this.hint == 'Produits supprimer')
+            }else if (this.hint == 'offres supprimer')
             {
                 this.callApi(1)
             }
@@ -211,9 +187,7 @@ export default {
         callApi(filter)
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/product/filter/${filter}?page=${this.page}`).then(e=>{
-                    this.count = e.data.last_page
-                    this.itemsPerPage = e.data.per_page
+                axios.get(`/api/product/offers/filter/${filter}/${this.product_id}`).then(e=>{
                     this.data = e.data.data
                     this.loading = false
                 }).catch(err=>{
@@ -238,7 +212,7 @@ export default {
             this.loading = true
             this.data = []
             this.$router.push(`?page=${this.page}`).catch(err => {})
-            if(this.hint == 'Produits Active')
+            if(this.hint == 'offres Active')
             {
                 this.init()
             }else{
@@ -248,9 +222,7 @@ export default {
         init()
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/product?page=${this.page}`).then(e=>{
-                    this.count = e.data.last_page
-                    this.itemsPerPage = e.data.per_page
+                axios.get(`/api/product/offers/${this.product_id}`).then(e=>{
                     this.data = e.data.data
                     this.loading = false
                 }).catch(err=>{
@@ -272,22 +244,22 @@ export default {
         },
         destroy(id)
         {
-            this.product_id = id
+            this.option_value_id = id
             this.dialog1 = true
         },
         restore(id)
         {
-            this.product_id = id
+            this.option_value_id = id
             this.dialog2 = true
         },
         close()
         {
-            this.product_id = null
+            this.option_value_id = null
             this.dialog1 = false
         },
         close1()
         {
-            this.product_id = null
+            this.option_value_id = null
             this.dialog2 = false
         }
     },

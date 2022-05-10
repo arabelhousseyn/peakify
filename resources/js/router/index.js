@@ -186,7 +186,6 @@ const routes = [
                         children : [
                             {
                                 path: '/',
-                                name: 'ProductOffer',
                                 component : () => import('../pages/Product/Offer/ProductOfferDatatable')
                             }
                         ]

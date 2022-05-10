@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use App\Models\{Product};
+use App\Models\{Product, ProductOffer};
 
 class ProductController extends Controller
 {
@@ -172,6 +172,21 @@ class ProductController extends Controller
         }catch (ModelNotFoundException $exception)
         {
             throw new ModelNotFoundException('product not found');
+        }
+    }
+
+    public function filterOffers($filter,$product_id)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $values = ProductOffer::where('product_id',$product_id)->withTrashed()->latest('created_at')->get();
+                return response(['data' => $values],200);
+                break;
+            case 1 :
+                $values = ProductOffer::where('product_id',$product_id)->onlyTrashed()->latest('created_at')->get();
+                return response(['data' => $values],200);
+                break;
         }
     }
 }
