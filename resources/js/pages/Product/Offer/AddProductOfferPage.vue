@@ -13,10 +13,10 @@
                                 <v-expansion-panels flat>
                                     <v-expansion-panel elevation="1">
                                         <v-expansion-panel-header disable-icon-rotate>
-                                            <strong>Valeurs</strong>
+                                            <strong>Offres</strong>
                                             <template v-slot:actions>
                                                 <p>
-                                                    <small>Ajouter les valeurs</small>
+                                                    <small>Ajouter les offres</small>
                                                     <v-icon color="primary">
                                                         mdi-plus
                                                     </v-icon>
@@ -24,14 +24,37 @@
                                             </template>
                                         </v-expansion-panel-header>
                                         <v-expansion-panel-content>
-                                            <v-text-field
-                                                v-for="(input,index) in inputs" :key="index"
-                                                @change="mutateValue($event,index)"
-                                                solo
-                                                required
-                                                label="valeur*"
-                                                prepend-inner-icon="mdi-square"
-                                            ></v-text-field>
+                                            <v-row v-for="(input,index) in inputs" :key="index">
+                                                <v-col cols="12" lg="4" md="4">
+                                                    <v-text-field
+                                                        @change="mutateValue($event,'Q',index)"
+                                                        solo
+                                                        type="number"
+                                                        min="1"
+                                                        label="Quantité*"
+                                                        prepend-inner-icon="mdi-square"
+                                                    ></v-text-field>
+                                                </v-col>
+
+                                                <v-col cols="12" lg="4" md="4">
+                                                    <v-text-field
+                                                        @change="mutateValue($event,'D',index)"
+                                                        solo
+                                                        type="number"
+                                                        min="1"
+                                                        max="100"
+                                                        label="Réduction*"
+                                                        prepend-inner-icon="mdi-percent-outline"
+                                                    ></v-text-field>
+                                                </v-col>
+
+                                                <v-col cols="12" lg="4" md="4">
+                                                    <v-checkbox
+                                                        @change="mutateValue($event,'T',index)"
+                                                        label="Statique"
+                                                    ></v-checkbox>
+                                                </v-col>
+                                            </v-row>
                                             <v-btn color="success" @click="incrementInputs" rounded text><v-icon>mdi-plus</v-icon></v-btn>
                                             <v-btn color="error" @click="decrementInput" rounded text><v-icon>mdi-minus</v-icon></v-btn>
                                         </v-expansion-panel-content>
@@ -69,7 +92,7 @@ import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent";
 export default {
     data : ()=>({
         data : {
-            values : []
+            offers : []
         },
         items : [
             {
@@ -98,6 +121,9 @@ export default {
         hasError : false,
         errors : [],
         inputs : 1,
+        quantity : null,
+        discount : null,
+        is_static : false,
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -109,17 +135,14 @@ export default {
 
             let url = window.location.href.split('/')
 
-            this.data.option_id = url[url.length - 2]
+            this.data.product_id = url[url.length - 2]
 
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.post('/api/option/store-values',this.data).then(e=>{
+                axios.post('/api/product/offers/store',this.data).then(e=>{
                     this.$toast.open({
                         message : "Opération effectué",
                         type : 'success'
                     })
-                    this.data.values = []
-                    this.inputs = 1
-                    this.loading = false
                     this.empty()
                 }).catch(err => {
                     if(err.response.status == 422)
@@ -136,36 +159,59 @@ export default {
                 })
             })
         },
+        empty()
+        {
+            this.data.offers = []
+            this.inputs = 1
+            this.loading = false
+            this.disabled = true
+        },
         incrementInputs()
         {
+            this.resetParamsOffers()
             this.inputs++
         },
-        mutateValue(value,index)
+        mutateValue(value,attribute,index)
         {
-            if(this.disabled)
+            switch (attribute)
             {
-                this.disabled =  false
+                case 'Q' : this.quantity = value; break;
+                case 'D' : this.discount = value; break;
+                case 'T' : this.is_static = value; break;
             }
 
-            if(this.data.values[index] !== undefined)
+            if(this.data.offers[index] !== undefined)
             {
-                this.data.values[index] = {value : value}
+                this.data.offers[index].quantity = this.quantity
+                this.data.offers[index].discount = this.discount
+                this.data.offers[index].is_static = this.is_static
             }else{
-                this.data.values.push({value : value})
+                if(this.quantity !== null && this.discount !== null)
+                {
+                    let data = {
+                        quantity : this.quantity,
+                        discount : this.discount,
+                        is_static : this.is_static,
+                    }
+                    this.disabled = false
+                    this.data.offers.push(data)
+                }
             }
         },
         decrementInput()
         {
             if(this.inputs > 1)
             {
-                this.data.values.pop()
+                this.data.offers.pop()
                 this.inputs--
             }
         },
-        empty()
+        resetParamsOffers()
         {
-            this.data.name = null
-        }
+            this.discount = null
+            this.quantity = null
+            this.is_static = false
+        },
     }
 }
 </script>

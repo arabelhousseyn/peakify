@@ -150,7 +150,7 @@ class OptionController extends Controller
     {
         try {
             $option = Option::with('values')->findOrFail($option_id);
-            return response(['data' => $option->values],200);
+            return response(['data' => array_reverse($option->values->toArray())],200);
         }catch (ModelNotFoundException $exception)
         {
             throw new ModelNotFoundException('option not found');

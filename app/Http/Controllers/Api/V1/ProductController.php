@@ -169,7 +169,7 @@ class ProductController extends Controller
     {
         try {
             $product = Product::with('offers')->findOrFail($product_id);
-            return response(['data' => $product->offers],200);
+            return response(['data' => array_reverse($product->offers->toArray())],200);
         }catch (ModelNotFoundException $exception)
         {
             throw new ModelNotFoundException('product not found');
