@@ -5,7 +5,7 @@
             <v-btn class="mt-3" @click="$router.push('/home/products')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
             <v-card class="mt-5" elevation="0">
                 <v-card-title>
-                    <span>Offres</span>
+                    <span>Varients</span>
                     <v-spacer></v-spacer>
                     <v-btn @click="forward" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
@@ -124,15 +124,13 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <delete-offer-dialog @close="close" :dialog="dialog1" :product_offer_id="product_offer_id" />
-        <restore-offer-dialog @close="close1" :dialog="dialog2" :product_offer_id="product_offer_id" />
+        <delete-variant-dialog @close="close" :dialog="dialog1" :product_offer_id="product_offer_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent"
-import DeleteOfferDialog from "../../../components/dialog/Product/Offer/DeleteOfferDialog";
-import RestoreOfferDialog from "../../../components/dialog/Product/Offer/RestoreOfferDialog";
+import DeleteVariantDialog from "../../../components/dialog/Product/Variant/DeleteVariantDialog";
 export default {
     data : ()=>({
         product_id : window.location.href.split('/').pop(),
@@ -175,7 +173,7 @@ export default {
         product_offer_id : null,
         hint : 'varients Active'
     }),
-    components: {RestoreOfferDialog, DeleteOfferDialog, BreadCrumbsComponent},
+    components: {DeleteVariantDialog, BreadCrumbsComponent},
     methods : {
         forward()
         {
