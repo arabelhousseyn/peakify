@@ -112,6 +112,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
 
             Route::prefix('options')->group(function (){
                 Route::get('{product_variant_id}','options')->whereAlphaNumeric('product_variant_id');
+                Route::post('store','storeOptions');
             });
         });
     });

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductOffersRequest;
 use App\Http\Resources\ProductOfferResource;
 use App\Http\Resources\ProductVariantResource;
 use App\Http\Requests\{StoreProductRequest,
+    StoreProductVariantOptionsRequest,
     StoreProductVariantsRequest,
     UpdateProductRequest,
     UpdateProductOfferRequest,
@@ -385,23 +386,19 @@ class ProductController extends Controller
 //                break;
 //        }
 //    }
-//
-//    public function storeVariants(StoreProductVariantsRequest $request)
-//    {
-//        if($request->validated())
-//        {
-//            $product = Product::find($request->product_id);
-//            collect($request->variants)->map(function ($variant) use ($product){
-//                $data = $product->variants()->create($variant);
-//
-//                collect($variant['options'])->map(function ($option) use ($data){
-//                    $data->options()->create($option);
-//                });
-//            });
-//            return response(['message' => 'created !'],201);
-//        }
-//    }
-//
+
+    public function storeOptions(StoreProductVariantOptionsRequest $request)
+    {
+        if($request->validated())
+        {
+            $product_variant = ProductVariant::find($request->product_variant_id);
+                collect($request->options)->map(function ($option) use ($product_variant){
+                    $product_variant->options()->create($option);
+                });
+            return response(['message' => 'created !'],201);
+        }
+    }
+
 //    public function updateVariant(UpdateProductVariantRequest $request,$product_variant_id)
 //    {
 //        try {
