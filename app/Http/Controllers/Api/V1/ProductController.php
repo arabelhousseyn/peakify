@@ -165,6 +165,8 @@ class ProductController extends Controller
         }
     }
 
+    // offers
+
     public function offers($product_id)
     {
         try {
@@ -254,4 +256,8 @@ class ProductController extends Controller
             throw new ModelNotFoundException('offer not found');
         }
     }
+
+    // variants
+
+
 }
