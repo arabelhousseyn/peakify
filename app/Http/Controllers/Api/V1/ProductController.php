@@ -202,11 +202,12 @@ class ProductController extends Controller
         }
     }
 
-    public function UpdateOffers(UpdateProductOfferRequest $request,$product_offer_id)
+    public function updateOffers(UpdateProductOfferRequest $request,$product_offer_id)
     {
         try {
             $product_offer = ProductOffer::findOrFail($product_offer_id);
             $product_offer->update($request->validated());
+            return response()->noContent();
         }catch (ModelNotFoundException $exception)
         {
             throw new ModelNotFoundException('product not found');
