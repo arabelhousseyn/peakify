@@ -17,6 +17,6 @@ class OptionValue extends Model
 
     public function option()
     {
-        return $this->belongsTo(Option::class,'option_id');
+        return $this->belongsTo(Option::class,'option_id')->withDefault([]);
     }
 }

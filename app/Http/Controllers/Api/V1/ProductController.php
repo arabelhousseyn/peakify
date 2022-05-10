@@ -358,4 +358,100 @@ class ProductController extends Controller
             throw new ModelNotFoundException('variant not found');
         }
     }
+       // variant options
+
+    public function options($product_variant_id)
+    {
+        try {
+            $variant = ProductVariant::with('options.value.option')->findOrFail($product_variant_id);
+            return response(['data' => array_reverse($variant->options->toArray())],200);
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('variant not found');
+        }
+    }
+
+//    public function filterVariants($filter,$product_id)
+//    {
+//        switch ($filter)
+//        {
+//            case 0 :
+//                $values = ProductVariant::where('product_id',$product_id)->withTrashed()->latest('created_at')->get();
+//                return response(['data' => $values],200);
+//                break;
+//            case 1 :
+//                $values = ProductVariant::where('product_id',$product_id)->onlyTrashed()->latest('created_at')->get();
+//                return response(['data' => $values],200);
+//                break;
+//        }
+//    }
+//
+//    public function storeVariants(StoreProductVariantsRequest $request)
+//    {
+//        if($request->validated())
+//        {
+//            $product = Product::find($request->product_id);
+//            collect($request->variants)->map(function ($variant) use ($product){
+//                $data = $product->variants()->create($variant);
+//
+//                collect($variant['options'])->map(function ($option) use ($data){
+//                    $data->options()->create($option);
+//                });
+//            });
+//            return response(['message' => 'created !'],201);
+//        }
+//    }
+//
+//    public function updateVariant(UpdateProductVariantRequest $request,$product_variant_id)
+//    {
+//        try {
+//            $product_variant = ProductVariant::findOrFail($product_variant_id);
+//            $product_variant->update($request->all());
+//            return response()->noContent();
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('variant not found');
+//        }
+//    }
+//
+//    public function destroyVariant($product_variant_id)
+//    {
+//        try {
+//            $product_variant = ProductVariant::findOrFail($product_variant_id);
+//            if(!$product_variant->trashed())
+//            {
+//                $product_variant->delete();
+//                return response()->noContent();
+//            }
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('variant not found');
+//        }
+//    }
+//
+//    public function restoreVariant($product_variant_id)
+//    {
+//        try {
+//            $product_variant = ProductVariant::withTrashed()->findOrFail($product_variant_id);
+//            if($product_variant->trashed())
+//            {
+//                $product_variant->restore();
+//                return response()->noContent();
+//            }
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('variant not found');
+//        }
+//    }
+//
+//    public function variantDetails($product_variant_id)
+//    {
+//        try {
+//            return new ProductVariantResource(ProductVariant::findOrFail($product_variant_id));
+//        }catch (ModelNotFoundException $exception)
+//        {
+//            throw new ModelNotFoundException('variant not found');
+//        }
+//    }
+
 }

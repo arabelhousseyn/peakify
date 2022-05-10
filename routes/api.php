@@ -109,6 +109,10 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
             Route::put('restore/{product_variant_id}','restoreVariant')->whereAlphaNumeric('product_variant_id');
             Route::put('update/{product_variant_id}','updateVariant')->whereAlphaNumeric('product_variant_id');
             Route::get('filter/{filter}/{product_id}','filterVariants')->whereNumber('filter','product_id');
+
+            Route::prefix('options')->group(function (){
+                Route::get('{product_variant_id}','options')->whereAlphaNumeric('product_variant_id');
+            });
         });
     });
 

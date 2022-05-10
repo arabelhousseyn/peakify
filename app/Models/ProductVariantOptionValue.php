@@ -17,11 +17,11 @@ class ProductVariantOptionValue extends Model
 
     public function value()
     {
-        return $this->hasOne(OptionValue::class);
+        return $this->belongsTo(OptionValue::class,'option_value_id')->withDefault([]);
     }
 
     public function variant()
     {
-        return $this->belongsTo(ProductVariant::class);
+        return $this->belongsTo(ProductVariant::class)->withDefault([]);
     }
 }
