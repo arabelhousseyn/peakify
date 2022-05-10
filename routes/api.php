@@ -87,6 +87,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::put('restore/{product_id}','restore')->whereAlphaNumeric('product_id');
         Route::get('product-details/{product_id}','productDetails')->whereAlphaNumeric('product_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');
+        Route::get('offers/{product_id}','offers')->whereAlphaNumeric('product_id');
     });
 
     // resource controllers

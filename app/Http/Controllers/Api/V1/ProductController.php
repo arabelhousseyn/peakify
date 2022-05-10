@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Product};
 
@@ -160,6 +161,17 @@ class ProductController extends Controller
                 $products = Product::onlyTrashed()->with(['category:_id,name','createdBy:_id,full_name,type'])->latest('created_at')->paginate(15);
                 return response($products,200);
                 break;
+        }
+    }
+
+    public function offers($product_id)
+    {
+        try {
+            $product = Product::with('offers')->findOrFail($product_id);
+            return response(['data' => $product->offers],200);
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('product not found');
         }
     }
 }
