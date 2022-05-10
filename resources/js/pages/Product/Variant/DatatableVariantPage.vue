@@ -104,7 +104,7 @@
 
                                 <v-list>
                                     <v-list-item-group>
-                                        <v-list-item link @click="$router.push({name : 'UpdateOffer',params : {idd : item._id,data : item}})">
+                                        <v-list-item link @click="$router.push({name : 'UpdateVariant',params : {idd : item._id,data : item}})">
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
