@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductOffersRequest;
+use App\Http\Resources\ProductOfferResource;
 use App\Http\Requests\{StoreProductRequest,UpdateProductRequest,UpdateProductOfferRequest};
 use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -210,7 +211,17 @@ class ProductController extends Controller
             return response()->noContent();
         }catch (ModelNotFoundException $exception)
         {
-            throw new ModelNotFoundException('product not found');
+            throw new ModelNotFoundException('offer not found');
+        }
+    }
+
+    public function OfferDetails($product_offer_id)
+    {
+        try {
+            return new ProductOfferResource(ProductOffer::findOrFail($product_offer_id));
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('offer not found');
         }
     }
 }
