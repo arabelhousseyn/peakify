@@ -8,7 +8,8 @@ use App\Http\Resources\ProductOfferResource;
 use App\Http\Requests\{StoreProductRequest,
     StoreProductVariantsRequest,
     UpdateProductRequest,
-    UpdateProductOfferRequest};
+    UpdateProductOfferRequest,
+    UpdateProductVariantRequest};
 use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -304,18 +305,18 @@ class ProductController extends Controller
             return response(['message' => 'created !'],201);
         }
     }
-//
-//    public function updateOffers(UpdateProductOfferRequest $request,$product_offer_id)
-//    {
-//        try {
-//            $product_offer = ProductOffer::findOrFail($product_offer_id);
-//            $product_offer->update($request->validated());
-//            return response()->noContent();
-//        }catch (ModelNotFoundException $exception)
-//        {
-//            throw new ModelNotFoundException('offer not found');
-//        }
-//    }
+
+    public function updateVariant(UpdateProductVariantRequest $request,$product_variant_id)
+    {
+        try {
+            $product_variant = ProductVariant::findOrFail($product_variant_id);
+            $product_variant->update($request->all());
+            return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('variant not found');
+        }
+    }
 //
 //    public function destroyOffer($product_offer_id)
 //    {
