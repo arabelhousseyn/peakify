@@ -118,12 +118,14 @@
             </v-card>
         </v-container>
         <delete-offer-dialog @close="close" :dialog="dialog1" :product_offer_id="product_offer_id" />
+        <restore-offer-dialog @close="close1" :dialog="dialog2" :product_offer_id="product_offer_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent"
 import DeleteOfferDialog from "../../../components/dialog/Product/Offer/DeleteOfferDialog";
+import RestoreOfferDialog from "../../../components/dialog/Product/Offer/RestoreOfferDialog";
 export default {
     data : ()=>({
         product_id : window.location.href.split('/').pop(),
@@ -167,7 +169,7 @@ export default {
         product_offer_id : null,
         hint : 'offres Active'
     }),
-    components: {DeleteOfferDialog, BreadCrumbsComponent},
+    components: {RestoreOfferDialog, DeleteOfferDialog, BreadCrumbsComponent},
     methods : {
         forward()
         {
