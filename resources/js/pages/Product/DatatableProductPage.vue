@@ -118,6 +118,10 @@
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
+                                        <v-list-item link @click="$router.push({name : 'ProductOffer',params : {id : item._id}})">
+                                            <v-list-item-icon><v-icon color="green">mdi-percent-outline</v-icon></v-list-item-icon>
+                                            <v-list-item-content><v-list-item-title>Offres</v-list-item-title></v-list-item-content>
+                                        </v-list-item>
                                         <v-list-item v-if="item.deleted_at == null" link @click="destroy(item._id)">
                                             <v-list-item-icon><v-icon color="red">mdi-trash-can</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Supprimer</v-list-item-title></v-list-item-content>

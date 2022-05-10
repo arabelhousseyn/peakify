@@ -179,6 +179,17 @@ const routes = [
                         name : 'updateProduct',
                         props: true,
                         component : () => import('../pages/Product/UpdateProductPage')
+                    },
+                    {
+                        path : 'offers/:id',
+                        component : () => import('../pages/Product/Offer/ProductOfferPage'),
+                        children : [
+                            {
+                                path: '/',
+                                name: 'ProductOffer',
+                                component : () => import('../pages/Product/Offer/ProductOfferDatatable')
+                            }
+                        ]
                     }
                 ]
             }
