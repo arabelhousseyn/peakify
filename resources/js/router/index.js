@@ -199,6 +199,16 @@ const routes = [
                                 component : () => import('../pages/Product/Offer/UpdateOfferPage')
                             },
                         ]
+                    },
+                    {
+                        path: 'variants/:id',
+                        component : () => import('../pages/Product/Variant/VariantPage'),
+                        children: [
+                            {
+                                path: '/',
+                                component : () => import('../pages/Product/Variant/DatatableVariantPage')
+                            }
+                        ]
                     }
                 ]
             }
