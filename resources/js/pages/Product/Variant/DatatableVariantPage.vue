@@ -140,13 +140,12 @@ export default {
         loading : true,
         headers: [
             {
-                text: 'QT',
+                text: 'Code',
                 align: 'start',
                 sortable: false,
-                value: 'quantity',
+                value: 'code',
             },
-            { text: 'Remise', value: 'discount' },
-            { text: 'Type', value: 'is_static' },
+            { text: 'Price', value: 'price' },
             { text: 'Créé à', value: 'created_at' },
             { text: 'état', value: 'deleted_at' },
             { text: 'Actions', value: 'actions', sortable: false },
@@ -164,17 +163,17 @@ export default {
                 href: '/home/products',
             },
             {
-                text: 'Offres',
+                text: 'Varients',
                 disabled: true,
                 href: '',
             },
         ],
-        selections: ['Tous les offres','offres Active','offres supprimer'],
+        selections: ['Tous les varients','varients Active','varients supprimer'],
 
         dialog1 : false,
         dialog2 : false,
         product_offer_id : null,
-        hint : 'offres Active'
+        hint : 'varients Active'
     }),
     components: {RestoreOfferDialog, DeleteOfferDialog, BreadCrumbsComponent},
     methods : {
@@ -184,13 +183,13 @@ export default {
         },
         filter()
         {
-            if(this.hint == 'offres Active')
+            if(this.hint == 'varients Active')
             {
                 this.init()
-            }else if(this.hint == 'Tous les offres')
+            }else if(this.hint == 'Tous les varients')
             {
                 this.callApi(0)
-            }else if (this.hint == 'offres supprimer')
+            }else if (this.hint == 'varients supprimer')
             {
                 this.callApi(1)
             }
@@ -198,7 +197,7 @@ export default {
         callApi(filter)
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/product/offers/filter/${filter}/${this.product_id}`).then(e=>{
+                axios.get(`/api/product/variants/filter/${filter}/${this.product_id}`).then(e=>{
                     this.data = e.data.data
                     this.loading = false
                 }).catch(err=>{
@@ -233,7 +232,7 @@ export default {
         init()
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/product/offers/${this.product_id}`).then(e=>{
+                axios.get(`/api/product/variants/${this.product_id}`).then(e=>{
                     this.data = e.data.data
                     this.loading = false
                 }).catch(err=>{
