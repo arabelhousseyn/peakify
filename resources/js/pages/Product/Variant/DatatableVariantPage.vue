@@ -179,7 +179,7 @@ export default {
     methods : {
         forward()
         {
-            this.$router.push(`/home/products/offers/${this.product_id}/add-offers`)
+            this.$router.push(`/home/products/variants/${this.product_id}/add-variant`)
         },
         filter()
         {

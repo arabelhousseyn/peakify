@@ -209,6 +209,10 @@ const routes = [
                                 component : () => import('../pages/Product/Variant/DatatableVariantPage')
                             },
                             {
+                                path: 'add-variant',
+                                component : () => import('../pages/Product/Variant/AddProductVariantPage')
+                            },
+                            {
                                 path: 'update-variant/:idd',
                                 name : 'UpdateVariant',
                                 props : true,
