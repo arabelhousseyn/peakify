@@ -26,9 +26,9 @@ class StoreProductOffersRequest extends FormRequest
         return [
             'product_id' => 'required|exists:products,_id',
             'offers' => 'array|required',
-            'offers.*.quantity' => 'required',
-            'offers.*.discount' => 'required',
-            'offers.*.is_static' => 'required',
+            'offers.*.quantity' => 'required|numeric',
+            'offers.*.discount' => 'required|numeric',
+            'offers.*.is_static' => 'required|boolean',
         ];
     }
 }
