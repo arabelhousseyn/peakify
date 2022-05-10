@@ -117,11 +117,13 @@
                 </v-card-text>
             </v-card>
         </v-container>
+        <delete-offer-dialog @close="close" :dialog="dialog1" :product_offer_id="product_offer_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent"
+import DeleteOfferDialog from "../../../components/dialog/Product/Offer/DeleteOfferDialog";
 export default {
     data : ()=>({
         product_id : window.location.href.split('/').pop(),
@@ -162,10 +164,10 @@ export default {
 
         dialog1 : false,
         dialog2 : false,
-        option_value_id : null,
+        product_offer_id : null,
         hint : 'offres Active'
     }),
-    components: {BreadCrumbsComponent},
+    components: {DeleteOfferDialog, BreadCrumbsComponent},
     methods : {
         forward()
         {
@@ -244,22 +246,22 @@ export default {
         },
         destroy(id)
         {
-            this.option_value_id = id
+            this.product_offer_id = id
             this.dialog1 = true
         },
         restore(id)
         {
-            this.option_value_id = id
+            this.product_offer_id = id
             this.dialog2 = true
         },
         close()
         {
-            this.option_value_id = null
+            this.product_offer_id = null
             this.dialog1 = false
         },
         close1()
         {
-            this.option_value_id = null
+            this.product_offer_id = null
             this.dialog2 = false
         }
     },
