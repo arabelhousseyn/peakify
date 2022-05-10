@@ -112,8 +112,8 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
 
             Route::prefix('options')->group(function (){
                 Route::get('{product_variant_id}','options')->whereAlphaNumeric('product_variant_id');
+                Route::delete('destroy/{product_variant_option_value_id}','destroyOption')->whereAlphaNumeric('product_variant_option_value_id');
                 Route::post('store','storeOptions');
-                Route::get('filter/{filter}/{product_variant_id}','filterOptions')->whereNumber('filter','product_variant_id');
             });
         });
     });

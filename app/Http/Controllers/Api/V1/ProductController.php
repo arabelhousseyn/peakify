@@ -372,21 +372,6 @@ class ProductController extends Controller
         }
     }
 
-    public function filterOptions($filter,$product_variant_id)
-    {
-        switch ($filter)
-        {
-            case 0 :
-                $values = ProductVariantOptionValue::with('value.option')->where('product_variant_id',$product_variant_id)->withTrashed()->latest('created_at')->get();
-                return response(['data' => $values],200);
-                break;
-            case 1 :
-                $values = ProductVariantOptionValue::with('value.option')->where('product_variant_id',$product_variant_id)->onlyTrashed()->latest('created_at')->get();
-                return response(['data' => $values],200);
-                break;
-        }
-    }
-
     public function storeOptions(StoreProductVariantOptionsRequest $request)
     {
         if($request->validated())
@@ -399,56 +384,21 @@ class ProductController extends Controller
         }
     }
 
-//    public function updateVariant(UpdateProductVariantRequest $request,$product_variant_id)
-//    {
-//        try {
-//            $product_variant = ProductVariant::findOrFail($product_variant_id);
-//            $product_variant->update($request->all());
-//            return response()->noContent();
-//        }catch (ModelNotFoundException $exception)
-//        {
-//            throw new ModelNotFoundException('variant not found');
-//        }
-//    }
-//
-//    public function destroyVariant($product_variant_id)
-//    {
-//        try {
-//            $product_variant = ProductVariant::findOrFail($product_variant_id);
-//            if(!$product_variant->trashed())
-//            {
-//                $product_variant->delete();
-//                return response()->noContent();
-//            }
-//        }catch (ModelNotFoundException $exception)
-//        {
-//            throw new ModelNotFoundException('variant not found');
-//        }
-//    }
-//
-//    public function restoreVariant($product_variant_id)
-//    {
-//        try {
-//            $product_variant = ProductVariant::withTrashed()->findOrFail($product_variant_id);
-//            if($product_variant->trashed())
-//            {
-//                $product_variant->restore();
-//                return response()->noContent();
-//            }
-//        }catch (ModelNotFoundException $exception)
-//        {
-//            throw new ModelNotFoundException('variant not found');
-//        }
-//    }
-//
-//    public function variantDetails($product_variant_id)
-//    {
-//        try {
-//            return new ProductVariantResource(ProductVariant::findOrFail($product_variant_id));
-//        }catch (ModelNotFoundException $exception)
-//        {
-//            throw new ModelNotFoundException('variant not found');
-//        }
-//    }
+
+    public function destroyOption($product_variant_option_value_id)
+    {
+        try {
+            $product_variant_option_value = ProductVariantOptionValue::findOrFail($product_variant_option_value_id);
+            if(!$product_variant_option_value->trashed())
+            {
+                $product_variant_option_value->forceDelete();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('option not found');
+        }
+    }
+
 
 }
