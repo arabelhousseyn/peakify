@@ -112,6 +112,10 @@
                                             <v-list-item-icon><v-icon color="primary">mdi-plus</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Ajouter Options</v-list-item-title></v-list-item-content>
                                         </v-list-item>
+                                        <v-list-item link @click="openOptionsDialog(item._id)">
+                                            <v-list-item-icon><v-icon color="primary">mdi-square</v-icon></v-list-item-icon>
+                                            <v-list-item-content><v-list-item-title>Options</v-list-item-title></v-list-item-content>
+                                        </v-list-item>
                                         <v-list-item v-if="item.deleted_at == null" link @click="destroy(item._id)">
                                             <v-list-item-icon><v-icon color="red">mdi-trash-can</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Supprimer</v-list-item-title></v-list-item-content>
@@ -130,6 +134,7 @@
         </v-container>
         <delete-variant-dialog @close="close" :dialog="dialog1" :product_offer_id="product_offer_id" />
         <restore-variant-dialog @close="close1" :dialog="dialog2" :product_offer_id="product_offer_id" />
+        <variant-options-dialog v-if="dialog3" @close="close3" :dialog="dialog3" :product_variant_id="product_variant_id" />
     </div>
 </template>
 <script>
@@ -137,6 +142,7 @@ import moment from 'moment'
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent"
 import DeleteVariantDialog from "../../../components/dialog/Product/Variant/DeleteVariantDialog";
 import RestoreVariantDialog from "../../../components/dialog/Product/Variant/RestoreVariantDialog";
+import VariantOptionsDialog from "../../../components/dialog/Product/Variant/Options/VariantOptionsDialog";
 export default {
     data : ()=>({
         product_id : window.location.href.split('/').pop(),
@@ -176,10 +182,12 @@ export default {
 
         dialog1 : false,
         dialog2 : false,
+        dialog3 : false,
+        product_variant_id : null,
         product_offer_id : null,
         hint : 'Variantes Active'
     }),
-    components: {RestoreVariantDialog, DeleteVariantDialog, BreadCrumbsComponent},
+    components: {VariantOptionsDialog, RestoreVariantDialog, DeleteVariantDialog, BreadCrumbsComponent},
     methods : {
         forward()
         {
@@ -266,6 +274,11 @@ export default {
             this.product_offer_id = id
             this.dialog2 = true
         },
+        openOptionsDialog(product_variant_id)
+        {
+            this.product_variant_id = product_variant_id
+            this.dialog3 = true
+        },
         close()
         {
             this.product_offer_id = null
@@ -275,6 +288,11 @@ export default {
         {
             this.product_offer_id = null
             this.dialog2 = false
+        },
+        close3()
+        {
+            this.product_variant_id = null
+            this.dialog3 = false
         }
     },
     mounted() {
