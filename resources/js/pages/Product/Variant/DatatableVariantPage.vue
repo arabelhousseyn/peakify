@@ -155,7 +155,7 @@ export default {
                 sortable: false,
                 value: 'code',
             },
-            { text: 'Price', value: 'price' },
+            { text: 'Prix', value: 'price' },
             { text: 'Créé à', value: 'created_at' },
             { text: 'état', value: 'deleted_at' },
             { text: 'Actions', value: 'actions', sortable: false },

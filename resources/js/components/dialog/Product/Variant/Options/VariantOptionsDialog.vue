@@ -54,7 +54,7 @@
                                 <td>{{ item.value.option.name }}</td>
                                 <td>{{ item.value.value }}</td>
                                 <td>
-                                    <v-btn color="red" rounded small dark elevation="1"><v-icon>mdi-trash-can</v-icon></v-btn>
+                                    <v-btn color="red" @click="destroy(item._id)" rounded small dark elevation="1"><v-icon>mdi-trash-can</v-icon></v-btn>
                                 </td>
                             </tr>
                             </tbody>
@@ -73,35 +73,30 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <delete-variant-option-dialog @close="close1" @close1="close2" :dialog="dialog1" :product_variant_option_id="product_variant_option_id" />
     </div>
 </template>
 
 <script>
+import DeleteVariantOptionDialog from "./DeleteVariantOptionDialog";
 export default {
+    components: {DeleteVariantOptionDialog},
     props : ['product_variant_id','dialog'],
     data : () =>({
         data : [],
         loading : true,
+        dialog1 : false,
+        product_variant_option_id : null,
     }),
     methods : {
         colse()
         {
             this.$emit('close')
         },
-        destroy()
+        destroy(product_variant_option_id)
         {
-            axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.delete(`/api/product/variants/options/destroy/${this.product_variant_id}`).then(e => {
-                    if(e.status == 204)
-                    {
-                        this.$toast.open({
-                            message : "Opération effectué",
-                            type : 'success'
-                        })
-                        window.location.reload()
-                    }
-                })
-            })
+            this.dialog1 = true
+            this.product_variant_option_id = product_variant_option_id
         },
         init()
         {
@@ -113,6 +108,24 @@ export default {
             }).catch(err=>{
                 this.close()
             })
+        },
+        close1(product_variant_option_id)
+        {
+            this.dialog1 = false
+            this.product_variant_option_id = null
+        },
+        close2(product_variant_option_id)
+        {
+            for (let i = 0;i<this.data.length;i++)
+            {
+                if(this.data[i]._id == product_variant_option_id)
+                {
+                    this.data.splice(i,1)
+                }
+            }
+
+            this.dialog1 = false
+            this.product_variant_option_id = null
         }
     },
     mounted() {
