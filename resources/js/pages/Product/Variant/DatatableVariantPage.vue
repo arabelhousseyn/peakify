@@ -113,7 +113,7 @@
                                             <v-list-item-content><v-list-item-title>Ajouter Options</v-list-item-title></v-list-item-content>
                                         </v-list-item>
                                         <v-list-item link @click="openOptionsDialog(item._id)">
-                                            <v-list-item-icon><v-icon color="primary">mdi-square</v-icon></v-list-item-icon>
+                                            <v-list-item-icon><v-icon color="primary">mdi-settings-helper</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Options</v-list-item-title></v-list-item-content>
                                         </v-list-item>
                                         <v-list-item v-if="item.deleted_at == null" link @click="destroy(item._id)">
