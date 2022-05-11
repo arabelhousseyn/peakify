@@ -218,6 +218,11 @@ const routes = [
                                 props : true,
                                 component : () => import('../pages/Product/Variant/UpdateVariantPage')
                             },
+                            {
+                                path: 'add-options/:iddd',
+                                name : 'AddOption',
+                                component : () => import('../pages/Product/Variant/Option/AddPproductVariantOptionPage')
+                            }
                         ]
                     }
                 ]

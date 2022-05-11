@@ -139,12 +139,12 @@ export default {
                 href: '/home/products',
             },
             {
-                text: 'offres',
+                text: 'variantes',
                 disabled: true,
                 href: '',
             },
             {
-                text: 'Ajouter un offre',
+                text: 'Ajouter une variante',
                 disabled: true,
                 href: '',
             },

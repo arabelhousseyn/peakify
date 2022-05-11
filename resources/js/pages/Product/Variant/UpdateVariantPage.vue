@@ -4,7 +4,7 @@
             <bread-crumbs-component :items="items" />
             <v-btn class="mt-3" @click="$router.back()" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
             <v-card width="650" class="mt-5" elevation="0">
-                <v-card-title>Modifier un offre</v-card-title>
+                <v-card-title>Modifier une variante</v-card-title>
                 <v-card-text>
                     <form class="flex justify-content-center mb-3" @submit.prevent="update">
                         <v-row>
