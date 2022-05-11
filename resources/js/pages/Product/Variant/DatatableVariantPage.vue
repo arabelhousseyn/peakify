@@ -167,17 +167,17 @@ export default {
                 href: '/home/products',
             },
             {
-                text: 'Varients',
+                text: 'Variantes',
                 disabled: true,
                 href: '',
             },
         ],
-        selections: ['Tous les varients','varients Active','varients supprimer'],
+        selections: ['Tous les Variantes','Variantes Active','Variantes supprimer'],
 
         dialog1 : false,
         dialog2 : false,
         product_offer_id : null,
-        hint : 'varients Active'
+        hint : 'Variantes Active'
     }),
     components: {RestoreVariantDialog, DeleteVariantDialog, BreadCrumbsComponent},
     methods : {
@@ -187,13 +187,13 @@ export default {
         },
         filter()
         {
-            if(this.hint == 'varients Active')
+            if(this.hint == 'Variantes Active')
             {
                 this.init()
-            }else if(this.hint == 'Tous les varients')
+            }else if(this.hint == 'Tous les Variantes')
             {
                 this.callApi(0)
-            }else if (this.hint == 'varients supprimer')
+            }else if (this.hint == 'Variantes supprimer')
             {
                 this.callApi(1)
             }

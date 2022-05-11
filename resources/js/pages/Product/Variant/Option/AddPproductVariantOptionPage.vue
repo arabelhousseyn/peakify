@@ -98,7 +98,7 @@ export default {
                 href: '/home/products',
             },
             {
-                text: 'variantes',
+                text: 'Variantes',
                 disabled: true,
                 href: '',
             },
