@@ -45,7 +45,7 @@ class OptionController extends Controller
         {
             $option = Option::create($request->validated());
 
-            if($request->has('value'))
+            if($request->has('values'))
             {
                 collect($request->values)->map(function ($value) use ($option){
                     $option->values()->create($value);
