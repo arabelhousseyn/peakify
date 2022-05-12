@@ -121,7 +121,10 @@ export default {
                         type : 'success'
                     })
                     this.data.values = []
-                    this.inputs = 1
+                    this.inputs = 0
+                    setTimeout(()=>{
+                        this.inputs = 1
+                    },2000)
                     this.loading = false
                     this.empty()
                 }).catch(err => {
