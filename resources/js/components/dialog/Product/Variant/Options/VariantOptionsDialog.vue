@@ -109,7 +109,7 @@ export default {
                 this.close()
             })
         },
-        close1(product_variant_option_id)
+        close1()
         {
             this.dialog1 = false
             this.product_variant_option_id = null
