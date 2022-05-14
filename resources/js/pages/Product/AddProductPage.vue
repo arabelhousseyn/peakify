@@ -21,7 +21,7 @@
                                 ></v-select>
                             </v-col>
 
-                            <v-col cols="12" lg="6" sm="6">
+                            <v-col  cols="12" lg="6" sm="6">
                                 <v-text-field
                                     @keydown="check"
                                     solo
@@ -30,6 +30,12 @@
                                     v-model="data.product_code"
                                     prepend-inner-icon="mdi-code-array"
                                 ></v-text-field>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn @click="generateProductCode" v-bind="attrs" v-on="on" rounded text large color="primary"><v-icon>mdi-code-tags-check</v-icon></v-btn>
+                                    </template>
+                                    <span>Générer le code produit</span>
+                                </v-tooltip>
                             </v-col>
 
                             <v-col cols="12" lg="6" sm="6">
@@ -279,6 +285,12 @@ export default {
     }),
     components: {BreadCrumbsComponent},
     methods : {
+        generateProductCode()
+        {
+          let code = Date.now().toString(36) + Math.random().toString(36).substr(2)
+          this.data.product_code = code
+          this.check()
+        },
         store()
         {
             this.loading = true
