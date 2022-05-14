@@ -83,7 +83,7 @@
 </template>
 <script>
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
-import ConfirmationUpdateUserDialog from "../../components/dialog/User/ConfirmationUpdateUserDialog";
+import ConfirmationUpdateUserDialog from "../../components/dialog/ConfirmationUpdateUserDialog";
 export default {
     props : ['data'],
     data : ()=>({

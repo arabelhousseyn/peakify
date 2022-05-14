@@ -63,7 +63,7 @@
 </template>
 <script>
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
-import ConfirmationUpdateUserDialog from "../../components/dialog/User/ConfirmationUpdateUserDialog";
+import ConfirmationUpdateUserDialog from "../../components/dialog/ConfirmationUpdateUserDialog";
 export default {
     data : ()=>({
         id : window.location.href.split('/').pop(),
