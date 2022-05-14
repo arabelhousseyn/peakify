@@ -49,10 +49,13 @@
                                                 </v-col>
 
                                                 <v-col cols="12" lg="4" md="4">
-                                                    <v-checkbox
+                                                    <v-combobox
                                                         @change="mutateValue($event,'T',index)"
-                                                        label="Statique"
-                                                    ></v-checkbox>
+                                                        :items="selections"
+                                                        label="Choisir*"
+                                                        dense
+                                                        solo
+                                                    ></v-combobox>
                                                 </v-col>
                                             </v-row>
                                             <v-btn color="success" @click="incrementInputs" rounded text><v-icon>mdi-plus</v-icon></v-btn>
@@ -124,6 +127,7 @@ export default {
         quantity : null,
         discount : null,
         is_static : false,
+        selections : ['Pourcentage','Statique'],
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -162,7 +166,10 @@ export default {
         empty()
         {
             this.data.offers = []
-            this.inputs = 1
+            this.inputs = 0
+            setTimeout(()=>{
+                this.inputs = 1
+            },2000)
             this.loading = false
             this.disabled = true
         },
@@ -177,7 +184,7 @@ export default {
             {
                 case 'Q' : this.quantity = value; break;
                 case 'D' : this.discount = value; break;
-                case 'T' : this.is_static = value; break;
+                case 'T' : this.is_static = (value == 'Pourcentage') ? false : true; break;
             }
 
             if(this.data.offers[index] !== undefined)
