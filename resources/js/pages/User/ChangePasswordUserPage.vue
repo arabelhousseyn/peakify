@@ -8,7 +8,7 @@
             <v-card width="650" class="mt-5" elevation="0">
                 <v-card-title>Modifier mot de passe</v-card-title>
                 <v-card-text>
-                    <form class="flex justify-content-center mb-3" @submit.prevent="changePassword">
+                    <form class="flex justify-content-center mb-3" @submit.prevent="handle">
                         <v-row>
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
@@ -57,12 +57,13 @@
                     </form>
                 </v-card-text>
             </v-card>
-
         </v-container>
+        <confirmation-update-user-dialog :dialog="dialog" @close="close" @update="changePassword" />
     </div>
 </template>
 <script>
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
+import ConfirmationUpdateUserDialog from "../../components/dialog/User/ConfirmationUpdateUserDialog";
 export default {
     data : ()=>({
         id : window.location.href.split('/').pop(),
@@ -92,13 +93,23 @@ export default {
         disabled : true,
         loading : false,
         hasError : false,
-        errors : []
+        errors : [],
+        dialog : false,
 
     }),
-    components: {BreadCrumbsComponent},
+    components: {ConfirmationUpdateUserDialog, BreadCrumbsComponent},
     methods : {
+        handle()
+        {
+            this.dialog = true
+        },
+        close()
+        {
+            this.dialog = false
+        },
         changePassword()
         {
+            this.dialog = false
             this.loading = true
             this.disabled = true
             axios.get('/sanctum/csrf-cookie').then(res => {
