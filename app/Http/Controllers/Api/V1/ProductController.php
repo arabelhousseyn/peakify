@@ -57,8 +57,8 @@ class ProductController extends Controller
 
             if($request->has('offers'))
             {
-                collect($request->offers)->map(function ($offer) use ($product){
-                    $product->offers()->create($offer);
+                collect($request->offers)->map(function ($offer) use ($product,$creator){
+                    $product->offers()->create(array_merge($offer,$creator));
                 });
 
             }
@@ -176,7 +176,7 @@ class ProductController extends Controller
     public function offers($product_id)
     {
         try {
-            $product = Product::with('offers')->findOrFail($product_id);
+            $product = Product::with('offers.createdBy')->findOrFail($product_id);
             return response(['data' => array_reverse($product->offers->toArray())],200);
         }catch (ModelNotFoundException $exception)
         {
@@ -189,11 +189,11 @@ class ProductController extends Controller
         switch ($filter)
         {
             case 0 :
-                $values = ProductOffer::where('product_id',$product_id)->withTrashed()->latest('created_at')->get();
+                $values = ProductOffer::with('createdBy')->where('product_id',$product_id)->withTrashed()->latest('created_at')->get();
                 return response(['data' => $values],200);
                 break;
             case 1 :
-                $values = ProductOffer::where('product_id',$product_id)->onlyTrashed()->latest('created_at')->get();
+                $values = ProductOffer::with('createdBy')->where('product_id',$product_id)->onlyTrashed()->latest('created_at')->get();
                 return response(['data' => $values],200);
                 break;
         }
@@ -203,9 +203,12 @@ class ProductController extends Controller
     {
         if($request->validated())
         {
+            $creator = [
+                'created_by' => Auth::id()
+            ];
             $product = Product::find($request->product_id);
-            collect($request->offers)->map(function ($offer) use ($product){
-                $product->offers()->create($offer);
+            collect($request->offers)->map(function ($offer) use ($product,$creator){
+                $product->offers()->create(array_merge($offer,$creator));
             });
             return response(['message' => 'created !'],201);
         }

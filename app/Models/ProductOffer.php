@@ -12,7 +12,7 @@ class ProductOffer extends Model
 
     protected $fillable = [
         'product_id',
-        'user_id',
+        'created_by',
         'quantity',
         'discount',
         'is_static'
@@ -23,9 +23,10 @@ class ProductOffer extends Model
         return $this->belongsTo(Product::class,'product_id');
     }
 
-    public function user()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class,'created_by')
+            ->withDefault(['full_name' => __('messages.user_deleted')]);
     }
 
     protected $hidden = [

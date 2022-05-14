@@ -72,6 +72,18 @@
                             </div>
                         </template>
 
+                        <template v-slot:item.created_by="{ item }">
+                            <div class="created-by">
+                                <span>{{item.created_by.full_name}}</span>
+                                <v-chip v-if="item.created_by.type == 'admin'" dark color="green">
+                                    {{item.created_by.type}}
+                                </v-chip>
+                                <v-chip v-if="item.created_by.type == 'agent'" dark color="yellow">
+                                    {{item.created_by.type}}
+                                </v-chip>
+                            </div>
+                        </template>
+
                         <template v-slot:item.is_static="{ item }">
                             <v-chip small dark color="green">
                             <span v-if="!item.is_static"><v-icon>mdi-percent-outline</v-icon></span>
@@ -147,6 +159,7 @@ export default {
             },
             { text: 'Remise', value: 'discount' },
             { text: 'Type', value: 'is_static' },
+            { text: 'Créé par', value: 'created_by' },
             { text: 'Créé à', value: 'created_at' },
             { text: 'état', value: 'deleted_at' },
             { text: 'Actions', value: 'actions', sortable: false },
