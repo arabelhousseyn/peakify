@@ -145,11 +145,19 @@
 
                                                 <v-col cols="12" lg="6" md="6">
                                                     <v-text-field
+                                                        :value="input.code"
                                                         @change="mutateValue1($event,'C',index)"
                                                         solo
                                                         label="Code variante*"
                                                         prepend-inner-icon="mdi-square"
                                                     ></v-text-field>
+
+                                                    <v-tooltip bottom>
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <v-btn @click="generateVariantCode(index)" v-bind="attrs" v-on="on" rounded text large color="primary"><v-icon>mdi-code-tags-check</v-icon></v-btn>
+                                                        </template>
+                                                        <span>Générer le code variantes</span>
+                                                    </v-tooltip>
                                                 </v-col>
 
                                                 <v-col cols="12" lg="6" md="6">
@@ -276,7 +284,7 @@ export default {
         fruits1 : [],
         fruits2 : [],
         inputs : 1,
-        inputs1 : [{nbr : 1}],
+        inputs1 : [{nbr : 1,code : ''}],
         quantity : null,
         discount : null,
         is_static : false,
@@ -294,6 +302,12 @@ export default {
           let code = Date.now().toString(36) + Math.random().toString(36).substr(2)
           this.data.product_code = code
           this.check()
+        },
+        generateVariantCode(index)
+        {
+            let code = Date.now().toString(36) + Math.random().toString(36).substr(2)
+            this.inputs1[index].code = code
+            this.mutateValue1(code,'C',index)
         },
         store()
         {
@@ -353,7 +367,7 @@ export default {
 
             setTimeout(()=>{
                 this.inputs = 1
-                this.inputs1 = [{nbr : 1}]
+                this.inputs1 = [{nbr : 1,code : ''}]
             },2000)
         },
         init()
@@ -446,7 +460,8 @@ export default {
         {
             this.resetParamsVariants()
             this.inputs1.push({
-                nbr : 1
+                nbr : 1,
+                code : ''
             })
         },
         decrementInput1()
