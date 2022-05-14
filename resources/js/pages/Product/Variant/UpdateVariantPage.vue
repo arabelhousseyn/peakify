@@ -6,7 +6,7 @@
             <v-card width="650" class="mt-5" elevation="0">
                 <v-card-title>Modifier une variante</v-card-title>
                 <v-card-text>
-                    <form class="flex justify-content-center mb-3" @submit.prevent="update">
+                    <form class="flex justify-content-center mb-3" @submit.prevent="handle">
                         <v-row>
                             <v-col cols="12" lg="6" md="6">
                                 <v-text-field
@@ -44,10 +44,12 @@
                 </v-card-text>
             </v-card>
         </v-container>
+        <confirmation-update-user-dialog :dialog="dialog" @close="close" @update="update" />
     </div>
 </template>
 <script>
 import BreadCrumbsComponent from "../../../components/BreadCrumbsComponent";
+import ConfirmationUpdateUserDialog from "../../../components/dialog/ConfirmationUpdateUserDialog";
 export default {
     props : ['data'],
     data : ()=>({
@@ -79,12 +81,22 @@ export default {
         hasError : false,
         errors : [],
         disable : false,
-        infos : {}
+        infos : {},
+        dialog : false,
     }),
-    components: {BreadCrumbsComponent},
+    components: {ConfirmationUpdateUserDialog, BreadCrumbsComponent},
     methods : {
+        handle()
+        {
+            this.dialog = true
+        },
+        close()
+        {
+            this.dialog = false
+        },
         update()
         {
+            this.dialog = false
             this.loading = true
             this.disabled = true
 
