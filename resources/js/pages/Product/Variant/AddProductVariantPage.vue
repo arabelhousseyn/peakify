@@ -28,11 +28,19 @@
 
                                                 <v-col cols="12" lg="6" md="6">
                                                     <v-text-field
+                                                        :value="input.code"
                                                         @change="mutateValue1($event,'C',index)"
                                                         solo
                                                         label="Code variante*"
                                                         prepend-inner-icon="mdi-square"
                                                     ></v-text-field>
+
+                                                    <v-tooltip bottom>
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <v-btn @click="generateVariantCode(index)" v-bind="attrs" v-on="on" rounded text large color="primary"><v-icon>mdi-code-tags-check</v-icon></v-btn>
+                                                        </template>
+                                                        <span>Générer le code variantes</span>
+                                                    </v-tooltip>
                                                 </v-col>
 
                                                 <v-col cols="12" lg="6" md="6">
@@ -153,7 +161,7 @@ export default {
         loading : false,
         hasError : false,
         errors : [],
-        inputs1 : [{nbr : 1}],
+        inputs1 : [{nbr : 1, code : ''}],
         code : null,
         price : null,
         options : [],
@@ -172,6 +180,12 @@ export default {
                     })
                 })
             })
+        },
+        generateVariantCode(index)
+        {
+            let code = Date.now().toString(36) + Math.random().toString(36).substr(2)
+            this.inputs1[index].code = code
+            this.mutateValue1(code,'C',index)
         },
         store()
         {
@@ -212,7 +226,7 @@ export default {
             this.price = null
             this.inputs1 = 0
             setTimeout(()=>{
-                this.inputs1 = [{nbr : 1}]
+                this.inputs1 = [{nbr : 1, code : ''}]
             },2000)
             this.loading = false
             this.disabled = true
@@ -248,7 +262,8 @@ export default {
         {
             this.resetParamsVariants()
             this.inputs1.push({
-                nbr : 1
+                nbr : 1,
+                code : ''
             })
         },
         decrementInput1()
