@@ -104,15 +104,18 @@
                                                         min="1"
                                                         max="100"
                                                         label="Réduction*"
-                                                        prepend-inner-icon="mdi-percent-outline"
+                                                        prepend-inner-icon="mdi-ticket"
                                                     ></v-text-field>
                                                 </v-col>
 
                                                 <v-col cols="12" lg="4" md="4">
-                                                    <v-checkbox
+                                                    <v-combobox
                                                         @change="mutateValue($event,'T',index)"
-                                                        label="Statique"
-                                                    ></v-checkbox>
+                                                        :items="selections"
+                                                        label="Choisir*"
+                                                        dense
+                                                        solo
+                                                    ></v-combobox>
                                                 </v-col>
                                             </v-row>
                                             <v-btn color="success" @click="incrementInputs" rounded text><v-icon>mdi-plus</v-icon></v-btn>
@@ -282,6 +285,7 @@ export default {
         options : [],
         values : [],
         disabled_panel : true,
+        selections : ['Pourcentage','Statique'],
     }),
     components: {BreadCrumbsComponent},
     methods : {
@@ -383,7 +387,7 @@ export default {
             {
                 case 'Q' : this.quantity = value; break;
                 case 'D' : this.discount = value; break;
-                case 'T' : this.is_static = value; break;
+                case 'T' : this.is_static = (value == 'Pourcentage') ? false : true; break;
             }
 
             if(this.data.offers[index] !== undefined)
