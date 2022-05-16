@@ -24,7 +24,7 @@ class UpdateCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'max:254|unique:cities,_id'
+            'name' => 'max:254'
         ];
     }
 }

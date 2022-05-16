@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCityRequest;
 use App\Http\Requests\UpdateCityRequest;
 use App\Http\Resources\CityResource;
 use App\Models\{City};
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -101,18 +102,29 @@ class CityController extends Controller
         }
     }
 
-    public function restore(City $city)
+    public function restore($city_id)
     {
-        if($city->trashed())
+        try {
+            $city = City::withTrashed()->findOrFail($city_id);
+            if($city->trashed())
+            {
+                $city->restore();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
         {
-            $city->restore();
-            return response()->noContent();
+            throw new ModelNotFoundException('city not found');
         }
     }
 
-    public function CityDetails(City $city)
+    public function CityDetails($city_id)
     {
-        return new CityResource($city);
+        try {
+            return new CityResource(City::findOrFail($city_id));
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('city not found');
+        }
     }
 
     public function filter($filter)
