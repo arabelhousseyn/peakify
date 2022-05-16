@@ -31,6 +31,18 @@
                         </v-list-item-content>
                     </v-list-item>
 
+                    <v-list-item
+                        @click="()=>{this.$router.push('/home/cities').catch(err => {})}"
+                        style="border-right: 4px solid;"
+                    >
+                        <v-list-item-icon>
+                            <v-icon>mdi-city</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Villes</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
                     <v-list-group
                         color="white"
                         prepend-icon="mdi-account"

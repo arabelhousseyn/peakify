@@ -82,6 +82,16 @@ const routes = [
                 ]
             },
             {
+                path : 'cities',
+                component : () => import('../pages/City/CityPage'),
+                children: [
+                    {
+                        path: '/',
+                        component : () => import('../pages/City/CityDatatablePage')
+                    }
+                ]
+            },
+            {
                 path : 'clients',
                 component : () => import('../pages/Client/ClientPage'),
                 children: [
