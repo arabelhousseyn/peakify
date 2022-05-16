@@ -1,5 +1,5 @@
 <template>
-    <div class="update-user-page">
+    <div  class="update-user-page">
         <v-container fluid>
             <bread-crumbs-component :items="items" />
             <v-btn class="mt-3" @click="$router.push('/home/clients')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
@@ -40,7 +40,7 @@
                                 ></v-text-field>
                             </v-col>
 
-                            <v-col cols="12" lg="6" sm="6">
+                            <v-col v-if="infos.city !== undefined" cols="12" lg="6" sm="6">
                                 <v-combobox
                                     :disabled="disable"
                                     v-model="infos.city.name"
