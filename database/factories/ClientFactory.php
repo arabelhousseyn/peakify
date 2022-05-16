@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,14 @@ class ClientFactory extends Factory
      */
     public function definition()
     {
+        $cities_ids = City::withTrashed()->get()->pluck('_id');
+
+
         return [
             'full_name' => $this->faker->name(),
             'phone' => $this->faker->numerify('##########'),
             'email' => $this->faker->safeEmail,
-            'city' => $this->faker->city,
+            'city_id' => $cities_ids[rand(0,count($cities_ids ) - 1)],
             'address' => $this->faker->address
         ];
     }
