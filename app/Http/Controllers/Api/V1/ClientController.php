@@ -18,7 +18,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-         $clients = Client::withoutTrashed()->latest('created_at')->paginate(15);
+         $clients = Client::with('city:name')->withoutTrashed()->latest('created_at')->paginate(15);
          return response($clients,200);
     }
 
@@ -130,11 +130,11 @@ class ClientController extends Controller
         switch ($filter)
         {
             case 0 :
-                $clients = Client::withTrashed()->latest('created_at')->paginate(15);
+                $clients = Client::with('city:name')->withTrashed()->latest('created_at')->paginate(15);
                 return response($clients,200);
                 break;
             case 1 :
-                $clients = Client::onlyTrashed()->latest('created_at')->paginate(15);
+                $clients = Client::with('city:name')->onlyTrashed()->latest('created_at')->paginate(15);
                 return response($clients,200);
                 break;
         }

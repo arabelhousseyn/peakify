@@ -44,13 +44,15 @@
                             </v-col>
 
                             <v-col cols="12" lg="6" sm="6">
-                                <v-text-field
-                                    @keydown="check"
-                                    v-model="data.town"
+                                <v-combobox
+                                    @change="check"
+                                    v-model="selectedCity"
+                                    :items="cities"
                                     solo
-                                    label="Ville"
+                                    label="Ville*"
                                     prepend-inner-icon="mdi-city"
-                                ></v-text-field>
+                                    required
+                                ></v-combobox>
                             </v-col>
 
                             <v-col cols="12" lg="6" sm="6">
@@ -95,6 +97,7 @@ export default {
         data : {
             full_name : null,
             phone : null,
+            city_id : null,
         },
         items : [
             {
@@ -117,12 +120,35 @@ export default {
         loading : false,
         hasError : false,
         errors : [],
+        fruits : [],
+        cities : [],
+        selectedCity : null,
 
     }),
     components: {BreadCrumbsComponent},
     methods : {
+        init()
+        {
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get('/api/city/all').then(e=>{
+                    this.fruits = e.data.data
+                    for (const fruit of this.fruits) {
+                        this.cities.push(fruit.name)
+                    }
+                }).catch(err => {
+                    console.log(err)
+                })
+            })
+        },
         store()
         {
+            let city;
+             city = this.fruits.filter(function (fruit){
+                return fruit.name == this
+            },this.selectedCity)[0]
+
+            this.data.city_id = city._id
+
             this.loading = true
             this.disabled = true
             // because when i define the city directly into v-model binding it say the keyword city is already used in the kernel system of vue
@@ -162,17 +188,21 @@ export default {
                 this.hasError = false
                 this.errors = []
             }
-            this.disabled = (this.data.full_name == null || this.data.phone == null) ? true : false
+            this.disabled = (this.data.full_name == null || this.data.phone == null || this.selectedCity == null) ? true : false
         },
         empty()
         {
             this.data.full_name = null
             this.data.phone = null
+            this.selectedCity = null
+            this.init()
             delete this.data.email
-            delete this.data.town
             delete this.data.address
 
         }
+    },
+    mounted() {
+        this.init()
     }
 }
 </script>
