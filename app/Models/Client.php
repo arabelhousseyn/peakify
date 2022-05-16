@@ -15,8 +15,13 @@ class Client extends Model
         'full_name',
         'phone',
         'email',
-        'city',
+        'city_id',
         'address'
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class,'city_id')->withDefault([]);
+    }
 
 }
