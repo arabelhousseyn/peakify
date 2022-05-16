@@ -27,7 +27,7 @@ class StoreClientRequest extends FormRequest
             'full_name' => 'required|max:255',
             'phone' => 'required|digits:10|unique:clients,phone',
             'email' => 'email:rfc,dns,filter|unique:clients,email',
-            'city' => 'max:255',
+            'city_id' => 'required|exists:cities,_id',
             'address' => 'max:255'
         ];
     }

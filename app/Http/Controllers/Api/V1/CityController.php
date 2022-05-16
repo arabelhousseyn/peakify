@@ -144,7 +144,7 @@ class CityController extends Controller
 
     public function allCities()
     {
-        $cities = City::all();
+        $cities = City::select('name')->get();
 
         return response(['data' => $cities],200);
     }

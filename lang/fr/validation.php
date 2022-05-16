@@ -235,6 +235,10 @@ return [
         'product_id' => [
             'required' => 'erreur veuillez réessayer.',
             'exists' => 'erreur veuillez réessayer.'
+        ],
+        'city_id' => [
+            'required' => 'Ville requis.',
+            'exists' => 'Ville n\'existse pas.'
         ]
     ],
 

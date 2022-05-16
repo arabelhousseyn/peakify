@@ -143,7 +143,7 @@ class CategoryController extends Controller
 
     public function getAllCategories()
     {
-        $categories = Category::all();
+        $categories = Category::select('name')->get();
         return response(['data' => $categories],200);
     }
 }
