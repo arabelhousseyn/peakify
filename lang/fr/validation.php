@@ -191,8 +191,8 @@ return [
             'max' => 'Ville maximum de caractères 255 .'
         ],
         'name' => [
-            'required' => 'Nom categorie requis.',
-            'max' => 'Nom categorie maximum de caractères 255 .'
+            'required' => 'Nom requis.',
+            'max' => 'Nom maximum de caractères 255 .'
         ],
         'category_id' => [
             'required' => 'Catégorie requis.',
