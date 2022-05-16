@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\City;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ClientResource extends JsonResource
@@ -18,7 +19,8 @@ class ClientResource extends JsonResource
             'full_name' => $this->full_name,
             'phone' => $this->phone,
             'email' => $this->email,
-            'city' => $this->city,
+            'city' => new CityResource(City::find($this->city_id)),
+            'city_id' =>$this->city_id,
             'address' => $this->address
         ];
     }

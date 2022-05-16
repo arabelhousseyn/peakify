@@ -35,20 +35,20 @@
                                     v-model="infos.email"
                                     type="email"
                                     solo
-                                    required
                                     label="Email"
                                     prepend-inner-icon="mdi-email"
                                 ></v-text-field>
                             </v-col>
 
                             <v-col cols="12" lg="6" sm="6">
-                                <v-text-field
+                                <v-combobox
                                     :disabled="disable"
-                                    v-model="infos.city"
+                                    v-model="infos.city.name"
                                     solo
+                                    :items="cities"
                                     label="Ville"
                                     prepend-inner-icon="mdi-city"
-                                ></v-text-field>
+                                ></v-combobox>
                             </v-col>
 
                             <v-col cols="12" lg="6" sm="6">
@@ -113,6 +113,8 @@ export default {
         disable : false,
         infos : {},
         dialog : false,
+        fruits : [],
+        cities : []
     }),
     components: {ConfirmationUpdateUserDialog, BreadCrumbsComponent},
     methods : {
@@ -129,6 +131,18 @@ export default {
             this.dialog = false
             this.loading = true
             this.disabled = true
+
+            let city;
+            city = this.fruits.filter(function (fruit){
+                return fruit.name == this
+            },this.infos.city.name)[0]
+
+            this.infos.city_id = city._id
+
+            if(this.infos.email == null)
+            {
+                delete this.infos.email
+            }
 
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.put(`/api/client/${this.client_id}`,this.infos).then(e=>{
@@ -163,6 +177,17 @@ export default {
                     this.disable = false
                 }).catch(err => {
                     window.location.href = '/home/clients'
+                })
+            })
+
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get('/api/city/all').then(e=>{
+                    this.fruits = e.data.data
+                    for (const fruit of this.fruits) {
+                        this.cities.push(fruit.name)
+                    }
+                }).catch(err => {
+                    console.log(err)
                 })
             })
         }
