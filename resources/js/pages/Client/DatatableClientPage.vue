@@ -152,7 +152,7 @@ export default {
             },
             { text: 'email', value: 'email' },
             { text: 'Telephone', value: 'phone' },
-            { text: 'Ville', value: 'city' },
+            { text: 'Ville', value: 'city.name' },
             { text: 'Adresse', value: 'address' },
             { text: 'état', value: 'deleted_at' },
             { text: 'Créé à', value: 'created_at' },
