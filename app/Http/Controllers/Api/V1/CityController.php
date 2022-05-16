@@ -141,4 +141,11 @@ class CityController extends Controller
                 break;
         }
     }
+
+    public function allCities()
+    {
+        $cities = City::all();
+
+        return response(['data' => $cities],200);
+    }
 }

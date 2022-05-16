@@ -55,6 +55,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::put('restore/{city_id}','restore')->whereAlphaNumeric('city_id');
         Route::get('city-details/{city_id}','CityDetails')->whereAlphaNumeric('city_id');
         Route::get('filter/{filter}','filter')->whereNumber('filter');
+        Route::get('all','allCities');
     });
 
     // client
