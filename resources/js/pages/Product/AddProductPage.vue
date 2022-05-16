@@ -299,13 +299,13 @@ export default {
     methods : {
         generateProductCode()
         {
-          let code = Date.now().toString(36) + Math.random().toString(36).substr(2)
+          let code = Date.now().toString(36) + Math.random().toString(36).substr(20)
           this.data.product_code = code
           this.check()
         },
         generateVariantCode(index)
         {
-            let code = Date.now().toString(36) + Math.random().toString(36).substr(2)
+            let code = Date.now().toString(36) + Math.random().toString(36).substr(20)
             this.inputs1[index].code = code
             this.mutateValue1(code,'C',index)
         },
