@@ -1,8 +1,8 @@
 <template>
-    <div class="update-category-page">
+    <div class="update-city-page">
         <v-container fluid>
             <bread-crumbs-component :items="items" />
-            <v-btn class="mt-3" @click="$router.push('/home/categories')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
+            <v-btn class="mt-3" @click="$router.push('/home/cities')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
             <v-card width="650" class="mt-5" elevation="0">
                 <v-card-title>Modifier une catégories</v-card-title>
                 <v-card-text>
@@ -14,7 +14,7 @@
                                     v-model="infos.name"
                                     solo
                                     required
-                                    label="Nom catégories*"
+                                    label="Nom ville*"
                                     prepend-inner-icon="mdi-square"
                                 ></v-text-field>
                             </v-col>
@@ -46,7 +46,7 @@ import ConfirmationUpdateUserDialog from "../../components/dialog/ConfirmationUp
 export default {
     props : ['data'],
     data : ()=>({
-        category_id : window.location.href.split('/').pop(),
+        city_id : window.location.href.split('/').pop(),
         items : [
             {
                 text: 'Tableau de bord',
@@ -54,12 +54,12 @@ export default {
                 href: '/',
             },
             {
-                text: 'Catégories',
+                text: 'Villes',
                 disabled: false,
-                href: '/home/categories',
+                href: '/home/cities',
             },
             {
-                text: 'Modifier une catégories',
+                text: 'Modifier une ville',
                 disabled: true,
                 href: '',
             },
@@ -89,7 +89,7 @@ export default {
             this.disabled = true
 
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.put(`/api/category/${this.category_id}`,this.infos).then(e=>{
+                axios.put(`/api/city/${this.city_id}`,this.infos).then(e=>{
                     this.$toast.open({
                         message : "Opération effectué",
                         type : 'success'
@@ -116,7 +116,7 @@ export default {
         {
             this.disable = true
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/category/category-details/${this.category_id}`).then(e=>{
+                axios.get(`/api/city/city-details/${this.city_id}`).then(e=>{
                     this.infos = e.data.data
                     this.disable = false
                 }).catch(err => {

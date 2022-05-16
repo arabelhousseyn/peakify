@@ -92,6 +92,12 @@ const routes = [
                     {
                         path: 'add-city',
                         component : () => import('../pages/City/AddCityPage')
+                    },
+                    {
+                        path: 'update-city/:id',
+                        props: true,
+                        name : 'UpdateCity',
+                        component : () => import('../pages/City/UpdateCityPage')
                     }
                 ]
             },
