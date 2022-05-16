@@ -192,6 +192,7 @@ return [
         ],
         'name' => [
             'required' => 'Nom requis.',
+            'unique' =>'Nom doit être unique.',
             'max' => 'Nom maximum de caractères 255 .'
         ],
         'category_id' => [
