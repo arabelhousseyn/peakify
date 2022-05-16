@@ -6,7 +6,7 @@
                 <v-card-title>
                     <span>Villes</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('categories/add-city')" color="primary">
+                    <v-btn @click="$router.push('cities/add-city')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>

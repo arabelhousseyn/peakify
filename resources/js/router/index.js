@@ -88,6 +88,10 @@ const routes = [
                     {
                         path: '/',
                         component : () => import('../pages/City/CityDatatablePage')
+                    },
+                    {
+                        path: 'add-city',
+                        component : () => import('../pages/City/AddCityPage')
                     }
                 ]
             },

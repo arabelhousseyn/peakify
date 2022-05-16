@@ -1,12 +1,12 @@
 <template>
-    <div class="add-category-page">
+    <div class="add-city-page">
         <v-container fluid>
             <bread-crumbs-component :items="items" />
 
-            <v-btn class="mt-3" @click="$router.push('/home/categories')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
+            <v-btn class="mt-3" @click="$router.push('/home/cities')" color="primary"><v-icon>mdi-arrow-left</v-icon> Retour</v-btn>
 
             <v-card width="650" class="mt-5" elevation="0">
-                <v-card-title>Ajouter une catégories</v-card-title>
+                <v-card-title>Ajouter une ville</v-card-title>
                 <v-card-text>
                     <form class="flex justify-content-center mb-3" @submit.prevent="store">
                         <v-row>
@@ -16,7 +16,7 @@
                                     v-model="data.name"
                                     solo
                                     required
-                                    label="Nom catégories*"
+                                    label="Nom ville*"
                                     prepend-inner-icon="mdi-square"
                                 ></v-text-field>
                             </v-col>
@@ -60,14 +60,14 @@ export default {
                 href: '/',
             },
             {
-                text: 'Catégories',
+                text: 'Villes',
                 disabled: false,
-                href: '/home/categories',
+                href: '/home/cities',
             },
             {
-                text: 'Ajouter une catégories',
+                text: 'Ajouter une ville',
                 disabled: false,
-                href: '/home/categories/add-category',
+                href: '/home/categories/add-city',
             },
         ],
         disabled : true,
@@ -84,7 +84,7 @@ export default {
             this.disabled = true
 
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.post('/api/category',this.data).then(e=>{
+                axios.post('/api/city',this.data).then(e=>{
                     this.$toast.open({
                         message : "Opération effectué",
                         type : 'success'
