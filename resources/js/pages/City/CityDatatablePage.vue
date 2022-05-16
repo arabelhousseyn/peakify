@@ -4,9 +4,9 @@
             <bread-crumbs-component :items="items" />
             <v-card class="mt-5" elevation="0">
                 <v-card-title>
-                    <span>Catégories</span>
+                    <span>Villes</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('categories/add-category')" color="primary">
+                    <v-btn @click="$router.push('categories/add-city')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>
@@ -162,29 +162,29 @@ export default {
                 href: '/',
             },
             {
-                text: 'catégories',
+                text: 'villes',
                 disabled: false,
-                href: '/home/categories',
+                href: '/home/cities',
             },
         ],
-        selections: ['Tous les catégories','Catégories Active','Catégories supprimer'],
+        selections: ['Tous les villes','Villes Active','Villes supprimer'],
 
         dialog1 : false,
         dialog2 : false,
         category_id : null,
-        hint : 'Catégories Active'
+        hint : 'Villes Active'
     }),
     components: {RestoreCategoryDialog, DeleteCategoryDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
-            if(this.hint == 'Catégories Active')
+            if(this.hint == 'Villes Active')
             {
                 this.init()
-            }else if(this.hint == 'Tous les catégories')
+            }else if(this.hint == 'Tous les villes')
             {
                 this.callApi(0)
-            }else if (this.hint == 'Catégories supprimer')
+            }else if (this.hint == 'Villes supprimer')
             {
                 this.callApi(1)
             }
@@ -192,7 +192,7 @@ export default {
         callApi(filter)
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/category/filter/${filter}?page=${this.page}`).then(e=>{
+                axios.get(`/api/city/filter/${filter}?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
@@ -219,7 +219,7 @@ export default {
             this.loading = true
             this.data = []
             this.$router.push(`?page=${this.page}`).catch(err => {})
-            if(this.hint == 'Catégories Active')
+            if(this.hint == 'Villes Active')
             {
                 this.init()
             }else{
@@ -229,7 +229,7 @@ export default {
         init()
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/category?page=${this.page}`).then(e=>{
+                axios.get(`/api/city?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
