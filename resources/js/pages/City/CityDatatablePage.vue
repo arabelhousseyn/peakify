@@ -127,15 +127,15 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <delete-category-dialog @close="close" :dialog="dialog1" :category_id="category_id" />
-        <restore-category-dialog @close="close1" :dialog="dialog2" :category_id="category_id" />
+        <destroy-city-dialog @close="close" :dialog="dialog1" :city_id="city_id" />
+        <restore-city-dialog @close="close1" :dialog="dialog2" :city_id="city_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
-import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
-import DeleteCategoryDialog from "../../components/dialog/Category/DeleteCategoryDialog";
-import RestoreCategoryDialog from "../../components/dialog/Category/RestoreCategoryDialog";
+import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
+import DestroyCityDialog from "../../components/dialog/City/DestroyCityDialog";
+import RestoreCityDialog from "../../components/dialog/City/RestoreCityDialog";
 export default {
     data : ()=>({
         search : null,
@@ -171,10 +171,10 @@ export default {
 
         dialog1 : false,
         dialog2 : false,
-        category_id : null,
+        city_id : null,
         hint : 'Villes Active'
     }),
-    components: {RestoreCategoryDialog, DeleteCategoryDialog, BreadCrumbsComponent},
+    components: {RestoreCityDialog, DestroyCityDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
@@ -253,22 +253,22 @@ export default {
         },
         destroy(id)
         {
-            this.category_id = id
+            this.city_id = id
             this.dialog1 = true
         },
         restore(id)
         {
-            this.category_id = id
+            this.city_id = id
             this.dialog2 = true
         },
         close()
         {
-            this.category_id = null
+            this.city_id = null
             this.dialog1 = false
         },
         close1()
         {
-            this.category_id = null
+            this.city_id = null
             this.dialog2 = false
         }
     },
