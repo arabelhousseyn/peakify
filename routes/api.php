@@ -13,7 +13,8 @@ use App\Http\Controllers\Api\V1\{
     CategoryController,
     ProductController,
     OptionController,
-    CityController
+    CityController,
+    ShipperController
 };
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -136,6 +137,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         'category' => CategoryController::class,
         'product' => ProductController::class,
         'option' => OptionController::class,
-        'city' => CityController::class
+        'city' => CityController::class,
+        'shipper' => ShipperController::class
     ]);
 });

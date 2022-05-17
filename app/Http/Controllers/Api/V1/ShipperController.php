@@ -15,7 +15,8 @@ class ShipperController extends Controller
      */
     public function index()
     {
-        //
+        $shippers = Shipper::with('cities.city:_id,name')->paginate(15);
+        return response($shippers,200);
     }
 
     /**
