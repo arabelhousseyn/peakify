@@ -20,7 +20,7 @@ class ShipperController extends Controller
      */
     public function index()
     {
-        $shippers = Shipper::with('cities.city:_id,name')->latest('created_at')->paginate(15);
+        $shippers = Shipper::latest('created_at')->paginate(15);
         return response($shippers,200);
     }
 

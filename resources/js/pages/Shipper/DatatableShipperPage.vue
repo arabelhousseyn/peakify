@@ -79,6 +79,11 @@
                             <span> {{ formatDate(item.created_at) }} </span>
                         </template>
 
+                        <template v-slot:item.type="{ item }">
+                            <v-chip v-if="item.type == 'C'" color="green" dark>Société</v-chip>
+                            <v-chip color="green" v-else dark>Personne</v-chip>
+                        </template>
+
                         <template v-slot:item.actions="{ item }">
                             <v-menu
                                 bottom
@@ -127,15 +132,11 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <delete-category-dialog @close="close" :dialog="dialog1" :category_id="category_id" />
-        <restore-category-dialog @close="close1" :dialog="dialog2" :category_id="category_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
-import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
-import DeleteCategoryDialog from "../../components/dialog/Category/DeleteCategoryDialog";
-import RestoreCategoryDialog from "../../components/dialog/Category/RestoreCategoryDialog";
+import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
 export default {
     data : ()=>({
         search : null,
@@ -145,11 +146,14 @@ export default {
         loading : true,
         headers: [
             {
-                text: 'Nom',
+                text: 'Nom complet',
                 align: 'start',
                 sortable: false,
-                value: 'name',
+                value: 'full_name',
             },
+            {text : "Telephone",value : "phone"},
+            {text : "email",value : "email"},
+            {text : "type",value : "type"},
             { text: 'état', value: 'deleted_at' },
             { text: 'Créé à', value: 'created_at' },
             { text: 'Actions', value: 'actions', sortable: false },
@@ -162,29 +166,29 @@ export default {
                 href: '/',
             },
             {
-                text: 'catégories',
+                text: 'Livreurs',
                 disabled: false,
-                href: '/home/categories',
+                href: '/home/shippers',
             },
         ],
-        selections: ['Tous les catégories','Catégories Active','Catégories supprimer'],
+        selections: ['Tous les livreurs','Livreurs Active','Livreurs supprimer'],
 
         dialog1 : false,
         dialog2 : false,
-        category_id : null,
-        hint : 'Catégories Active'
+        shipper_id : null,
+        hint : 'Livreurs Active'
     }),
-    components: {RestoreCategoryDialog, DeleteCategoryDialog, BreadCrumbsComponent},
+    components: {BreadCrumbsComponent},
     methods : {
         filter()
         {
-            if(this.hint == 'Catégories Active')
+            if(this.hint == 'Livreurs Active')
             {
                 this.init()
-            }else if(this.hint == 'Tous les catégories')
+            }else if(this.hint == 'Tous les livreurs')
             {
                 this.callApi(0)
-            }else if (this.hint == 'Catégories supprimer')
+            }else if (this.hint == 'Livreurs supprimer')
             {
                 this.callApi(1)
             }
@@ -192,7 +196,7 @@ export default {
         callApi(filter)
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/category/filter/${filter}?page=${this.page}`).then(e=>{
+                axios.get(`/api/shipper/filter/${filter}?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
@@ -219,7 +223,7 @@ export default {
             this.loading = true
             this.data = []
             this.$router.push(`?page=${this.page}`).catch(err => {})
-            if(this.hint == 'Catégories Active')
+            if(this.hint == 'Livreurs Active')
             {
                 this.init()
             }else{
@@ -229,7 +233,7 @@ export default {
         init()
         {
             axios.get('/sanctum/csrf-cookie').then(res => {
-                axios.get(`/api/category?page=${this.page}`).then(e=>{
+                axios.get(`/api/shipper?page=${this.page}`).then(e=>{
                     this.count = e.data.last_page
                     this.itemsPerPage = e.data.per_page
                     this.data = e.data.data
@@ -253,22 +257,22 @@ export default {
         },
         destroy(id)
         {
-            this.category_id = id
+            this.shipper_id = id
             this.dialog1 = true
         },
         restore(id)
         {
-            this.category_id = id
+            this.shipper_id = id
             this.dialog2 = true
         },
         close()
         {
-            this.category_id = null
+            this.shipper_id = null
             this.dialog1 = false
         },
         close1()
         {
-            this.category_id = null
+            this.shipper_id = null
             this.dialog2 = false
         }
     },
