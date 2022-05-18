@@ -14,11 +14,17 @@ class Shipper extends Model
         'full_name',
         'phone',
         'email',
-        'type'
+        'type',
+        'city_id'
     ];
 
     public function cities()
     {
         return $this->hasMany(ShipperCity::class);
+    }
+
+    public function defaultCity()
+    {
+        return $this->belongsTo(City::class,'city_id')->withDefault([]);
     }
 }

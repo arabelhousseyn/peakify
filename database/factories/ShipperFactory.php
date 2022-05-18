@@ -19,12 +19,12 @@ class ShipperFactory extends Factory
     public function definition()
     {
         $genders = ['M','F'];
-        $types = ['C','P'];
+        $type_shippers = ['C','P'];
         return [
             'full_name' => $this->faker->name($genders[rand(0,count($genders) - 1)]),
             'phone' => $this->faker->numerify('##########'),
             'email' => $this->faker->email,
-            'type' => $types[rand(0,count($types) - 1)]
+            'type' => $type_shippers[rand(0,count($type_shippers) - 1)]
         ];
     }
 

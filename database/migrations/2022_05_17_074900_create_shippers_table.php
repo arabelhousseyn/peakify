@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('phone');
             $table->string('email')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->enum('type',['C','P'])->index();// C stand for COMPANY || P stand for person
             $table->softDeletes();
             $table->timestamps();
