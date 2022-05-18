@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreShipperRequest;
 use App\Models\Shipper;
 use Illuminate\Http\Request;
 
@@ -35,9 +36,12 @@ class ShipperController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreShipperRequest $request)
     {
-        //
+        if($request->validated())
+        {
+
+        }
     }
 
     /**
