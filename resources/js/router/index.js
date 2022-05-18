@@ -258,6 +258,12 @@ const routes = [
                     {
                         path: 'add-shipper',
                         component : () => import('../pages/Shipper/AddShipperPage')
+                    },
+                    {
+                        path: 'update-shipper/:id',
+                        props: true,
+                        name : 'UpdateShipper',
+                        component : () => import('../pages/Shipper/UpdateShipperPage')
                     }
                 ]
             }

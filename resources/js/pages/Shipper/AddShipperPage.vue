@@ -48,7 +48,6 @@
                                 <v-select
                                     @change="check"
                                     v-model="data.type"
-                                    type="email"
                                     solo
                                     :items="types"
                                     required
