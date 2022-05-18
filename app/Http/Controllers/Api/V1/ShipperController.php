@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreShipperRequest;
+use App\Http\Requests\UpdateShipperRequest;
 use App\Models\Shipper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -87,9 +88,13 @@ class ShipperController extends Controller
      * @param  \App\Models\Shipper  $shipper
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shipper $shipper)
+    public function update(UpdateShipperRequest $request, Shipper $shipper)
     {
-        //
+        if($request->validated())
+        {
+            $shipper->update($request->validated());
+            return response()->noContent();
+        }
     }
 
     /**
