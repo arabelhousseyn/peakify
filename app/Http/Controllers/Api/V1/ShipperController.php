@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreShipperRequest;
 use App\Models\Shipper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShipperController extends Controller
 {
@@ -16,7 +17,7 @@ class ShipperController extends Controller
      */
     public function index()
     {
-        $shippers = Shipper::with('cities.city:_id,name')->paginate(15);
+        $shippers = Shipper::with('cities.city:_id,name')->latest('created_at')->paginate(15);
         return response($shippers,200);
     }
 
@@ -40,7 +41,20 @@ class ShipperController extends Controller
     {
         if($request->validated())
         {
-
+                $shipper = Shipper::create(array_merge($request->except('cities'),['city_id' => null]));
+                collect($request->cities)->map(function ($city) use ($shipper){
+                    if($city['type'] == 'S')
+                    {
+                        $shipper->update([
+                            'city_id' => $city['city_id']
+                        ]);
+                    }
+                    $shipper->cities()->create([
+                        'city_id' => $city['city_id'],
+                        'price' => $city['price']
+                    ]);
+                });
+            return response(['message' => 'created!'],201);
         }
     }
 

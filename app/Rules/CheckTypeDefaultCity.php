@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class CheckTypeShipperRule implements Rule
+class CheckTypeDefaultCity implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,10 +25,9 @@ class CheckTypeShipperRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $types = ['C','P'];
+        $types = ['D','S'];
 
         return in_array($value,$types);
-
     }
 
     /**

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('shipper_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('city_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('price');
-            $table->enum('type',['D','S']); // D stand for default || S stand for secondary
             $table->softDeletes();
             $table->timestamps();
         });
