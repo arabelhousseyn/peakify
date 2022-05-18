@@ -95,6 +95,19 @@
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-group>
+
+                    <v-list-item
+                        @click="()=>{this.$router.push('/home/shippers').catch(err => {})}"
+                        style="border-right: 4px solid;"
+                    >
+                        <v-list-item-icon>
+                            <v-icon>mdi-truck-delivery</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Vendeurs</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>

@@ -246,6 +246,16 @@ const routes = [
                         ]
                     }
                 ]
+            },
+            {
+                path: 'shippers',
+                component : () => import('../pages/Shipper/ShipperPage'),
+                children: [
+                    {
+                        path: '/',
+                        component : () => import('../pages/Shipper/DatatableShipperPage')
+                    }
+                ]
             }
         ]
     }
