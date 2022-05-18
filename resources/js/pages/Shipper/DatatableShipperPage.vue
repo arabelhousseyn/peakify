@@ -132,11 +132,15 @@
                 </v-card-text>
             </v-card>
         </v-container>
+        <destroy-shipper-dialog @close="close" :dialog="dialog1" :shipper_id="shipper_id" />
+        <restore-shipper-dialog @close="close1" :dialog="dialog2" :shipper_id="shipper_id" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
+import DestroyShipperDialog from "../../components/dialog/Shipper/DestroyShipperDialog";
+import RestoreShipperDialog from "../../components/dialog/Shipper/RestoreShipperDialog";
 export default {
     data : ()=>({
         search : null,
@@ -178,7 +182,7 @@ export default {
         shipper_id : null,
         hint : 'Livreurs Active'
     }),
-    components: {BreadCrumbsComponent},
+    components: {RestoreShipperDialog, DestroyShipperDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
