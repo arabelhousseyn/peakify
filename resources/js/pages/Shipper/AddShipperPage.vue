@@ -13,13 +13,59 @@
                             <v-col cols="12" lg="6" sm="6">
                                 <v-text-field
                                     @keydown="check"
-                                    v-model="data.name"
+                                    v-model="data.full_name"
                                     solo
                                     required
-                                    label="Nom catégories*"
+                                    label="Nom complet*"
                                     prepend-inner-icon="mdi-square"
                                 ></v-text-field>
                             </v-col>
+
+                            <v-col cols="12" lg="6" sm="6">
+                                <v-text-field
+                                    @keydown="check"
+                                    v-model="data.phone"
+                                    solo
+                                    required
+                                    label="Telephone*"
+                                    prepend-inner-icon="mdi-phone"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" lg="6" sm="6">
+                                <v-text-field
+                                    @keydown="check"
+                                    v-model="data.email"
+                                    type="email"
+                                    solo
+                                    required
+                                    label="Email*"
+                                    prepend-inner-icon="mdi-email"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" lg="6" sm="6">
+                                <v-select
+                                    @change="check"
+                                    v-model="data.type"
+                                    type="email"
+                                    solo
+                                    :items="types"
+                                    required
+                                    label="Type*"
+                                ></v-select>
+                            </v-col>
+
+<!--                            <v-col cols="12" lg="6" sm="6">-->
+<!--                                <v-combobox-->
+<!--                                    @change="mutateValue"-->
+<!--                                    solo-->
+<!--                                    :items="cities"-->
+<!--                                    required-->
+<!--                                    multiple-->
+<!--                                    label="Villes"-->
+<!--                                ></v-combobox>-->
+<!--                            </v-col>-->
 
                             <v-col cols="12">
                                 <small><span class="font-weight-bold">Note : </span> <span class="grey--text">* indique les champs requis.</span> </small>
@@ -51,7 +97,11 @@ import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
 export default {
     data : ()=>({
         data : {
-            name : null,
+            full_name : null,
+            phone : null,
+            email : null,
+            type : null,
+            cities : []
         },
         items : [
             {
@@ -74,6 +124,9 @@ export default {
         loading : false,
         hasError : false,
         errors : [],
+        cities : [],
+        fruits : [],
+        types : ['C','P']
 
     }),
     components: {BreadCrumbsComponent},
@@ -106,6 +159,10 @@ export default {
                 })
             })
         },
+        mutateValue()
+        {
+
+        },
         check()
         {
             if(this.hasError)
@@ -113,12 +170,33 @@ export default {
                 this.hasError = false
                 this.errors = []
             }
-            this.disabled = (this.data.name == null) ? true : false
+            this.disabled = (this.data.full_name == null || this.data.phone == null ||
+            this.data.type == null || this.data.email == null) ? true : false
         },
         empty()
         {
-            this.data.name = null
-        }
-    }
+            this.data.full_name = null
+            this.data.phone = null
+            this.data.type = null
+            this.data.email = null
+            this.data.cities = []
+        },
+        // init()
+        // {
+        //     axios.get('/sanctum/csrf-cookie').then(res => {
+        //         axios.get('/api/city/all').then(e=>{
+        //             this.fruits = e.data.data
+        //             this.cities = this.fruits.map(function (fruit){
+        //                 return fruit.name
+        //             })
+        //         }).catch(err => {
+        //             console.log(err)
+        //         })
+        //     })
+        // }
+    },
+    // mounted() {
+    //     this.init()
+    // }
 }
 </script>
