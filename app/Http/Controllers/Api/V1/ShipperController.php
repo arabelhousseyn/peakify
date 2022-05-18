@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreShipperRequest;
 use App\Http\Requests\UpdateShipperRequest;
+use App\Http\Resources\ShipperResource;
 use App\Models\Shipper;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -90,11 +92,8 @@ class ShipperController extends Controller
      */
     public function update(UpdateShipperRequest $request, Shipper $shipper)
     {
-        if($request->validated())
-        {
-            $shipper->update($request->validated());
+            $shipper->update($request->all());
             return response()->noContent();
-        }
     }
 
     /**
@@ -105,6 +104,56 @@ class ShipperController extends Controller
      */
     public function destroy(Shipper $shipper)
     {
-        //
+        if(!$shipper->trashed())
+        {
+            $shipper->delete();
+            return response()->noContent();
+        }
+    }
+
+    public function restore($shipper_id)
+    {
+        try {
+            $shipper = Shipper::withTrashed()->findOrFail($shipper_id);
+            if($shipper->trashed())
+            {
+                $shipper->restore();
+                return response()->noContent();
+            }
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('shipper not found');
+        }
+    }
+
+    public function shipperDetails($shipper_id)
+    {
+        try {
+            return new ShipperResource(Shipper::findOrFail($shipper_id));
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('shipper not found');
+        }
+    }
+
+    public function filter($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $shippers = Shipper::withTrashed()->latest('created_at')->paginate(15);
+                return response($shippers,200);
+                break;
+            case 1 :
+                $shippers = Shipper::onlyTrashed()->latest('created_at')->paginate(15);
+                return response($shippers,200);
+                break;
+        }
+    }
+
+    public function getAllShippers()
+    {
+        $shippers = Shipper::select(['_id','full_name','type','phone'])->get();
+        return response(['data' => $shippers],200);
     }
 }
