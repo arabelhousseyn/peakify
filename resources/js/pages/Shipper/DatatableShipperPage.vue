@@ -6,7 +6,7 @@
                 <v-card-title>
                     <span>Livreurs</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('categories/add-category')" color="primary">
+                    <v-btn @click="$router.push('shippers/add-shipper')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>

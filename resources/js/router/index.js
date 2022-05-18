@@ -254,6 +254,10 @@ const routes = [
                     {
                         path: '/',
                         component : () => import('../pages/Shipper/DatatableShipperPage')
+                    },
+                    {
+                        path: 'add-shipper',
+                        component : () => import('../pages/Shipper/AddShipperPage')
                     }
                 ]
             }
