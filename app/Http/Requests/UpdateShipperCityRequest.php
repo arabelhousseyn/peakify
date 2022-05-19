@@ -26,8 +26,8 @@ class UpdateShipperCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'price' => 'required|numeric',
-            'type' => ['required',new CheckTypeShipperRule()]
+            'price' => 'numeric',
+            'city_id' => 'exists:cities,_id'
         ];
     }
 }

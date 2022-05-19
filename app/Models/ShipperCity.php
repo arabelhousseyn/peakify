@@ -15,8 +15,7 @@ class ShipperCity extends Model
     protected $fillable = [
         'shipper_id',
         'city_id',
-        'price',
-        'type'
+        'price'
     ];
 
     protected $appends = ['priceValue'];
