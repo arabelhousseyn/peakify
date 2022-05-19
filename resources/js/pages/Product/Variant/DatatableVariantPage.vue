@@ -234,7 +234,7 @@ export default {
             this.loading = true
             this.data = []
             this.$router.push(`?page=${this.page}`).catch(err => {})
-            if(this.hint == 'offres Active')
+            if(this.hint == 'Variantes Active')
             {
                 this.init()
             }else{

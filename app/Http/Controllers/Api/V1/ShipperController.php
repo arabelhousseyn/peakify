@@ -156,4 +156,30 @@ class ShipperController extends Controller
         $shippers = Shipper::select(['_id','full_name','type','phone'])->get();
         return response(['data' => $shippers],200);
     }
+
+    public function getCitiesByShipper($shipper_id)
+    {
+        try {
+            $shipper = Shipper::with('cities.city')->findOrFail($shipper_id);
+            return response(['data' => $shipper->cities],200);
+        }catch (ModelNotFoundException $exception)
+        {
+            return new ModelNotFoundException('shipper not found');
+        }
+    }
+
+    public function shipperCitiesFilter($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $shipper = Shipper::with('cities.city')->withTrashed()->latest('created_at')->paginate(15);
+                return response($shipper->cities,200);
+                break;
+            case 1 :
+                $shipper = Shipper::with('cities.city')->onlyTrashed()->latest('created_at')->paginate(15);
+                return response($shipper->cities,200);
+                break;
+        }
+    }
 }

@@ -109,7 +109,7 @@
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
-                                        <v-list-item link @click="$router.push({name : 'UpdateShipper',params : {id : item._id,data : item}})">
+                                        <v-list-item link @click="$router.push(`/home/shippers/cities/${item._id}`)">
                                             <v-list-item-icon><v-icon color="green">mdi-city</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Villes</v-list-item-title></v-list-item-content>
                                         </v-list-item>

@@ -136,6 +136,10 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         Route::get('filter/{type}','filter')->whereAlphaNumeric('type');
         Route::put('restore/{shipper_id}','restore')->whereAlphaNumeric('shipper_id');
         Route::get('shipper-details/{shipper_id}','shipperDetails')->whereAlphaNumeric('shipper_id');
+
+        Route::prefix('cities')->group(function (){
+            Route::get('{shipper_id}','getCitiesByShipper')->whereAlphaNumeric('shipper_id');
+        });
     });
 
     // resource controllers
