@@ -104,7 +104,7 @@
                             <v-icon>mdi-truck-delivery</v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
-                            <v-list-item-title>Vendeurs</v-list-item-title>
+                            <v-list-item-title>Livreurs</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreShipperRequest;
+use App\Http\Requests\UpdateShipperCityRequest;
 use App\Http\Requests\UpdateShipperRequest;
 use App\Http\Resources\ShipperResource;
 use App\Models\Shipper;
+use App\Models\ShipperCity;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -168,18 +170,45 @@ class ShipperController extends Controller
         }
     }
 
-    public function shipperCitiesFilter($filter)
+    public function shipperCitiesFilter($filter,$shipper_id)
     {
         switch ($filter)
         {
             case 0 :
-                $shipper = Shipper::with('cities.city')->withTrashed()->latest('created_at')->paginate(15);
+                $shipper = Shipper::with('cities.city')->withTrashed()->latest('created_at')->find($shipper_id);
                 return response($shipper->cities,200);
                 break;
             case 1 :
-                $shipper = Shipper::with('cities.city')->onlyTrashed()->latest('created_at')->paginate(15);
+                $shipper = Shipper::with('cities.city')->onlyTrashed()->latest('created_at')->find($shipper_id);
                 return response($shipper->cities,200);
                 break;
+        }
+    }
+
+    public function UpdateShipperCity(UpdateShipperCityRequest $request, $shipper_city_id)
+    {
+        if($request->validated())
+        {
+            try {
+                $shipper_city = ShipperCity::findOrFail($shipper_city_id);
+                $shipper_city->update($request->all());
+                return response()->noContent();
+            }catch (ModelNotFoundException $exception)
+            {
+                return new ModelNotFoundException('shipper city not found');
+            }
+        }
+    }
+
+    public function destroyShipperCity($shipper_city_id)
+    {
+        try {
+            $shipper_city = ShipperCity::findOrFail($shipper_city_id);
+            $shipper_city->forceDelete();
+            return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            return new ModelNotFoundException('shipper city not found');
         }
     }
 }
