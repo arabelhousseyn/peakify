@@ -163,7 +163,7 @@ class ShipperController extends Controller
     {
         try {
             $shipper = Shipper::with('cities.city')->findOrFail($shipper_id);
-            return response(['data' => $shipper->cities],200);
+            return response(['data' => $shipper->cities,'default_city' => $shipper->city_id],200);
         }catch (ModelNotFoundException $exception)
         {
             return new ModelNotFoundException('shipper not found');
@@ -174,9 +174,16 @@ class ShipperController extends Controller
     {
         if($request->validated())
         {
+
             try {
                 $shipper_city = ShipperCity::findOrFail($shipper_city_id);
-                $shipper_city->update($request->all());
+                $shipper_city->update($request->only('price'));
+
+                if($request->type == 'D')
+                {
+                   $shipper_city->shipper()->update($request->only('city_id'));
+                }
+
                 return response()->noContent();
             }catch (ModelNotFoundException $exception)
             {

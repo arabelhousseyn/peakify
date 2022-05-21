@@ -20,11 +20,13 @@ class ShipperFactory extends Factory
     {
         $genders = ['M','F'];
         $type_shippers = ['C','P'];
+        $cities = City::all()->pluck('_id');
         return [
             'full_name' => $this->faker->name($genders[rand(0,count($genders) - 1)]),
             'phone' => $this->faker->numerify('##########'),
             'email' => $this->faker->email,
-            'type' => $type_shippers[rand(0,count($type_shippers) - 1)]
+            'type' => $type_shippers[rand(0,count($type_shippers) - 1)],
+            'city_id' => $cities[rand(0,count($cities) - 1)]
         ];
     }
 
