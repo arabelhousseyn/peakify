@@ -109,7 +109,7 @@
                                             <v-list-item-icon><v-icon color="green">mdi-pencil</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Modifier</v-list-item-title></v-list-item-content>
                                         </v-list-item>
-                                        <v-list-item link @click="$router.push(`/home/shippers/cities/${item._id}`)">
+                                        <v-list-item link @click="openCitiesDialog(item.cities,item._id)">
                                             <v-list-item-icon><v-icon color="green">mdi-city</v-icon></v-list-item-icon>
                                             <v-list-item-content><v-list-item-title>Villes</v-list-item-title></v-list-item-content>
                                         </v-list-item>
@@ -138,6 +138,7 @@
         </v-container>
         <destroy-shipper-dialog @close="close" :dialog="dialog1" :shipper_id="shipper_id" />
         <restore-shipper-dialog @close="close1" :dialog="dialog2" :shipper_id="shipper_id" />
+        <shipper-cities-dialog v-if="dialog3" @close="close2" :dialog="dialog3" :shipper_id="shipper_id" />
     </div>
 </template>
 <script>
@@ -145,6 +146,7 @@ import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
 import DestroyShipperDialog from "../../components/dialog/Shipper/DestroyShipperDialog";
 import RestoreShipperDialog from "../../components/dialog/Shipper/RestoreShipperDialog";
+import ShipperCitiesDialog from "../../components/dialog/Shipper/ShipperCitiesDialog";
 export default {
     data : ()=>({
         search : null,
@@ -183,10 +185,12 @@ export default {
 
         dialog1 : false,
         dialog2 : false,
+        dialog3 : false,
         shipper_id : null,
-        hint : 'Livreurs Active'
+        hint : 'Livreurs Active',
+        cities : [],
     }),
-    components: {RestoreShipperDialog, DestroyShipperDialog, BreadCrumbsComponent},
+    components: {ShipperCitiesDialog, RestoreShipperDialog, DestroyShipperDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
@@ -221,6 +225,12 @@ export default {
                     }
                 })
             })
+        },
+        openCitiesDialog(cities,shipper_id)
+        {
+            this.cities = cities
+            this.shipper_id = shipper_id
+            this.dialog3 = true
         },
         formatDate(date)
         {
@@ -282,6 +292,12 @@ export default {
         {
             this.shipper_id = null
             this.dialog2 = false
+        },
+        close2()
+        {
+            this.shipper_id = null
+            this.cities = []
+            this.dialog3 = false
         }
     },
     mounted() {

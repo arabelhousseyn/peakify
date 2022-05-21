@@ -139,7 +139,6 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
 
         Route::prefix('cities')->group(function (){
             Route::get('{shipper_id}','getCitiesByShipper')->whereAlphaNumeric('shipper_id');
-            Route::get('filter/{type}/{shipper_id}','shipperCitiesFilter')->whereAlphaNumeric('type','shipper_id');
             Route::put('update-shipper-city/{shipper_city_id}','UpdateShipperCity')->whereAlphaNumeric('shipper_city_id');
             Route::delete('destory-shipper-city/{shipper_city_id}','destroyShipperCity')->whereAlphaNumeric('shipper_city_id');
         });

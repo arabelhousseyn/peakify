@@ -170,21 +170,6 @@ class ShipperController extends Controller
         }
     }
 
-    public function shipperCitiesFilter($filter,$shipper_id)
-    {
-        switch ($filter)
-        {
-            case 0 :
-                $shipper = Shipper::with('cities.city')->withTrashed()->latest('created_at')->find($shipper_id);
-                return response($shipper->cities,200);
-                break;
-            case 1 :
-                $shipper = Shipper::with('cities.city')->onlyTrashed()->latest('created_at')->find($shipper_id);
-                return response($shipper->cities,200);
-                break;
-        }
-    }
-
     public function UpdateShipperCity(UpdateShipperCityRequest $request, $shipper_city_id)
     {
         if($request->validated())
