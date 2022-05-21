@@ -33,7 +33,7 @@ class StoreShipperRequest extends FormRequest
             'cities' => 'array',
             'cities.*.city_id' => 'required|exists:cities,_id',
             'cities.*.price' => 'required|numeric',
-            'cities.*.type' => ['required',new CheckTypeDefaultCity()]
+//            'cities.*.type' => ['required',new CheckTypeDefaultCity()]
         ];
     }
 }

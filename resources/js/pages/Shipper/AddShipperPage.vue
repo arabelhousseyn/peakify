@@ -55,15 +55,46 @@
                                 ></v-select>
                             </v-col>
 
-                            <v-col cols="12" lg="6" sm="6">
-                                <v-combobox
-                                    @change="mutateValue"
-                                    solo
-                                    :items="cities"
-                                    required
-                                    multiple
-                                    label="Villes"
-                                ></v-combobox>
+                            <v-col cols="12">
+                                <v-expansion-panels flat>
+                                    <v-expansion-panel elevation="1">
+                                        <v-expansion-panel-header disable-icon-rotate>
+                                            <strong>Villes</strong>
+                                            <template v-slot:actions>
+                                                <p>
+                                                    <small>Ajouter les villes</small>
+                                                    <v-icon color="primary">
+                                                        mdi-plus
+                                                    </v-icon>
+                                                </p>
+                                            </template>
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <v-row v-for="(input,index) in inputs" :key="index">
+                                                <v-col cols="12" lg="6" md="6">
+                                                    <v-combobox
+                                                        @change="mutateValue($event,'C',index)"
+                                                        :items="cities"
+                                                        solo
+                                                        label="Ville"
+                                                        prepend-inner-icon="mdi-city"
+                                                    ></v-combobox>
+                                                </v-col>
+
+                                                <v-col cols="12" lg="6" md="6">
+                                                    <v-text-field
+                                                        @change="mutateValue($event,'P',index)"
+                                                        solo
+                                                        label="Prix"
+                                                        prepend-inner-icon="mdi-currency-usd"
+                                                    ></v-text-field>
+                                                </v-col>
+                                            </v-row>
+                                            <v-btn color="success" @click="incrementInputs" rounded text><v-icon>mdi-plus</v-icon></v-btn>
+                                            <v-btn color="error" @click="decrementInput" rounded text><v-icon>mdi-minus</v-icon></v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
                             </v-col>
 
                             <v-col cols="12">
@@ -122,20 +153,38 @@ export default {
         disabled : true,
         loading : false,
         hasError : false,
+        inputs : 1,
         errors : [],
         cities : [],
         fruits : [],
-        types : ['Personne','Société']
+        types : ['Personne','Société'],
+        city_id : null,
+        price : null
 
     }),
     components: {BreadCrumbsComponent},
     methods : {
+        incrementInputs()
+        {
+            this.resetParamsShipper()
+            this.inputs++
+        },
+        decrementInput()
+        {
+            if(this.inputs > 1)
+            {
+                this.data.cities.pop()
+                this.inputs--
+            }
+        },
         store()
         {
             this.loading = true
             this.disabled = true
 
             this.data.type = (this.data.type == 'Personne') ? 'P' : 'C'
+
+            console.log(this.data)
 
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.post('/api/shipper',this.data).then(e=>{
@@ -160,9 +209,33 @@ export default {
                 })
             })
         },
-        mutateValue()
+        mutateValue(value,attribute,index)
         {
+            switch (attribute)
+            {
+                case 'C' :
+                    let city = this.fruits.filter(function (fruit){
+                        return fruit.name == this
+                    },value)[0]
+                    this.city_id = city._id
+                    break;
+                case 'P' : this.price = value; break;
+            }
 
+            if(this.data.cities[index] !== undefined)
+            {
+                this.data.cities[index].city_id = this.city_id
+                this.data.cities[index].price = this.price
+            }else{
+                if(this.city_id !== null && this.price !== null)
+                {
+                    let data = {
+                        city_id : this.city_id,
+                        price : this.price,
+                    }
+                    this.data.cities.push(data)
+                }
+            }
         },
         check()
         {
@@ -181,6 +254,10 @@ export default {
             this.data.type = null
             this.data.email = null
             this.data.cities = []
+            this.inputs = 0
+            setTimeout(()=>{
+                this.inputs = 1
+            },3000)
         },
         init()
         {
@@ -194,6 +271,11 @@ export default {
                     console.log(err)
                 })
             })
+        },
+        resetParamsShipper()
+        {
+            this.city_id = null
+            this.price = null
         }
     },
     mounted() {

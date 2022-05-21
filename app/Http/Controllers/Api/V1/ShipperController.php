@@ -48,12 +48,12 @@ class ShipperController extends Controller
         {
                 $shipper = Shipper::create(array_merge($request->except('cities'),['city_id' => null]));
                 collect($request->cities)->map(function ($city) use ($shipper){
-                    if($city['type'] == 'S')
-                    {
-                        $shipper->update([
-                            'city_id' => $city['city_id']
-                        ]);
-                    }
+//                    if($city['type'] == 'S')
+//                    {
+//                        $shipper->update([
+//                            'city_id' => $city['city_id']
+//                        ]);
+//                    }
                     $shipper->cities()->create([
                         'city_id' => $city['city_id'],
                         'price' => $city['price']
