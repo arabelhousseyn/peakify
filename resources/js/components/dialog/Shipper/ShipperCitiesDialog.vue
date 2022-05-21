@@ -9,7 +9,7 @@
                 <v-card-title class="text-h5">
                     Villes
                     <v-spacer></v-spacer>
-                    <v-btn color="primary"><v-icon>mdi-plus</v-icon> Ajouter</v-btn>
+                    <v-btn @click="dialog3 = true" color="primary"><v-icon>mdi-plus</v-icon> Ajouter</v-btn>
                 </v-card-title>
                 <v-card-text>
                     <v-container v-if="loading">
@@ -88,6 +88,7 @@
         <destroy-shipper-city-dialog @close="close1" @close1="close2" :dialog="dialog1" :shipper_city_id="shipper_city_id" />
         <update-shipper-city-dialog v-if="dialog2" @close="close3" :dialog="dialog2" :shipper_city_id="shipper_city_id"
         :city_id="city_id" :price="price" :is_default="is_default" />
+        <add-shipper-cities-dialog :shipper_id="shipper_id" :dialog="dialog3" @close="close4" />
     </div>
 </template>
 
@@ -95,14 +96,16 @@
 
 import DestroyShipperCityDialog from "./DestroyShipperCityDialog";
 import UpdateShipperCityDialog from "./UpdateShipperCityDialog";
+import AddShipperCitiesDialog from "./AddShipperCitiesDialog";
 export default {
-    components: {UpdateShipperCityDialog, DestroyShipperCityDialog},
+    components: {AddShipperCitiesDialog, UpdateShipperCityDialog, DestroyShipperCityDialog},
     props : ['shipper_id','dialog'],
     data : () =>({
         data : [],
         loading : true,
         dialog1 : false,
         dialog2 : false,
+        dialog3 : false,
         shipper_city_id : null,
         city_id : null,
         price : null,
@@ -168,6 +171,14 @@ export default {
             this.price = null
             this.is_default = false
             this.dialog2 = false
+        },
+        close4(init = false)
+        {
+            if(init)
+            {
+                this.init()
+            }
+            this.dialog3 = false
         }
     },
     mounted() {
