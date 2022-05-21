@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreShipperCitiesRequest;
 use App\Http\Requests\StoreShipperRequest;
 use App\Http\Requests\UpdateShipperCityRequest;
 use App\Http\Requests\UpdateShipperRequest;
@@ -167,6 +168,26 @@ class ShipperController extends Controller
         }catch (ModelNotFoundException $exception)
         {
             return new ModelNotFoundException('shipper not found');
+        }
+    }
+
+    public function storeCitiesShipper(StoreShipperCitiesRequest $request)
+    {
+        if($request->validated())
+        {
+            try {
+
+                $shipper = Shipper::findOrFail($request->shipper_id);
+                collect($request->cities)->map(function ($city) use ($shipper){
+                    $shipper->cities()->create($city);
+                });
+
+                return response(['message' => 'created!'],201);
+
+            }catch (ModelNotFoundException $exception)
+            {
+                throw new ModelNotFoundException('shipper not found');
+            }
         }
     }
 
