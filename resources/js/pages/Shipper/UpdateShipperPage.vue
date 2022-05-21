@@ -47,6 +47,9 @@
                                     required
                                     label="Type*"
                                 ></v-select>
+
+                                <v-chip v-if="infos.type == 'C'" color="green" dark>Société</v-chip>
+                                <v-chip v-if="infos.type == 'P'" color="green" dark>Personne</v-chip>
                             </v-col>
 
                             <v-alert v-if="hasError" border="right" colored-border type="error" elevation="2">
@@ -101,7 +104,7 @@ export default {
         disable : false,
         infos : {},
         dialog : false,
-        types : ['C','P']
+        types : ['Personne','Société']
     }),
     components: {ConfirmationUpdateUserDialog, BreadCrumbsComponent},
     methods : {
@@ -118,6 +121,8 @@ export default {
             this.dialog = false
             this.loading = true
             this.disabled = true
+
+            this.infos.type = (this.infos.type == 'Personne') ? 'P' : 'C'
 
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.put(`/api/shipper/${this.shipper_id}`,this.infos).then(e=>{
