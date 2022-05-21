@@ -125,7 +125,7 @@ export default {
         errors : [],
         cities : [],
         fruits : [],
-        types : ['C','P']
+        types : ['Personne','Société']
 
     }),
     components: {BreadCrumbsComponent},
@@ -134,6 +134,8 @@ export default {
         {
             this.loading = true
             this.disabled = true
+
+            this.data.type = (this.data.type == 'Personne') ? 'P' : 'C'
 
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.post('/api/shipper',this.data).then(e=>{
