@@ -32,10 +32,17 @@
                             </v-col>
 
                             <v-col cols="12" lg="4" md="4">
-                                <v-checkbox
-                                    v-model="infos.is_static"
-                                    label="Statique"
-                                ></v-checkbox>
+                                <v-combobox
+                                    v-model="selected"
+                                    :items="selections"
+                                    label="Choisir*"
+                                    dense
+                                    solo
+                                ></v-combobox>
+                                <v-chip v-if="infos.is_static" color="green" dark>
+                                    Statique
+                                </v-chip>
+                                <v-chip v-else color="green" dark>Pourcentage</v-chip>
                             </v-col>
 
                             <v-alert v-if="hasError" border="right" colored-border type="error" elevation="2">
@@ -95,6 +102,8 @@ export default {
         disable : false,
         infos : {},
         dialog : false,
+        selections : ['Pourcentage','Statique'],
+        selected : null
     }),
     components: {ConfirmationUpdateUserDialog, BreadCrumbsComponent},
     methods : {
@@ -111,6 +120,9 @@ export default {
             this.dialog = false
             this.loading = true
             this.disabled = true
+
+            this.infos.is_static = (this.selected == null) ? this.infos.is_static
+                : (this.selected == 'Pourcentage') ? false : true
 
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.put(`/api/product/offers/update/${this.product_offer_id}`,this.infos).then(e=>{

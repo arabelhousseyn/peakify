@@ -55,16 +55,16 @@
                                 ></v-select>
                             </v-col>
 
-<!--                            <v-col cols="12" lg="6" sm="6">-->
-<!--                                <v-combobox-->
-<!--                                    @change="mutateValue"-->
-<!--                                    solo-->
-<!--                                    :items="cities"-->
-<!--                                    required-->
-<!--                                    multiple-->
-<!--                                    label="Villes"-->
-<!--                                ></v-combobox>-->
-<!--                            </v-col>-->
+                            <v-col cols="12" lg="6" sm="6">
+                                <v-combobox
+                                    @change="mutateValue"
+                                    solo
+                                    :items="cities"
+                                    required
+                                    multiple
+                                    label="Villes"
+                                ></v-combobox>
+                            </v-col>
 
                             <v-col cols="12">
                                 <small><span class="font-weight-bold">Note : </span> <span class="grey--text">* indique les champs requis.</span> </small>
@@ -182,22 +182,22 @@ export default {
             this.data.email = null
             this.data.cities = []
         },
-        // init()
-        // {
-        //     axios.get('/sanctum/csrf-cookie').then(res => {
-        //         axios.get('/api/city/all').then(e=>{
-        //             this.fruits = e.data.data
-        //             this.cities = this.fruits.map(function (fruit){
-        //                 return fruit.name
-        //             })
-        //         }).catch(err => {
-        //             console.log(err)
-        //         })
-        //     })
-        // }
+        init()
+        {
+            axios.get('/sanctum/csrf-cookie').then(res => {
+                axios.get('/api/city/all').then(e=>{
+                    this.fruits = e.data.data
+                    this.cities = this.fruits.map(function (fruit){
+                        return fruit.name
+                    })
+                }).catch(err => {
+                    console.log(err)
+                })
+            })
+        }
     },
-    // mounted() {
-    //     this.init()
-    // }
+    mounted() {
+        this.init()
+    }
 }
 </script>
