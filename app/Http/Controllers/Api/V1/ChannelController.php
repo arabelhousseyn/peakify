@@ -139,7 +139,7 @@ class ChannelController extends Controller
         }
     }
 
-    public function getAllCategories()
+    public function getAllChannels()
     {
         $channels = Channel::select('name')->get();
         return response(['data' => $channels],200);
