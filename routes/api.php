@@ -156,6 +156,8 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
           Route::get('channels','getAllChannels');
       });
 
+
+
     // resource controllers
 
     Route::resources([

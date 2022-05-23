@@ -108,6 +108,24 @@
                         </v-list-item-content>
                     </v-list-item>
 
+                    <v-list-group
+                        color="white"
+                        prepend-icon="mdi-tshirt-v"
+                        no-action
+                    >
+                        <template v-slot:activator>
+                            <v-list-item-content>
+                                <v-list-item-title>Gestion des <br> commandes</v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+
+                        <v-list-item style="border-right: 4px solid;" @click="()=>{this.$router.push('/home/channels').catch(err => {})}">
+                            <v-list-item-content>
+                                <v-list-item-title>Canaux</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list-group>
+
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>
