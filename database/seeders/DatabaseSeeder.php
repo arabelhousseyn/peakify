@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\{Category, City, Client, Product, Shipper, User};
+use App\Models\{Category, Channel, City, Client, Product, Shipper, User};
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         Category::factory(6)->create();
         Product::factory(10000)->create();
         Shipper::factory(10)->create();
+        Channel::factory(2)->create();
     }
 }
