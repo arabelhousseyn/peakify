@@ -278,7 +278,14 @@ const routes = [
                     {
                         path: 'add-channel',
                         component : () => import('../pages/Channel/AddChannelPage')
+                    },
+                    {
+                        path: 'update-channel/:id',
+                        component : () => import('../pages/Channel/UpdateChannelPage'),
+                        props: true,
+                        name : 'updateChannel'
                     }
+
                 ]
             }
 
