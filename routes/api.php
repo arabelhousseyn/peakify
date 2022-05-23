@@ -146,6 +146,13 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         });
     });
 
+    // product
+
+      // channels
+      Route::controller(ChannelController::class)->prefix('channel')->group(function (){
+          Route::put('restore/{channel_id}','restore')->whereAlphaNumeric('channel_id');
+      });
+
     // resource controllers
 
     Route::resources([

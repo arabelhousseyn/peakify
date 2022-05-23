@@ -103,7 +103,7 @@ class ChannelController extends Controller
     public function restore($channel_id)
     {
         try {
-            $channel = Channel::findOrFail($channel_id);
+            $channel = Channel::withTrashed()->findOrFail($channel_id);
             $channel->restore();
             return response()->noContent();
         }catch (ModelNotFoundException $exception)
