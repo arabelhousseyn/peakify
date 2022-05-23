@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreChannelRequest;
 use App\Http\Requests\UpdateChannelRequest;
+use App\Http\Resources\ChannelResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\{Channel};
@@ -111,5 +112,36 @@ class ChannelController extends Controller
             throw new ModelNotFoundException('channel not found');
         }
 
+    }
+
+    public function channelDetails($channel_id)
+    {
+        try {
+            return new ChannelResource(Channel::findOrFail($channel_id));
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('channel not found');
+        }
+    }
+
+    public function filter($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $channels = Channel::withTrashed()->latest('created_at')->paginate(15);
+                return response($channels,200);
+                break;
+            case 1 :
+                $channels = Channel::onlyTrashed()->latest('created_at')->paginate(15);
+                return response($channels,200);
+                break;
+        }
+    }
+
+    public function getAllCategories()
+    {
+        $channels = Channel::select('name')->get();
+        return response(['data' => $channels],200);
     }
 }
