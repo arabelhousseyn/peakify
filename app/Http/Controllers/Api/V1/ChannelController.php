@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreChannelRequest;
+use App\Http\Requests\UpdateChannelRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\{Channel};
 class ChannelController extends Controller
@@ -14,7 +17,8 @@ class ChannelController extends Controller
      */
     public function index()
     {
-
+        $channels = Channel::withoutTrashed()->latest('created_at')->paginate(15);
+        return response($channels,200);
     }
 
     /**
@@ -33,9 +37,14 @@ class ChannelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreChannelRequest $request)
     {
-        //
+        if($request->validated())
+        {
+            Channel::create($request->validated());
+
+            return response(['message' => 'created !'],201);
+        }
     }
 
     /**
@@ -67,9 +76,13 @@ class ChannelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateChannelRequest $request, Channel $channel)
     {
-        //
+        if($request->validated())
+        {
+             $channel->update($request->validated());
+             return response()->noContent();
+        }
     }
 
     /**
@@ -78,8 +91,25 @@ class ChannelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Channel $channel)
     {
-        //
+        if(!$channel->trashed())
+        {
+            $channel->delete();
+            return response()->noContent();
+        }
+    }
+
+    public function restore($channel_id)
+    {
+        try {
+            $channel = Channel::findOrFail($channel_id);
+            $channel->restore();
+            return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('channel not found');
+        }
+
     }
 }
