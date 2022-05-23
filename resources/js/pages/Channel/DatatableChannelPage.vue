@@ -6,7 +6,7 @@
                 <v-card-title>
                     <span>Canaux</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('categories/add-channel')" color="primary">
+                    <v-btn @click="$router.push('channels/add-channel')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>

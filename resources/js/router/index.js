@@ -274,6 +274,10 @@ const routes = [
                     {
                         path: '/',
                         component : () => import('../pages/Channel/DatatableChannelPage')
+                    },
+                    {
+                        path: 'add-channel',
+                        component : () => import('../pages/Channel/AddChannelPage')
                     }
                 ]
             }
