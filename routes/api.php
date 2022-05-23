@@ -151,6 +151,9 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
       // channels
       Route::controller(ChannelController::class)->prefix('channel')->group(function (){
           Route::put('restore/{channel_id}','restore')->whereAlphaNumeric('channel_id');
+          Route::get('channel-details/{channel_id}','channelDetails')->whereAlphaNumeric('channel_id');
+          Route::get('filter/{type}','filter')->whereNumber('type');
+          Route::get('channels','getAllChannels');
       });
 
     // resource controllers
