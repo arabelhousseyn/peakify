@@ -4,9 +4,9 @@
             <bread-crumbs-component :items="items" />
             <v-card class="mt-5" elevation="0">
                 <v-card-title>
-                    <span>Catégories</span>
+                    <span>Canaux</span>
                     <v-spacer></v-spacer>
-                    <v-btn @click="$router.push('categories/add-category')" color="primary">
+                    <v-btn @click="$router.push('categories/add-channel')" color="primary">
                         <v-icon>mdi-plus</v-icon> Ajouter
                     </v-btn>
                 </v-card-title>
@@ -162,9 +162,9 @@ export default {
                 href: '/',
             },
             {
-                text: 'catégories',
+                text: 'Canaux',
                 disabled: false,
-                href: '/home/categories',
+                href: '/home/channels',
             },
         ],
         selections: ['Tous les canaux','Canaux Active','Canaux supprimer'],
