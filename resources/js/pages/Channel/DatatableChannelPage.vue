@@ -127,15 +127,14 @@
                 </v-card-text>
             </v-card>
         </v-container>
-        <delete-category-dialog @close="close" :dialog="dialog1" :category_id="category_id" />
-        <restore-category-dialog @close="close1" :dialog="dialog2" :category_id="category_id" />
+        <destroy-channel-dialog @close="close" :channel_id="channel_id" :dialog="dialog1" />
+
     </div>
 </template>
 <script>
 import moment from 'moment'
-import BreadCrumbsComponent from "../../components/BreadCrumbsComponent";
-import DeleteCategoryDialog from "../../components/dialog/Category/DeleteCategoryDialog";
-import RestoreCategoryDialog from "../../components/dialog/Category/RestoreCategoryDialog";
+import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
+import DestroyChannelDialog from "../../components/dialog/Channel/DestroyChannelDialog";
 export default {
     data : ()=>({
         search : null,
@@ -174,7 +173,7 @@ export default {
         channel_id : null,
         hint : 'Canaux Active'
     }),
-    components: {RestoreCategoryDialog, DeleteCategoryDialog, BreadCrumbsComponent},
+    components: {DestroyChannelDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
