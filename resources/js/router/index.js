@@ -266,7 +266,18 @@ const routes = [
                         component : () => import('../pages/Shipper/UpdateShipperPage')
                     }
                 ]
+            },
+            {
+                path: 'channels',
+                component : () => import('../pages/Channel/ChannelPage'),
+                children: [
+                    {
+                        path: '/',
+                        component : () => import('../pages/Channel/DatatableChannelPage')
+                    }
+                ]
             }
+
         ]
     }
 
