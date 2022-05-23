@@ -128,13 +128,14 @@
             </v-card>
         </v-container>
         <destroy-channel-dialog @close="close" :channel_id="channel_id" :dialog="dialog1" />
-
+        <restore-channel-dialog @close="close1" :channel_id="channel_id" :dialog="dialog2" />
     </div>
 </template>
 <script>
 import moment from 'moment'
 import BreadCrumbsComponent from "../../components/BreadCrumbsComponent"
 import DestroyChannelDialog from "../../components/dialog/Channel/DestroyChannelDialog";
+import RestoreChannelDialog from "../../components/dialog/Channel/RestoreChannelDialog";
 export default {
     data : ()=>({
         search : null,
@@ -173,7 +174,7 @@ export default {
         channel_id : null,
         hint : 'Canaux Active'
     }),
-    components: {DestroyChannelDialog, BreadCrumbsComponent},
+    components: {RestoreChannelDialog, DestroyChannelDialog, BreadCrumbsComponent},
     methods : {
         filter()
         {
