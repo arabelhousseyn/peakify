@@ -36,7 +36,12 @@ class StoreOrderRequest extends FormRequest
             'order_status' => ['required',new CheckOrderStatusRule()],
             'delivery_status' => ['required',new CheckDeliveryStatusRule()],
             'payment_status' => ['required',new CheckPaymentStatusRule()],
-            'status' => ['required',new CheckOrderRule()]
+            'status' => ['required',new CheckOrderRule()],
+            'products' => 'array',
+            'products.*.has_variants' => 'required|boolean',
+            'products.*.product_id' => 'required|exists:products,_id',
+            'products.*.variants' => 'array',
+            'products.*.variants.*.product_variant_option_value_id' => 'required|exists:product_variant_option_values,_id'
         ];
     }
 }
