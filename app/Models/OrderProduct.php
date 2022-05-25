@@ -19,4 +19,9 @@ class OrderProduct extends Model
     {
         return $this->belongsTo(Product::class,'product_id')->withDefault([]);
     }
+
+    public function variants()
+    {
+        return $this->hasMany(OrderProductVariant::class);
+    }
 }
