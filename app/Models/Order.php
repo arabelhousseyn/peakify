@@ -48,4 +48,9 @@ class Order extends Model
     {
         return $this->belongsTo(User::class,'created_by')->withDefault([]);
     }
+
+    public function products()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
 }
