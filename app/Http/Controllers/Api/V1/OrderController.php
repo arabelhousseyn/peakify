@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use App\Services\GenerateOrderNumberService;
 class OrderController extends Controller
 {
     /**
@@ -40,7 +41,10 @@ class OrderController extends Controller
     {
         if($request->validated())
         {
-
+            $data = [
+                'confirmed_by' => Auth::id(),
+                'order_number' => (new GenerateOrderNumberService())->setType($request->type)->generate()
+            ];
         }
     }
 
