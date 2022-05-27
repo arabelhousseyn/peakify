@@ -37,9 +37,8 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
-        return (new GenerateOrderNumberService())->setType($request->type)->generate();
         if($request->validated())
         {
             $data = [
