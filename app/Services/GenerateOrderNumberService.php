@@ -19,7 +19,7 @@ class GenerateOrderNumberService{
     {
         $last_order = Order::withTrashed()->latest('created_at')->limit(1)->first();
         $now = Carbon::now();
-        $last_order_date = Carbon::parse($last_order->created_at);
+        $last_order_date = Carbon::parse(@$last_order->created_at);
         $format = $this->formatDateForOrder($now->format('Y-m-d'));
 
         if($now->month == $last_order_date->month)
@@ -27,6 +27,8 @@ class GenerateOrderNumberService{
             $order_number = Order::withTrashed()->count() + 1;
         }elseif($now->month > $last_order_date->month){
             $order_number = 1;
+        }else{
+           $order_number = 1;
         }
 
         if($this->type == 'N')

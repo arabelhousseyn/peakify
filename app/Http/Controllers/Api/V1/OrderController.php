@@ -37,14 +37,18 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOrderRequest $request)
+    public function store(Request $request)
     {
+        return (new GenerateOrderNumberService())->setType($request->type)->generate();
         if($request->validated())
         {
             $data = [
-                'confirmed_by' => Auth::id(),
+                'created_by' => Auth::id(),
                 'order_number' => (new GenerateOrderNumberService())->setType($request->type)->generate()
             ];
+            // first case
+            $order = Order::create(array_merge($request->all(),$data));
+
         }
     }
 

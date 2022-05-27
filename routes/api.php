@@ -15,12 +15,9 @@ use App\Http\Controllers\Api\V1\{
     OptionController,
     CityController,
     ShipperController,
-    ChannelController
+    ChannelController,
+    OrderController
 };
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 
 // login
@@ -168,6 +165,7 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
         'option' => OptionController::class,
         'city' => CityController::class,
         'shipper' => ShipperController::class,
-        'channel' => ChannelController::class
+        'channel' => ChannelController::class,
+        'order' => OrderController::class
     ]);
 });
