@@ -154,6 +154,11 @@ Route::middleware(['auth:sanctum','check.hours'])->group(function (){
       });
 
 
+      Route::controller(OrderController::class)->prefix('order')->group(function (){
+          Route::put('restore/{order_id}','restore')->whereAlphaNumeric('order_id');
+      });
+
+
 
     // resource controllers
 

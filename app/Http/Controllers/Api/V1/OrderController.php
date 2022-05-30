@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\GenerateOrderNumberService;
@@ -47,7 +48,6 @@ class OrderController extends Controller
             ];
             // first case
             $order = Order::create(array_merge($request->all(),$data));
-
         }
     }
 
@@ -93,6 +93,22 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        if(!$order->trashed())
+        {
+            $order->delete();
+            return response()->noContent();
+        }
+    }
+
+    public function restore($order_id)
+    {
+        try {
+            $order = Order::findOrFail($order_id);
+            $order->restore();
+            return response()->noContent();
+        }catch (ModelNotFoundException $exception)
+        {
+            throw new ModelNotFoundException('order not found');
+        }
     }
 }
