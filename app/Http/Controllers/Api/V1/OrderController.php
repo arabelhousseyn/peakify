@@ -112,4 +112,19 @@ class OrderController extends Controller
             throw new ModelNotFoundException('order not found');
         }
     }
+
+    public function filter($filter)
+    {
+        switch ($filter)
+        {
+            case 0 :
+                $orders = Order::withTrashed()->latest('created_at')->paginate(15);
+                return response($orders,200);
+                break;
+            case 1 :
+                $orders = Order::onlyTrashed()->latest('created_at')->paginate(15);
+                return response($orders,200);
+                break;
+        }
+    }
 }
