@@ -82,7 +82,8 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $order->update($request->all());
+        return response()->noContent();
     }
 
     /**
